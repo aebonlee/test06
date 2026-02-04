@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.1 스캘핑 계좌 이해 - HDH Fintech</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .close-btn {
+            background: #E5E7EB;
+            color: #6B7280;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #D1D5DB;
+            color: #374151;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .content-box {
+            background: white;
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            color: #64748B;
+            margin-bottom: 24px;
+        }
+
+        .breadcrumb a {
+            color: #F59E0B;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 16px;
+        }
+
+        .intro-text {
+            font-size: 16px;
+            color: #64748B;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .content-section {
+            margin-bottom: 32px;
+        }
+
+        .content-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0F172A;
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 4px solid #F59E0B;
+        }
+
+        .content-item {
+            padding: 16px 0;
+            color: #475569;
+            font-size: 15px;
+            line-height: 1.8;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .content-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #F59E0B;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .info-box {
+            background: #FFFBF5;
+            border-left: 4px solid #F59E0B;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #D97706;
+            margin-bottom: 12px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: #92400E;
+            line-height: 1.7;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #F59E0B;
+        }
+
+        .footer {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 32px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content-box {
+                padding: 32px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .footer-links {
+                gap: 24px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">HDH Fintech</a>
+            <a href="index.html" class="close-btn">×</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="content-box">
+            <div class="breadcrumb">
+                <a href="index.html">홈</a> > 매뉴얼 > 스캘핑 계좌 > 2.1 스캘핑 계좌 이해
+            </div>
+
+            <h1>2.1 스캘핑 계좌 이해</h1>
+            <p class="intro-text">스캘핑 계좌의 역할과 양방향 헷지 전략을 이해합니다.</p>
+
+            <div class="content-section">
+                <h2>양방향 헷지 전략의 역할</h2>
+                <div class="content-item">챌린지 계좌와 반대 방향으로 포지션을 진입합니다.</div>
+                <div class="content-item">챌린지 계좌 손실 시 스캘핑 계좌에서 수익이 발생합니다.</div>
+                <div class="content-item">리스크를 분산하여 안정적인 수익 구조를 만듭니다.</div>
+            </div>
+
+            <div class="content-section">
+                <h2>챌린지 탈락 시에도 수익 발생 원리</h2>
+                <div class="content-item">챌린지 계좌가 손실로 종료되어도 스캘핑 계좌는 수익 상태입니다.</div>
+                <div class="content-item">스캘핑 계좌의 수익으로 챌린지 참가비를 회수합니다.</div>
+                <div class="content-item">극저위험 자동화 시스템의 핵심 원리입니다.</div>
+            </div>
+
+            <div class="info-box">
+                <h3>💡 핵심 포인트</h3>
+                <p>스캘핑 계좌는 챌린지 실패 시에도 손실을 보전하는 "보험" 역할을 합니다. 이것이 HDH Fintech가 10년간 검증된 극저위험 시스템인 이유입니다.</p>
+            </div>
+
+            <a href="index.html" class="back-link">← 메인 페이지로 돌아가기</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="service-intro.html" class="footer-link">서비스 소개</a>
+                <a href="terms.html" class="footer-link">이용약관</a>
+                <a href="privacy.html" class="footer-link">개인정보처리방침</a>
+                <a href="contact.html" class="footer-link">고객센터</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 HDH Fintech. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

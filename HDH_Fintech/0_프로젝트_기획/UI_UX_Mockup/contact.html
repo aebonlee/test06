@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDH Fintech - 문의하기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+
+        .contact-container {
+            background: white;
+            padding: 48px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .contact-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            transition: all 0.2s;
+            color: #1F2937;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #94A3B8;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            resize: vertical;
+            min-height: 150px;
+            transition: all 0.2s;
+            color: #1F2937;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .form-textarea::placeholder {
+            color: #94A3B8;
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: #94A3B8;
+            margin-top: 6px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #F59E0B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #D97706;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .back-link:hover {
+            color: #F59E0B;
+        }
+
+        .footer {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 32px 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FFFFFF;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .footer-admin {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .footer-admin-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 12px;
+            transition: opacity 0.2s;
+        }
+
+        .footer-admin-link:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 0 16px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .main-content {
+                padding: 24px 16px;
+            }
+
+            .contact-container {
+                padding: 32px 20px;
+            }
+
+            .contact-title {
+                font-size: 22px;
+                margin-bottom: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-label {
+                font-size: 13px;
+            }
+
+            .form-input,
+            .form-textarea {
+                font-size: 14px;
+                padding: 12px 14px;
+            }
+
+            .submit-btn {
+                font-size: 15px;
+                padding: 14px;
+            }
+
+            .footer-links {
+                gap: 24px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-container {
+                padding: 24px 16px;
+            }
+
+            .contact-title {
+                font-size: 20px;
+            }
+
+            .form-input,
+            .form-textarea {
+                font-size: 13px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">HDH Fintech</a>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="main-content">
+        <div class="contact-container">
+            <h1 class="contact-title">문의하기</h1>
+
+            <form id="contactForm" onsubmit="submitContact(event)">
+                <div class="form-group">
+                    <label class="form-label" for="name">이름</label>
+                    <input
+                        type="text"
+                        id="name"
+                        class="form-input"
+                        placeholder="홍길동"
+                        required
+                        autocomplete="name"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">이메일</label>
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-input"
+                        placeholder="example@email.com"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="phone">핸드폰 번호 <span style="color: #94A3B8; font-weight: 400;">(선택사항)</span></label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        class="form-input"
+                        placeholder="010-1234-5678"
+                        autocomplete="tel"
+                    >
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="message">문의 내용</label>
+                    <textarea
+                        id="message"
+                        class="form-textarea"
+                        placeholder="문의하실 내용을 자유롭게 작성해주세요."
+                        required
+                    ></textarea>
+                    <div class="helper-text">구체적으로 작성하실수록 더 정확한 답변을 받으실 수 있습니다.</div>
+                </div>
+
+                <button type="submit" class="submit-btn">문의 제출</button>
+            </form>
+
+            <a href="index.html" class="back-link">← 메인 페이지로 돌아가기</a>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="service-intro.html" class="footer-link">서비스 소개</a>
+                <a href="terms.html" class="footer-link">이용약관</a>
+                <a href="privacy.html" class="footer-link">개인정보처리방침</a>
+                <a href="contact.html" class="footer-link">고객센터</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 HDH Fintech. All rights reserved.
+            </div>
+            <div class="footer-admin">
+                <a href="admin.html" class="footer-admin-link">Admin</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function submitContact(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+
+            // 성공 메시지
+            alert('✅ 문의가 접수되었습니다!\n\n이름: ' + name + '\n이메일: ' + email +
+                  (phone ? '\n전화번호: ' + phone : '') + '\n\n빠른 시일 내에 답변 드리겠습니다.');
+
+            // 폼 초기화
+            document.getElementById('contactForm').reset();
+        }
+    </script>
+</body>
+</html>

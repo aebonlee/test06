@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251130-06",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "자동화되는 것이 정말로 다 구현되었다고 그렇다면 지금 내가 보내는 것을 즉시 인식에서 뭔가 답변이 있어야 되는데 정말 답변이 있을지 궁금하다",
+  "content_english": "If automation is truly implemented, then what I'm sending now should immediately receive some kind of response. I wonder if there will actually be a response.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-30T07:03:46.890Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

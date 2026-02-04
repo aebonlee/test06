@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251128-29",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "이번에는 정말로 처리가 돼서 어 편안한 마음으로 잠을 잘 수가 있으면 좋겠다 이 오더 시트를 보는 즉시 반응을 보여주기 바란다",
+  "content_english": "I really hope this time it gets taken care of so I can sleep soundly. Please respond as soon as you see this order sheet.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-28T01:32:43.542Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDH Fintech - 관리자 페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .admin-title {
+            font-size: 18px;
+            color: white;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #64748B;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .section {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th {
+            background: #F8FAFC;
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        .admin-table td {
+            padding: 12px;
+            border-bottom: 1px solid #E2E8F0;
+            font-size: 14px;
+        }
+
+        .admin-table tr:hover {
+            background: #F8FAFC;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #D97706;
+        }
+
+        .btn-secondary {
+            background: #E2E8F0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #CBD5E1;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        /* 회원 등급 배지 */
+        .grade-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .grade-general {
+            background: #F1F5F9;
+            color: #475569;
+            border: 1px solid #E2E8F0;
+        }
+
+        .grade-operating {
+            background: #DBEAFE;
+            color: #1E40AF;
+            border: 1px solid #BFDBFE;
+        }
+
+        .grade-admin {
+            background: #FEF3C7;
+            color: #92400E;
+            border: 1px solid #FDE68A;
+        }
+
+        .grade-super-admin {
+            background: #FEE2E2;
+            color: #991B1B;
+            border: 1px solid #FECACA;
+        }
+
+        .footer {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 32px 0;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FFFFFF;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #F59E0B;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 0 16px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .admin-title {
+                font-size: 14px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 0 16px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .section {
+                padding: 20px 16px;
+                border-radius: 8px;
+            }
+
+            .section-title {
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+
+            /* 테이블 가로 스크롤 */
+            .admin-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .admin-table thead,
+            .admin-table tbody,
+            .admin-table tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+
+            .admin-table th,
+            .admin-table td {
+                font-size: 12px;
+                padding: 8px 6px;
+            }
+
+            .btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+
+            .status-badge {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+
+            .stat-value {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="logo">HDH Fintech</div>
+            <div class="admin-title">관리자 페이지</div>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="container">
+        <a href="index.html" class="back-link">← 메인 페이지로 돌아가기</a>
+
+        <!-- 대시보드 통계 -->
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-label">전체 회원 수</div>
+                <div class="stat-value">1,000명</div>
+                <div style="font-size: 12px; color: #10B981; margin-top: 4px;">+15 (이번 달)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">일반 회원</div>
+                <div class="stat-value">153명</div>
+                <div style="font-size: 12px; color: #EF4444; margin-top: 4px;">-8 (이번 달)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">운영 회원</div>
+                <div class="stat-value">847명</div>
+                <div style="font-size: 12px; color: #10B981; margin-top: 4px;">+23 (이번 달)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">관리자</div>
+                <div class="stat-value">10명</div>
+                <div style="font-size: 12px; color: #64748B; margin-top: 4px;">+1 (이번 달)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">교육 수강 신청</div>
+                <div class="stat-value">신규 23건</div>
+                <div style="font-size: 12px; color: #F59E0B; margin-top: 4px;">대기 12건</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">추천인 코드 신청</div>
+                <div class="stat-value">대기 15건</div>
+                <div style="font-size: 12px; color: #64748B; margin-top: 4px;">발급 347건 (누적)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">연간 회원 총 누적 수익</div>
+                <div class="stat-value">₩458억</div>
+                <div style="font-size: 12px; color: #10B981; margin-top: 4px;">+₩38억 (이번 달)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">AI 프로그램 다운로드</div>
+                <div class="stat-value">1,247건</div>
+                <div style="font-size: 12px; color: #10B981; margin-top: 4px;">+89 (이번 달)</div>
+            </div>
+        </div>
+
+        <!-- 회원 관리 -->
+        <div class="section">
+            <div class="section-title">📊 회원 관리</div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>회원 ID</th>
+                        <th>등급</th>
+                        <th>이름</th>
+                        <th>레벨</th>
+                        <th>랭킹</th>
+                        <th>누적 수익</th>
+                        <th>상태</th>
+                        <th>가입일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1001</td>
+                        <td><span class="grade-badge grade-operating">🔵 운영</span></td>
+                        <td>홍길동</td>
+                        <td>Lv.10</td>
+                        <td>5위</td>
+                        <td>₩58,920,000</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>2025-01-15</td>
+                        <td>
+                            <button class="btn btn-primary" style="margin-right: 4px;">등급변경</button>
+                            <button class="btn btn-secondary">상세보기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1002</td>
+                        <td><span class="grade-badge grade-operating">🔵 운영</span></td>
+                        <td>김영수</td>
+                        <td>Lv.10</td>
+                        <td>1위</td>
+                        <td>₩127,500,000</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>2025-01-10</td>
+                        <td>
+                            <button class="btn btn-primary" style="margin-right: 4px;">등급변경</button>
+                            <button class="btn btn-secondary">상세보기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1003</td>
+                        <td><span class="grade-badge grade-general">🔘 일반</span></td>
+                        <td>이정민</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>₩0</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>2025-01-08</td>
+                        <td>
+                            <button class="btn btn-primary" style="margin-right: 4px;">등급변경</button>
+                            <button class="btn btn-secondary">상세보기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#A001</td>
+                        <td><span class="grade-badge grade-super-admin">🔴 총괄</span></td>
+                        <td>김총괄</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>2024-06-01</td>
+                        <td>
+                            <button class="btn btn-secondary">로그조회</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#A003</td>
+                        <td><span class="grade-badge grade-admin">🟠 관리자</span></td>
+                        <td>이관리</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>2024-08-15</td>
+                        <td>
+                            <button class="btn btn-primary" style="margin-right: 4px;">등급변경</button>
+                            <button class="btn btn-secondary">로그조회</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 아카데미 교육 관리 -->
+        <div class="section">
+            <div class="section-title">🎓 아카데미 교육 관리</div>
+            <div style="display: flex; gap: 12px; margin-bottom: 20px; padding: 16px; background: #F8FAFC; border-radius: 8px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">이번 달 신규</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #0F172A;">23건</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">승인 대기</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #F59E0B;">12건</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">교육 진행 중</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #3B82F6;">8명</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">교육 완료</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #10B981;">124명</div>
+                </div>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>신청 ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>연락처</th>
+                        <th>희망 시기</th>
+                        <th>투자 경험</th>
+                        <th>상태</th>
+                        <th>신청일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#523</td>
+                        <td>박민수</td>
+                        <td>park@email.com</td>
+                        <td>010-2345-6789</td>
+                        <td>빠른 시일 내</td>
+                        <td>초보 (1년 미만)</td>
+                        <td><span class="status-badge" style="background: #FEF3C7; color: #92400E;">신규 접수</span></td>
+                        <td>2025-12-07</td>
+                        <td>
+                            <button class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">승인</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#522</td>
+                        <td>최영희</td>
+                        <td>choi@email.com</td>
+                        <td>010-3456-7890</td>
+                        <td>1개월 이내</td>
+                        <td>없음</td>
+                        <td><span class="status-badge" style="background: #DBEAFE; color: #1E40AF;">검토 중</span></td>
+                        <td>2025-12-06</td>
+                        <td>
+                            <button class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">승인</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#521</td>
+                        <td>정수진</td>
+                        <td>jung@email.com</td>
+                        <td>010-4567-8901</td>
+                        <td>일정 협의</td>
+                        <td>중급 (1-3년)</td>
+                        <td><span class="status-badge status-active">승인</span></td>
+                        <td>2025-12-05</td>
+                        <td>
+                            <button class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">교육완료</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 추천인 코드 관리 -->
+        <div class="section">
+            <div class="section-title">🔑 추천인 코드 관리</div>
+            <div style="display: flex; gap: 12px; margin-bottom: 20px; padding: 16px; background: #F8FAFC; border-radius: 8px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">이번 달 신청</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #0F172A;">18건</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">발급 대기</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #F59E0B;">12건</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">발급 완료 (누적)</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #10B981;">347건</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">활성 코드</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #3B82F6;">298개</div>
+                </div>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>신청 ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>연락처</th>
+                        <th>교육 이수</th>
+                        <th>신청 목적</th>
+                        <th>상태</th>
+                        <th>추천인 코드</th>
+                        <th>신청일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#489</td>
+                        <td>이준호</td>
+                        <td>lee@email.com</td>
+                        <td>010-5678-9012</td>
+                        <td><span class="status-badge status-active">이수 완료</span></td>
+                        <td>개인 운영</td>
+                        <td><span class="status-badge" style="background: #FEF3C7; color: #92400E;">신규 신청</span></td>
+                        <td>-</td>
+                        <td>2025-12-08</td>
+                        <td>
+                            <button class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">코드발급</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#488</td>
+                        <td>강민지</td>
+                        <td>kang@email.com</td>
+                        <td>010-6789-0123</td>
+                        <td><span class="status-badge status-pending">교육 예정</span></td>
+                        <td>학습 목적</td>
+                        <td><span class="status-badge" style="background: #DBEAFE; color: #1E40AF;">검토 중</span></td>
+                        <td>-</td>
+                        <td>2025-12-07</td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#487</td>
+                        <td>윤서준</td>
+                        <td>yoon@email.com</td>
+                        <td>010-7890-1234</td>
+                        <td><span class="status-badge status-active">이수 완료</span></td>
+                        <td>개인 운영</td>
+                        <td><span class="status-badge status-active">승인</span></td>
+                        <td><strong>HDH-2025-A1B2</strong></td>
+                        <td>2025-12-06</td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">재발급</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 공지사항 관리 -->
+        <div class="section">
+            <div class="section-title">📢 공지사항 관리</div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>상태</th>
+                        <th>작성일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#101</td>
+                        <td>12월 정기 점검 안내</td>
+                        <td>관리자</td>
+                        <td><span class="status-badge status-active">게시중</span></td>
+                        <td>2025-12-07</td>
+                        <td>
+                            <button class="btn btn-secondary">수정</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#102</td>
+                        <td>레벨 시스템 업데이트 공지</td>
+                        <td>관리자</td>
+                        <td><span class="status-badge status-active">게시중</span></td>
+                        <td>2025-12-05</td>
+                        <td>
+                            <button class="btn btn-secondary">수정</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#103</td>
+                        <td>신규 시뮬레이터 기능 추가</td>
+                        <td>관리자</td>
+                        <td><span class="status-badge status-pending">임시저장</span></td>
+                        <td>2025-12-03</td>
+                        <td>
+                            <button class="btn btn-primary">게시하기</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 주의사항 관리 -->
+        <div class="section">
+            <div class="section-title">⚠️ 주의사항 관리</div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>상태</th>
+                        <th>작성일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#201</td>
+                        <td>트레이딩 리스크 안내</td>
+                        <td>관리자</td>
+                        <td><span class="status-badge status-active">게시중</span></td>
+                        <td>2025-12-01</td>
+                        <td>
+                            <button class="btn btn-secondary">수정</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#202</td>
+                        <td>계좌 보안 주의사항</td>
+                        <td>관리자</td>
+                        <td><span class="status-badge status-active">게시중</span></td>
+                        <td>2025-11-28</td>
+                        <td>
+                            <button class="btn btn-secondary">수정</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#203</td>
+                        <td>정산 규정 변경 안내</td>
+                        <td>관리자</td>
+                        <td><span class="status-badge status-active">게시중</span></td>
+                        <td>2025-11-25</td>
+                        <td>
+                            <button class="btn btn-secondary">수정</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 고객센터 문의 관리 -->
+        <div class="section">
+            <div class="section-title">📞 고객센터 문의 관리</div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>전화번호</th>
+                        <th>문의 내용 (요약)</th>
+                        <th>상태</th>
+                        <th>접수일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#701</td>
+                        <td>이지은</td>
+                        <td>lee@example.com</td>
+                        <td>010-1234-5678</td>
+                        <td>펀딩 계좌 개설 절차 문의</td>
+                        <td><span class="status-badge status-pending">답변대기</span></td>
+                        <td>2025-12-07</td>
+                        <td>
+                            <button class="btn btn-primary">답변하기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#702</td>
+                        <td>박민수</td>
+                        <td>park@example.com</td>
+                        <td>010-9876-5432</td>
+                        <td>정산 지연 관련 문의</td>
+                        <td><span class="status-badge status-active">답변완료</span></td>
+                        <td>2025-12-06</td>
+                        <td>
+                            <button class="btn btn-secondary">상세보기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#703</td>
+                        <td>최수진</td>
+                        <td>choi@example.com</td>
+                        <td>-</td>
+                        <td>레벨 시스템 설명 요청</td>
+                        <td><span class="status-badge status-active">답변완료</span></td>
+                        <td>2025-12-05</td>
+                        <td>
+                            <button class="btn btn-secondary">상세보기</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sunny에게 묻기 관리 -->
+        <div class="section">
+            <div class="section-title">☀️ Sunny에게 묻기 관리</div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>회원명</th>
+                        <th>문의 유형</th>
+                        <th>제목</th>
+                        <th>상태</th>
+                        <th>접수일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#501</td>
+                        <td>홍길동</td>
+                        <td>기능 제안</td>
+                        <td>시뮬레이터 개선 요청</td>
+                        <td><span class="status-badge status-pending">답변대기</span></td>
+                        <td>2025-12-07</td>
+                        <td>
+                            <button class="btn btn-primary">답변하기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#502</td>
+                        <td>김영수</td>
+                        <td>사용법 문의</td>
+                        <td>펀딩 계좌 설정 방법</td>
+                        <td><span class="status-badge status-active">답변완료</span></td>
+                        <td>2025-12-06</td>
+                        <td>
+                            <button class="btn btn-secondary">상세보기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#503</td>
+                        <td>박서연</td>
+                        <td>트레이딩 전략</td>
+                        <td>리스크 관리 방법 조언</td>
+                        <td><span class="status-badge status-pending">답변대기</span></td>
+                        <td>2025-12-05</td>
+                        <td>
+                            <button class="btn btn-primary">답변하기</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 계좌 및 API 관리 -->
+        <div class="section">
+            <div class="section-title">💼 계좌 및 API 관리</div>
+            <div style="display: flex; gap: 12px; margin-bottom: 20px; padding: 16px; background: #F8FAFC; border-radius: 8px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">총 연결 계좌</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #0F172A;">2,458개</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">API 정상</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #10B981;">2,401개</div>
+                    <div style="font-size: 11px; color: #10B981;">(97.7%)</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">API 오류</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #EF4444;">57개</div>
+                    <div style="font-size: 11px; color: #EF4444;">(2.3%)</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">오늘 신규 연결</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #3B82F6;">12개</div>
+                </div>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>회원 ID</th>
+                        <th>이름</th>
+                        <th>연결 계좌 수</th>
+                        <th>API 상태</th>
+                        <th>마지막 동기화</th>
+                        <th>오류 내역</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1001</td>
+                        <td>홍길동</td>
+                        <td>3개</td>
+                        <td><span class="status-badge status-active">✅ 정상 (3/3)</span></td>
+                        <td>2분 전</td>
+                        <td>없음</td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세보기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1002</td>
+                        <td>김영수</td>
+                        <td>2개</td>
+                        <td><span class="status-badge" style="background: #FEE2E2; color: #991B1B;">⚠️ 오류 (1/2)</span></td>
+                        <td>1시간 전</td>
+                        <td>API 키 만료</td>
+                        <td>
+                            <button class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">재연결</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세보기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1005</td>
+                        <td>박민수</td>
+                        <td>4개</td>
+                        <td><span class="status-badge status-active">✅ 정상 (4/4)</span></td>
+                        <td>5분 전</td>
+                        <td>없음</td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">상세보기</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 관리자 관리 (총괄 관리자 전용) -->
+        <div class="section">
+            <div class="section-title">👑 관리자 관리 (총괄 관리자 전용)</div>
+            <div style="margin-bottom: 16px;">
+                <button class="btn btn-primary">+ 신규 관리자 추가</button>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>등급</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>마지막 로그인</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#A001</td>
+                        <td><span class="grade-badge grade-super-admin">🔴 총괄</span></td>
+                        <td>김총괄</td>
+                        <td>super@hdhft.com</td>
+                        <td>2025-12-08 14:30</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">로그</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">수정</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#A002</td>
+                        <td><span class="grade-badge grade-super-admin">🔴 총괄</span></td>
+                        <td>박총괄</td>
+                        <td>park@hdhft.com</td>
+                        <td>2025-12-07 09:15</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">로그</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px;">수정</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#A003</td>
+                        <td><span class="grade-badge grade-admin">🟠 관리자</span></td>
+                        <td>이관리</td>
+                        <td>admin1@hdhft.com</td>
+                        <td>2025-12-08 13:45</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">로그</button>
+                            <button class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">등급변경</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; background: #EF4444; color: white;">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#A004</td>
+                        <td><span class="grade-badge grade-admin">🟠 관리자</span></td>
+                        <td>최관리</td>
+                        <td>admin2@hdhft.com</td>
+                        <td>2025-12-08 10:20</td>
+                        <td><span class="status-badge status-active">활성</span></td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">로그</button>
+                            <button class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">등급변경</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; background: #EF4444; color: white;">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#A005</td>
+                        <td><span class="grade-badge grade-admin">🟠 관리자</span></td>
+                        <td>정관리</td>
+                        <td>admin3@hdhft.com</td>
+                        <td>2025-12-06 16:50</td>
+                        <td><span class="status-badge" style="background: #F1F5F9; color: #64748B;">휴면</span></td>
+                        <td>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">로그</button>
+                            <button class="btn btn-primary" style="font-size: 11px; padding: 6px 10px; margin-right: 4px;">등급변경</button>
+                            <button class="btn btn-secondary" style="font-size: 11px; padding: 6px 10px; background: #EF4444; color: white;">삭제</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 관리자 활동 로그 -->
+        <div class="section">
+            <div class="section-title">📋 관리자 활동 로그</div>
+            <div style="margin-bottom: 16px; display: flex; gap: 8px;">
+                <input type="date" style="padding: 8px; border: 1px solid #E2E8F0; border-radius: 6px;" value="2025-12-01">
+                <span style="padding: 8px;">~</span>
+                <input type="date" style="padding: 8px; border: 1px solid #E2E8F0; border-radius: 6px;" value="2025-12-08">
+                <button class="btn btn-secondary" style="margin-left: auto;">CSV 다운로드</button>
+                <button class="btn btn-secondary">Excel 다운로드</button>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>일시</th>
+                        <th>관리자</th>
+                        <th>액션</th>
+                        <th>대상</th>
+                        <th>상세</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-12-08 14:30</td>
+                        <td>김총괄</td>
+                        <td>회원 등급 변경</td>
+                        <td>홍길동 #1001</td>
+                        <td>일반 → 운영</td>
+                    </tr>
+                    <tr>
+                        <td>2025-12-08 14:25</td>
+                        <td>이관리</td>
+                        <td>교육 승인</td>
+                        <td>신청 #523</td>
+                        <td>아카데미 승인</td>
+                    </tr>
+                    <tr>
+                        <td>2025-12-08 14:20</td>
+                        <td>최관리</td>
+                        <td>추천인 코드 발급</td>
+                        <td>신청 #489</td>
+                        <td>HDH-2025-A1B2</td>
+                    </tr>
+                    <tr>
+                        <td>2025-12-08 14:15</td>
+                        <td>박총괄</td>
+                        <td>관리자 추가</td>
+                        <td>정관리 #A005</td>
+                        <td>관리자 계정 생성</td>
+                    </tr>
+                    <tr>
+                        <td>2025-12-08 14:10</td>
+                        <td>이관리</td>
+                        <td>공지사항 작성</td>
+                        <td>공지 #1024</td>
+                        <td>12월 이벤트 안내</td>
+                    </tr>
+                    <tr>
+                        <td>2025-12-08 14:05</td>
+                        <td>최관리</td>
+                        <td>문의 응답</td>
+                        <td>문의 #5678</td>
+                        <td>계좌 연결 문의</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 회원 설정 통계 -->
+        <div class="section">
+            <div class="section-title">📊 회원 설정 통계</div>
+            <div style="display: flex; gap: 12px; margin-bottom: 20px; padding: 16px; background: #F8FAFC; border-radius: 8px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">평균 거래 기간</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #0F172A;">127일</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">월 목표 평균</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #0F172A;">₩5,200,000</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">알림 ON 비율</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #10B981;">94%</div>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #64748B;">계좌 평균 개수</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #3B82F6;">2.3개</div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">거래 목표 달성률</h3>
+                <div style="display: flex; gap: 16px; padding: 12px; background: white; border: 1px solid #E2E8F0; border-radius: 8px;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: #64748B;">목표 달성</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #10B981;">423명 (49.9%)</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: #64748B;">목표 근접 (80% 이상)</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #F59E0B;">298명 (35.2%)</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: #64748B;">미달</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #64748B;">126명 (14.9%)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">알림 설정 사용 현황</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                    <div style="padding: 12px; background: white; border: 1px solid #E2E8F0; border-radius: 8px;">
+                        <div style="font-size: 13px; color: #64748B;">포지션 청산 알림</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #0F172A;">798명 (94.2%)</div>
+                    </div>
+                    <div style="padding: 12px; background: white; border: 1px solid #E2E8F0; border-radius: 8px;">
+                        <div style="font-size: 13px; color: #64748B;">계좌 연동 알림</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #0F172A;">812명 (95.9%)</div>
+                    </div>
+                    <div style="padding: 12px; background: white; border: 1px solid #E2E8F0; border-radius: 8px;">
+                        <div style="font-size: 13px; color: #64748B;">동기화 오류 알림</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #0F172A;">801명 (94.6%)</div>
+                    </div>
+                    <div style="padding: 12px; background: white; border: 1px solid #E2E8F0; border-radius: 8px;">
+                        <div style="font-size: 13px; color: #64748B;">API 오류 알림</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #0F172A;">789명 (93.2%)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">계좌 타입별 연결 현황</h3>
+                <div style="display: flex; gap: 16px; padding: 12px; background: white; border: 1px solid #E2E8F0; border-radius: 8px;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: #64748B;">챌린지 계좌만</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #0F172A;">234명 (27.6%)</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: #64748B;">챌린지 + 펀딩</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #0F172A;">387명 (45.7%)</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: #64748B;">전체 (챌린지+펀딩+스캘핑)</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #10B981;">226명 (26.7%)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-copyright">
+            © 2025 HDH Fintech. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

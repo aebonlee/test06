@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Site Hub - SUNNY ECOSYSTEM</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 20px;
+            opacity: 0.95;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-5px);
+        }
+
+        .category {
+            margin-bottom: 60px;
+        }
+
+        .category-header {
+            background: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .category-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 8px;
+        }
+
+        .category-desc {
+            font-size: 16px;
+            color: #6B7280;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .service-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #FEF3C7;
+            color: #92400E;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .service-badge.business {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .service-badge.politics {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .service-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 12px;
+        }
+
+        .service-desc {
+            font-size: 15px;
+            color: #64748B;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .service-features li {
+            font-size: 14px;
+            color: #475569;
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .service-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-weight: bold;
+        }
+
+        .service-status {
+            display: block;
+            width: fit-content;
+            padding: 8px 16px;
+            background: #10B981;
+            color: white;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .service-status.coming-soon {
+            background: #94A3B8;
+        }
+
+        .service-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 0;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .coming-soon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .coming-soon-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .coming-soon-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .coming-soon-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #F1F5F9;
+            color: #64748B;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .category-title {
+                font-size: 22px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .coming-soon-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .coming-soon-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← SUNNY ECONOMIC ECOSYSTEM 메인으로</a>
+
+        <div class="header">
+            <h1>Service Site Hub</h1>
+            <p>ProActive Senior의 전문성과 경험이 AI를 만나서 탄생한 서비스 허브</p>
+        </div>
+
+        <!-- 분류 1: 스타트업 & 중소기업 경영지원 -->
+        <div class="category">
+            <div class="category-header">
+                <div class="category-title">스타트업 & 중소기업 경영지원</div>
+                <div class="category-desc">ProActive Senior의 전문성과 수십년 실무 경험을 AI로 구현한 전문 경영지원 서비스</div>
+            </div>
+
+            <div class="services-grid">
+                <!-- CashMap -->
+                <a href="https://www.cashmap.kr/" target="_blank" class="service-card">
+                    <span class="service-badge business">회계/ERP</span>
+                    <div class="service-name">CashMap</div>
+                    <div class="service-desc">단복식 회계와 전자결재 기반 통합업무 시스템</div>
+                    <ul class="service-features">
+                        <li>회계·경리 자동화 (카드 자동 연동, 통장 자동처리)</li>
+                        <li>인사급여 통합관리 (연차, 근태, 출퇴근, 급여)</li>
+                        <li>통합 전자결재 시스템 (전자결재 + 메신저 + ERP)</li>
+                    </ul>
+                    <span class="service-status">서비스 중</span>
+                    <div class="service-link">
+                        서비스 바로가기 →
+                    </div>
+                </a>
+
+                <!-- AI-Gen -->
+                <a href="https://www.ai-gen.co.kr/" target="_blank" class="service-card">
+                    <span class="service-badge business">사업계획</span>
+                    <div class="service-name">AI-Gen</div>
+                    <div class="service-desc">AI 기반 사업계획서 자동 작성 솔루션</div>
+                    <ul class="service-features">
+                        <li>AI 기반 사업계획서 자동생성</li>
+                        <li>연구개발 사업계획서 자동작성</li>
+                        <li>투자유치용 사업계획서 자동작성</li>
+                    </ul>
+                    <span class="service-status">서비스 중</span>
+                    <div class="service-link">
+                        서비스 바로가기 →
+                    </div>
+                </a>
+
+                <!-- Lawgent -->
+                <a href="https://lawgent.kr/" target="_blank" class="service-card">
+                    <span class="service-badge business">법률</span>
+                    <div class="service-name">Lawgent</div>
+                    <div class="service-desc">AI 기반 소송문서 자동 생성</div>
+                    <ul class="service-features">
+                        <li>정교한 법률문서 자동 생성</li>
+                        <li>체계적인 소송 흐름 분석 및 증거 기반 유불리 판단</li>
+                        <li>쟁점별 주장 비교 분석 및 법령·판례 자동매칭</li>
+                    </ul>
+                    <span class="service-status">서비스 중</span>
+                    <div class="service-link">
+                        서비스 바로가기 →
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 분류 2: 경제·사회·문화·정치 커뮤니티 서비스 -->
+        <div class="category">
+            <div class="category-header">
+                <div class="category-title">경제·사회·문화·정치 커뮤니티 서비스</div>
+                <div class="category-desc">AI를 활용한 커뮤니티 기반 검색, 평가, 연결, 추천, 중개, 마켓, 소통 서비스 플랫폼</div>
+                <div style="margin-top: 12px;">
+                    <a href="finder_world_guide.html" target="_blank" style="color: #4CAF50; text-decoration: underline; font-weight: bold; font-size: 14px;">
+                        🌟 Finder World 종합 가이드: 카테고리 현황, 선별기준 및 사업화 전략 (2025.8.31 Update)
+                    </a>
+                </div>
+            </div>
+
+            <div class="services-grid">
+                <!-- Politician Finder -->
+                <a href="https://www.politicianfinder.ai.kr/" target="_blank" class="service-card">
+                    <span class="service-badge politics">정치</span>
+                    <div class="service-name">Politician Finder</div>
+                    <div class="service-desc">AI 기반 정치인 평가 플랫폼</div>
+                    <ul class="service-features">
+                        <li>공개 데이터 활용 AI 객관적 평점 순위</li>
+                        <li>정치인 검색 및 평가점수 확인</li>
+                        <li>커뮤니티 참여 및 토론</li>
+                    </ul>
+                    <span class="service-status">서비스 중</span>
+                    <div class="service-link">
+                        서비스 바로가기 →
+                    </div>
+                </a>
+            </div>
+
+            <!-- Coming Soon Services - Finder World -->
+            <div style="margin-top: 32px;">
+                <h3 style="color: white; font-size: 20px; font-weight: 600; margin-bottom: 20px; text-align: center;">곧 만나보실 Finder World (58개 커뮤니티)</h3>
+
+                <!-- 경제 영역 -->
+                <h4 style="color: white; font-size: 16px; font-weight: 600; margin: 32px 0 16px 0;">💰 경제 영역 (17개)</h4>
+                <div class="coming-soon-grid">
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🤖</div>
+                        <div class="coming-soon-name">AI Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🦾</div>
+                        <div class="coming-soon-name">Robot Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🚁</div>
+                        <div class="coming-soon-name">Drone Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">📱</div>
+                        <div class="coming-soon-name">App Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🌐</div>
+                        <div class="coming-soon-name">Metaverse Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎨</div>
+                        <div class="coming-soon-name">NFT Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">📈</div>
+                        <div class="coming-soon-name">Stock Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💹</div>
+                        <div class="coming-soon-name">ETF Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">₿</div>
+                        <div class="coming-soon-name">Coin Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💵</div>
+                        <div class="coming-soon-name">Stablecoin Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🛡️</div>
+                        <div class="coming-soon-name">Insurance Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💰</div>
+                        <div class="coming-soon-name">Loan Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏡</div>
+                        <div class="coming-soon-name">House Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🚗</div>
+                        <div class="coming-soon-name">Auto Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏠</div>
+                        <div class="coming-soon-name">Interior Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💼</div>
+                        <div class="coming-soon-name">Business Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏢</div>
+                        <div class="coming-soon-name">Corporate Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🔧</div>
+                        <div class="coming-soon-name">Parts & Materials Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💻</div>
+                        <div class="coming-soon-name">Job Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🌾</div>
+                        <div class="coming-soon-name">Seed Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🚜</div>
+                        <div class="coming-soon-name">Farm Equipment Finder</div>
+                        <span class="coming-soon-badge">경제</span>
+                    </div>
+                </div>
+
+                <!-- 사회 영역 -->
+                <h4 style="color: white; font-size: 16px; font-weight: 600; margin: 32px 0 16px 0;">🤝 사회 영역 (20개)</h4>
+                <div class="coming-soon-grid">
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏨</div>
+                        <div class="coming-soon-name">Stay Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏥</div>
+                        <div class="coming-soon-name">Institutional Care Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏠</div>
+                        <div class="coming-soon-name">Home Care Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🍽️</div>
+                        <div class="coming-soon-name">Food Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🌏</div>
+                        <div class="coming-soon-name">Local Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">✈️</div>
+                        <div class="coming-soon-name">Trip Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">⚖️</div>
+                        <div class="coming-soon-name">Lawyer Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏥</div>
+                        <div class="coming-soon-name">Hani Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🦷</div>
+                        <div class="coming-soon-name">Dental Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💉</div>
+                        <div class="coming-soon-name">Plastic Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🧠</div>
+                        <div class="coming-soon-name">Psych Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💄</div>
+                        <div class="coming-soon-name">Cosmetic Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">👟</div>
+                        <div class="coming-soon-name">Shoes Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💊</div>
+                        <div class="coming-soon-name">Supplement Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🧘</div>
+                        <div class="coming-soon-name">Wellness Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💐</div>
+                        <div class="coming-soon-name">Wedding Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🕊️</div>
+                        <div class="coming-soon-name">Funeral Finder</div>
+                        <span class="coming-soon-badge">사회</span>
+                    </div>
+                </div>
+
+                <!-- 문화 영역 -->
+                <h4 style="color: white; font-size: 16px; font-weight: 600; margin: 32px 0 16px 0;">🎨 문화 영역 (21개)</h4>
+                <div class="coming-soon-grid">
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎵</div>
+                        <div class="coming-soon-name">Music Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎸</div>
+                        <div class="coming-soon-name">Gear Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎪</div>
+                        <div class="coming-soon-name">Festival Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎮</div>
+                        <div class="coming-soon-name">Game Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">📖</div>
+                        <div class="coming-soon-name">Webtoon Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">📚</div>
+                        <div class="coming-soon-name">Book Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎬</div>
+                        <div class="coming-soon-name">Movie Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎭</div>
+                        <div class="coming-soon-name">Stage Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🖼️</div>
+                        <div class="coming-soon-name">Art Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">💇</div>
+                        <div class="coming-soon-name">Hair Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🚴</div>
+                        <div class="coming-soon-name">Bicycle Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏍️</div>
+                        <div class="coming-soon-name">Motorcycle Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🐾</div>
+                        <div class="coming-soon-name">Pet Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">⛺</div>
+                        <div class="coming-soon-name">Camping Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">⛳</div>
+                        <div class="coming-soon-name">Golf Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🌲</div>
+                        <div class="coming-soon-name">Forest Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🏋️</div>
+                        <div class="coming-soon-name">Fitness Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎨</div>
+                        <div class="coming-soon-name">Hobby Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                    <div class="coming-soon-card">
+                        <div class="coming-soon-icon">🎁</div>
+                        <div class="coming-soon-name">Gift Finder</div>
+                        <span class="coming-soon-badge">문화</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

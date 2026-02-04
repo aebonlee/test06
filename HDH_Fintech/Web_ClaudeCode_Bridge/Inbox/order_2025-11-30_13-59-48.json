@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251130-91",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "이번에는 진짜로 필요한 기능이 구현된 건지 궁금하네 스타 로드 시티를 보내볼테니까 어떻게 되는지 한번 보자구",
+  "content_english": "I wonder if they actually implemented the necessary features this time. I'll send it to Star Road City and see what happens.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-30T13:59:48.052Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

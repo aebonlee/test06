@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 상세 - HDH 실전 운영자 커뮤니티</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            min-height: 100vh;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 16px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .user-level {
+            background: #10B981;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .user-rank {
+            background: #EF4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .user-type {
+            background: #8B5CF6;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.9;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        /* 메인 컨테이너 */
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* 목록으로 버튼 */
+        .back-to-list {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 16px;
+            transition: color 0.2s;
+        }
+
+        .back-to-list:hover {
+            color: #F59E0B;
+        }
+
+        /* 게시글 카드 */
+        .post-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .post-badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .badge-board {
+            background: #F1F5F9;
+            color: #64748B;
+        }
+
+        .badge-coach {
+            background: #EDE9FE;
+            color: #7C3AED;
+        }
+
+        .badge-hot {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .post-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #E2E8F0;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #64748B;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .author-name.coach {
+            color: #7C3AED;
+        }
+
+        .author-level {
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* 레벨별 색상 */
+        .author-level.lv-1 { background: #94A3B8; }
+        .author-level.lv-2 { background: #64748B; }
+        .author-level.lv-3 { background: #059669; }
+        .author-level.lv-4 { background: #10B981; }
+        .author-level.lv-5 { background: #3B82F6; }
+        .author-level.lv-6 { background: #6366F1; }
+        .author-level.lv-7 { background: #8B5CF6; }
+        .author-level.lv-8 { background: #A855F7; }
+        .author-level.lv-9 { background: #EC4899; }
+        .author-level.lv-10 { background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%); }
+
+        .author-rank {
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* 순위별 색상 */
+        .author-rank.rank-1 { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; }
+        .author-rank.rank-2 { background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%); color: #000; }
+        .author-rank.rank-3 { background: linear-gradient(135deg, #CD7F32 0%, #B87333 100%); color: white; }
+        .author-rank.rank-4 { background: #EF4444; color: white; }
+        .author-rank.rank-5 { background: #F97316; color: white; }
+        .author-rank.rank-6 { background: #F59E0B; color: white; }
+        .author-rank.rank-7 { background: #84CC16; color: white; }
+        .author-rank.rank-8 { background: #22C55E; color: white; }
+        .author-rank.rank-9 { background: #14B8A6; color: white; }
+        .author-rank.rank-10 { background: #06B6D4; color: white; }
+        .author-rank.rank-normal { background: #1F2937; color: white; }
+
+        .author-center {
+            background: #E0F2FE;
+            color: #0369A1;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .author-type-badge {
+            background: #8B5CF6;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .meta-divider {
+            width: 1px;
+            height: 12px;
+            background: #E2E8F0;
+        }
+
+        /* 게시글 본문 */
+        .post-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: 32px;
+        }
+
+        .post-content p {
+            margin-bottom: 16px;
+        }
+
+        .post-content h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1F2937;
+            margin: 24px 0 12px;
+        }
+
+        .post-content ul {
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+
+        .post-content li {
+            margin-bottom: 8px;
+        }
+
+        /* 첨부 이미지 */
+        .post-images {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .post-image {
+            width: 200px;
+            height: 150px;
+            background: #F1F5F9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94A3B8;
+            font-size: 14px;
+        }
+
+        /* 투표 버튼 */
+        .vote-section {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            padding: 24px 0;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .vote-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .vote-btn.upvote {
+            background: #FEF2F2;
+        }
+
+        .vote-btn.upvote:hover,
+        .vote-btn.upvote.active {
+            background: #FEE2E2;
+        }
+
+        .vote-btn.downvote {
+            background: #F8FAFC;
+        }
+
+        .vote-btn.downvote:hover,
+        .vote-btn.downvote.active {
+            background: #F1F5F9;
+        }
+
+        .vote-btn.share {
+            background: #FEF3C7;
+        }
+
+        .vote-btn.share:hover {
+            background: #FDE68A;
+        }
+
+        .vote-btn.scrap {
+            background: #ECFDF5;
+        }
+
+        .vote-btn.scrap:hover {
+            background: #D1FAE5;
+        }
+
+        .vote-icon {
+            font-size: 24px;
+        }
+
+        .vote-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4B5563;
+        }
+
+        .vote-count {
+            font-weight: 700;
+        }
+
+        .vote-count.up {
+            color: #EF4444;
+        }
+
+        .vote-count.down {
+            color: #64748B;
+        }
+
+        /* 댓글 섹션 */
+        .comments-section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .comments-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1F2937;
+        }
+
+        .comments-count {
+            color: #F59E0B;
+        }
+
+        /* 댓글 작성 폼 */
+        .comment-form {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .comment-form-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748B;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .comment-textarea:focus {
+            border-color: #F59E0B;
+        }
+
+        .comment-form-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .comment-submit-btn {
+            padding: 10px 24px;
+            background: #F59E0B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .comment-submit-btn:hover {
+            background: #D97706;
+        }
+
+        /* 댓글 목록 */
+        .comment-list {
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .comment-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1F2937;
+        }
+
+        .comment-author.coach {
+            color: #7C3AED;
+        }
+
+        .comment-time {
+            font-size: 12px;
+            color: #94A3B8;
+        }
+
+        .comment-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+            margin-bottom: 12px;
+        }
+
+        .comment-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .comment-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #64748B;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .comment-action-btn:hover {
+            color: #F59E0B;
+        }
+
+        .comment-action-btn.upvote:hover {
+            color: #EF4444;
+        }
+
+        .comment-action-btn.upvoted {
+            color: #EF4444;
+        }
+
+        /* 대댓글 */
+        .reply-list {
+            margin-top: 16px;
+            margin-left: 32px;
+            padding-left: 16px;
+            border-left: 2px solid #E2E8F0;
+        }
+
+        .reply-item {
+            padding: 12px 0;
+        }
+
+        /* 더보기 버튼 */
+        .load-more-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748B;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .load-more-btn:hover {
+            border-color: #F59E0B;
+            color: #F59E0B;
+        }
+
+        /* 다른 게시글 */
+        .other-posts {
+            margin-top: 32px;
+        }
+
+        .other-posts-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 16px;
+        }
+
+        .other-post-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: #1F2937;
+            transition: box-shadow 0.2s;
+        }
+
+        .other-post-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .other-post-title {
+            font-weight: 500;
+        }
+
+        .other-post-likes {
+            font-size: 13px;
+            color: #EF4444;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .post-card {
+                padding: 20px;
+            }
+
+            .post-title {
+                font-size: 22px;
+            }
+
+            .vote-section {
+                flex-wrap: wrap;
+            }
+
+            .vote-btn {
+                padding: 12px 20px;
+            }
+
+            .comments-section {
+                padding: 20px;
+            }
+
+            .reply-list {
+                margin-left: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-inner">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <a href="index.html" class="back-link">← HDH Fintech</a>
+                <h1 class="header-title">HDH 실전 운영자 커뮤니티</h1>
+            </div>
+            <div class="header-user">
+                <div class="user-info">
+                    <span class="user-name">김철수</span>
+                    <span class="user-type">코치</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <main class="main-container">
+        <!-- 목록으로 -->
+        <a href="community.html" class="back-to-list">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            목록으로
+        </a>
+
+        <!-- 게시글 카드 -->
+        <article class="post-card">
+            <div class="post-badges">
+                <span class="badge badge-hot">Hot</span>
+                <span class="badge badge-coach">코치</span>
+            </div>
+
+            <h1 class="post-title">84:16 전략 실전 적용 노하우 공유합니다</h1>
+
+            <div class="post-meta">
+                <div class="author-info">
+                    <span class="author-name coach">박영수</span>
+                </div>
+                <span class="meta-divider"></span>
+                <span>2024.12.08 14:30</span>
+                <span class="meta-divider"></span>
+                <span>👁 892</span>
+                <span style="color: #EF4444;">👍 156</span>
+                <span>👎 3</span>
+                <span>💬 48</span>
+            </div>
+
+            <div class="post-content">
+                <p>안녕하세요, 코치 박영수입니다.</p>
+
+                <p>많은 분들이 84:16 전략에 대해 궁금해하셔서 제가 실전에서 적용하는 방법을 공유해드립니다.</p>
+
+                <h2>1. 84:16 전략이란?</h2>
+                <p>84:16 전략은 자금의 84%를 안정적인 포지션에, 16%를 공격적인 포지션에 배분하는 자금 관리 전략입니다. 파레토 법칙(80:20)을 변형한 것으로, 더 보수적인 접근을 통해 장기적인 수익을 추구합니다.</p>
+
+                <h2>2. 실전 적용 방법</h2>
+                <ul>
+                    <li><strong>84% 안정 포지션:</strong> 주요 지지/저항 라인에서만 진입, 손절폭 0.5% 이내</li>
+                    <li><strong>16% 공격 포지션:</strong> 변동성 높은 구간에서 스캘핑, 손절폭 1% 이내</li>
+                    <li><strong>리밸런싱:</strong> 주 1회 포지션 비율 조정</li>
+                </ul>
+
+                <h2>3. 주의사항</h2>
+                <p>이 전략은 자금 관리에 대한 하나의 가이드라인일 뿐, 시장 상황에 따라 유연하게 적용해야 합니다. 특히 뉴스 이벤트가 있는 날에는 포지션 크기를 줄이는 것을 권장합니다.</p>
+
+                <p>질문 있으시면 댓글 남겨주세요!</p>
+            </div>
+
+            <div class="post-images">
+                <div class="post-image">📊 차트 이미지 1</div>
+                <div class="post-image">📈 차트 이미지 2</div>
+            </div>
+
+            <!-- 투표 버튼 -->
+            <div class="vote-section">
+                <button class="vote-btn upvote" onclick="toggleVote('up')">
+                    <span class="vote-icon">👍</span>
+                    <span class="vote-label">공감 <span class="vote-count up" id="upvote-count">156</span></span>
+                </button>
+                <button class="vote-btn downvote" onclick="toggleVote('down')">
+                    <span class="vote-icon">👎</span>
+                    <span class="vote-label">비공감 <span class="vote-count down" id="downvote-count">3</span></span>
+                </button>
+                <button class="vote-btn share" onclick="openShareModal()">
+                    <span class="vote-icon">📤</span>
+                    <span class="vote-label">공유</span>
+                </button>
+                <button class="vote-btn scrap" onclick="toggleScrap()">
+                    <span class="vote-icon">📌</span>
+                    <span class="vote-label">스크랩</span>
+                </button>
+            </div>
+        </article>
+
+        <!-- 댓글 섹션 -->
+        <section class="comments-section">
+            <div class="comments-header">
+                <h2 class="comments-title">댓글 <span class="comments-count">48</span></h2>
+            </div>
+
+            <!-- 댓글 작성 폼 -->
+            <div class="comment-form">
+                <div class="comment-form-header">
+                    💬 댓글 작성
+                </div>
+                <textarea class="comment-textarea" rows="3" placeholder="의견을 남겨주세요..."></textarea>
+                <div class="comment-form-footer">
+                    <button class="comment-submit-btn">댓글 등록</button>
+                </div>
+            </div>
+
+            <!-- 댓글 목록 -->
+            <div class="comment-list">
+                <!-- 댓글 1 - 코치 댓글 -->
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-author coach">김지훈</span>
+                        <span class="comment-time">2024.12.08 15:20</span>
+                    </div>
+                    <div class="comment-content">
+                        좋은 정보 감사합니다! 저도 비슷한 전략을 사용하고 있는데, 16% 공격 포지션에서는 ATR 기반 손절을 사용하고 있어요. 나중에 이 부분도 공유해주시면 좋겠습니다.
+                    </div>
+                    <div class="comment-actions">
+                        <button class="comment-action-btn upvote">
+                            👍 <span>23</span>
+                        </button>
+                        <button class="comment-action-btn">
+                            👎 <span>0</span>
+                        </button>
+                        <button class="comment-action-btn">
+                            답글
+                        </button>
+                    </div>
+
+                    <!-- 대댓글 -->
+                    <div class="reply-list">
+                        <div class="reply-item">
+                            <div class="comment-header">
+                                <span class="comment-author coach">박영수</span>
+                                <span class="comment-time">2024.12.08 15:45</span>
+                            </div>
+                            <div class="comment-content">
+                                좋은 의견 감사합니다! ATR 기반 손절도 다음에 한번 정리해서 올릴게요 👍
+                            </div>
+                            <div class="comment-actions">
+                                <button class="comment-action-btn upvote upvoted">
+                                    👍 <span>12</span>
+                                </button>
+                                <button class="comment-action-btn">
+                                    👎 <span>0</span>
+                                </button>
+                                <button class="comment-action-btn">
+                                    답글
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 댓글 2 - 일반 회원 댓글 -->
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-author">이민준</span>
+                        <span class="author-level lv-3">Lv.3</span>
+                        <span class="author-rank rank-normal">156위</span>
+                        <span class="author-center">서울센트럴</span>
+                        <span class="comment-time">2024.12.08 16:00</span>
+                    </div>
+                    <div class="comment-content">
+                        와 이런 노하우를 공유해주시다니 감사합니다! 저도 자금 관리가 제일 어려웠는데, 이 전략 적용해봐야겠어요. 혹시 초보자도 바로 적용 가능한가요?
+                    </div>
+                    <div class="comment-actions">
+                        <button class="comment-action-btn upvote">
+                            👍 <span>8</span>
+                        </button>
+                        <button class="comment-action-btn">
+                            👎 <span>0</span>
+                        </button>
+                        <button class="comment-action-btn">
+                            답글
+                        </button>
+                    </div>
+
+                    <!-- 대댓글 -->
+                    <div class="reply-list">
+                        <div class="reply-item">
+                            <div class="comment-header">
+                                <span class="comment-author coach">박영수</span>
+                                <span class="comment-time">2024.12.08 16:15</span>
+                            </div>
+                            <div class="comment-content">
+                                네, 초보자분들도 충분히 적용 가능합니다! 처음에는 90:10 비율로 시작해서 점진적으로 84:16으로 조정하시는 것을 추천드려요.
+                            </div>
+                            <div class="comment-actions">
+                                <button class="comment-action-btn upvote">
+                                    👍 <span>15</span>
+                                </button>
+                                <button class="comment-action-btn">
+                                    👎 <span>0</span>
+                                </button>
+                                <button class="comment-action-btn">
+                                    답글
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 댓글 3 -->
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-author">김서연</span>
+                        <span class="author-level lv-6">Lv.6</span>
+                        <span class="author-rank rank-8">8위</span>
+                        <span class="author-center">서울센트럴</span>
+                        <span class="comment-time">2024.12.08 17:30</span>
+                    </div>
+                    <div class="comment-content">
+                        저는 이 전략으로 한 달 동안 운영해봤는데, 확실히 마음이 편해지더라고요. 감사합니다 코치님!
+                    </div>
+                    <div class="comment-actions">
+                        <button class="comment-action-btn upvote">
+                            👍 <span>5</span>
+                        </button>
+                        <button class="comment-action-btn">
+                            👎 <span>0</span>
+                        </button>
+                        <button class="comment-action-btn">
+                            답글
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 댓글 4 -->
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-author">정하늘</span>
+                        <span class="author-level lv-5">Lv.5</span>
+                        <span class="author-rank rank-normal">42위</span>
+                        <span class="author-center">서울센트럴</span>
+                        <span class="comment-time">2024.12.08 18:00</span>
+                    </div>
+                    <div class="comment-content">
+                        리밸런싱 주기가 주 1회라고 하셨는데, 어떤 요일에 하시는게 좋을까요? 그리고 변동성이 큰 주에는 어떻게 대응하시나요?
+                    </div>
+                    <div class="comment-actions">
+                        <button class="comment-action-btn upvote">
+                            👍 <span>3</span>
+                        </button>
+                        <button class="comment-action-btn">
+                            👎 <span>0</span>
+                        </button>
+                        <button class="comment-action-btn">
+                            답글
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="load-more-btn">댓글 더보기 (44개 남음)</button>
+        </section>
+
+        <!-- 다른 게시글 -->
+        <section class="other-posts">
+            <h2 class="other-posts-title">다른 게시글</h2>
+            <a href="community-post-detail.html" class="other-post-item">
+                <span class="other-post-title">이번 주 시장 분석 및 주의사항 안내</span>
+                <span class="other-post-likes">👍 98</span>
+            </a>
+            <a href="community-post-detail.html" class="other-post-item">
+                <span class="other-post-title">챌린지 계좌 손절 타이밍에 대해 질문드립니다</span>
+                <span class="other-post-likes">👍 23</span>
+            </a>
+            <a href="community-post-detail.html" class="other-post-item">
+                <span class="other-post-title">유용한 경제 캘린더 사이트 모음 공유합니다</span>
+                <span class="other-post-likes">👍 67</span>
+            </a>
+        </section>
+    </main>
+
+    <!-- 공유 모달 -->
+    <div class="modal-overlay" id="shareModal">
+        <div class="modal-content">
+            <h2 class="modal-title">게시글 공유하기</h2>
+            <p style="color: #64748B; margin-bottom: 20px;">84:16 전략 실전 적용 노하우 공유합니다</p>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" onclick="copyLink()">📋 링크 복사</button>
+                <button class="modal-btn" style="background: #1877F2; color: white;">Facebook</button>
+                <button class="modal-btn" style="background: #000; color: white;">X (Twitter)</button>
+                <button class="modal-btn" style="background: #03C75A; color: white;">네이버 블로그</button>
+                <button class="modal-btn cancel" onclick="closeShareModal()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 알림 모달 -->
+    <div class="modal-overlay" id="alertModal">
+        <div class="modal-content" style="max-width: 300px;">
+            <p id="alertMessage" style="text-align: center; margin-bottom: 20px;"></p>
+            <button class="modal-btn primary" onclick="closeAlertModal()" style="width: 100%;">확인</button>
+        </div>
+    </div>
+
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 12px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-align: center;
+        }
+
+        .modal-btn.primary {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            background: #D97706;
+        }
+
+        .modal-btn.cancel {
+            background: #F1F5F9;
+            color: #64748B;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #E2E8F0;
+        }
+    </style>
+
+    <script>
+        let upvoted = false;
+        let downvoted = false;
+        let upvoteCount = 156;
+        let downvoteCount = 3;
+
+        function toggleVote(type) {
+            if (type === 'up') {
+                if (upvoted) {
+                    upvoteCount--;
+                    upvoted = false;
+                } else {
+                    upvoteCount++;
+                    upvoted = true;
+                    if (downvoted) {
+                        downvoteCount--;
+                        downvoted = false;
+                    }
+                }
+            } else {
+                if (downvoted) {
+                    downvoteCount--;
+                    downvoted = false;
+                } else {
+                    downvoteCount++;
+                    downvoted = true;
+                    if (upvoted) {
+                        upvoteCount--;
+                        upvoted = false;
+                    }
+                }
+            }
+
+            document.getElementById('upvote-count').textContent = upvoteCount;
+            document.getElementById('downvote-count').textContent = downvoteCount;
+
+            // 버튼 활성화 상태
+            document.querySelector('.vote-btn.upvote').classList.toggle('active', upvoted);
+            document.querySelector('.vote-btn.downvote').classList.toggle('active', downvoted);
+        }
+
+        function toggleScrap() {
+            showAlert('게시글이 스크랩되었습니다.');
+        }
+
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('show');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('show');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                closeShareModal();
+                showAlert('링크가 복사되었습니다.');
+            });
+        }
+
+        function showAlert(message) {
+            document.getElementById('alertMessage').textContent = message;
+            document.getElementById('alertModal').classList.add('show');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alertModal').classList.remove('show');
+        }
+
+        // 모달 외부 클릭시 닫기
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

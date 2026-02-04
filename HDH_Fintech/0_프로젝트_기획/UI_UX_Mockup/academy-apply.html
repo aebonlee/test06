@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강신청 - HDH Fintech 아카데미</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .close-btn {
+            background: #E5E7EB;
+            color: #6B7280;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #D1D5DB;
+            color: #374151;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+
+        .form-container {
+            background: white;
+            padding: 48px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #64748B;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #DC2626;
+            margin-left: 2px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            transition: all 0.2s;
+            color: #1F2937;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #F59E0B;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #94A3B8;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.2s;
+            color: #1F2937;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #F59E0B;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .form-textarea::placeholder {
+            color: #94A3B8;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            transition: all 0.2s;
+            color: #1F2937;
+            background: white;
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #F59E0B;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: #94A3B8;
+            margin-top: 6px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .back-link:hover {
+            color: #F59E0B;
+        }
+
+        .footer {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 32px 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 0 16px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .main-content {
+                padding: 24px 16px;
+            }
+
+            .form-container {
+                padding: 32px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-label {
+                font-size: 13px;
+            }
+
+            .form-input,
+            .form-textarea,
+            .form-select {
+                font-size: 14px;
+                padding: 12px 14px;
+            }
+
+            .submit-btn {
+                font-size: 15px;
+                padding: 14px;
+            }
+
+            .footer-links {
+                gap: 24px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 24px 16px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .form-input,
+            .form-textarea,
+            .form-select {
+                font-size: 13px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">HDH Fintech</a>
+            <a href="index.html" class="close-btn">×</a>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="main-content">
+        <div class="form-container">
+            <h1>아카데미 수강신청</h1>
+            <p class="subtitle">HDH Fintech 아카데미 교육 수강을 신청합니다. 담당자가 확인 후 연락 드리겠습니다.</p>
+
+            <form id="applyForm" onsubmit="submitApplication(event)">
+                <div class="form-group">
+                    <label class="form-label" for="name">이름<span class="required">*</span></label>
+                    <input
+                        type="text"
+                        id="name"
+                        class="form-input"
+                        placeholder="홍길동"
+                        required
+                        autocomplete="name"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">이메일<span class="required">*</span></label>
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-input"
+                        placeholder="example@email.com"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="phone">연락처<span class="required">*</span></label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        class="form-input"
+                        placeholder="010-1234-5678"
+                        required
+                        autocomplete="tel"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="schedule">희망 교육 시기<span class="required">*</span></label>
+                    <select id="schedule" class="form-select" required>
+                        <option value="">선택해주세요</option>
+                        <option value="빠른 시일 내">빠른 시일 내</option>
+                        <option value="1개월 이내">1개월 이내</option>
+                        <option value="2~3개월 이내">2~3개월 이내</option>
+                        <option value="3개월 이후">3개월 이후</option>
+                        <option value="일정 협의">일정 협의</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="experience">투자 경험<span class="required">*</span></label>
+                    <select id="experience" class="form-select" required>
+                        <option value="">선택해주세요</option>
+                        <option value="없음">없음</option>
+                        <option value="초보 (1년 미만)">초보 (1년 미만)</option>
+                        <option value="중급 (1~3년)">중급 (1~3년)</option>
+                        <option value="숙련 (3년 이상)">숙련 (3년 이상)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="message">문의사항</label>
+                    <textarea
+                        id="message"
+                        class="form-textarea"
+                        placeholder="교육에 대해 궁금하신 점이나 특별히 요청하실 사항이 있으시면 자유롭게 작성해주세요."
+                    ></textarea>
+                    <div class="helper-text">선택사항입니다.</div>
+                </div>
+
+                <button type="submit" class="submit-btn">수강신청 제출</button>
+            </form>
+
+            <a href="academy-intro.html" class="back-link">← 교육과정 소개로 돌아가기</a>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="service-intro.html" class="footer-link">서비스 소개</a>
+                <a href="terms.html" class="footer-link">이용약관</a>
+                <a href="privacy.html" class="footer-link">개인정보처리방침</a>
+                <a href="contact.html" class="footer-link">고객센터</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 HDH Fintech. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function submitApplication(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const schedule = document.getElementById('schedule').value;
+            const experience = document.getElementById('experience').value;
+            const message = document.getElementById('message').value;
+
+            // 성공 메시지
+            alert('✅ 수강신청이 완료되었습니다!\n\n' +
+                  '신청자: ' + name + '\n' +
+                  '이메일: ' + email + '\n' +
+                  '연락처: ' + phone + '\n' +
+                  '희망 시기: ' + schedule + '\n' +
+                  '투자 경험: ' + experience + '\n\n' +
+                  '담당자가 확인 후 빠른 시일 내에 연락드리겠습니다.');
+
+            // 폼 초기화
+            document.getElementById('applyForm').reset();
+        }
+    </script>
+</body>
+</html>

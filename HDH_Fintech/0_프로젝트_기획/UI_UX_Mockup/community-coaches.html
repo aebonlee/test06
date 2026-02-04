@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코치 목록 - HDH 실전 운영자 커뮤니티</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            min-height: 100vh;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 16px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .user-level {
+            background: #10B981;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .user-rank {
+            background: #EF4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .user-type {
+            background: #8B5CF6;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.9;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        /* 메인 컨테이너 */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* 목록으로 */
+        .back-to-list {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 16px;
+            transition: color 0.2s;
+        }
+
+        .back-to-list:hover {
+            color: #F59E0B;
+        }
+
+        /* 페이지 헤더 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 12px;
+        }
+
+        .page-title-icon {
+            font-size: 36px;
+            margin-right: 8px;
+        }
+
+        .page-desc {
+            color: #D97706;
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            padding: 14px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #F59E0B;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* 검색 섹션 */
+        .search-section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            gap: 12px;
+        }
+
+        .search-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid #8B5CF6;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #7C3AED;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8B5CF6;
+        }
+
+        .search-btn {
+            padding: 14px 32px;
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-btn:hover {
+            background: #7C3AED;
+        }
+
+        /* 통계 */
+        .stats-section {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px 32px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8B5CF6;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #64748B;
+        }
+
+        /* 코치 그리드 */
+        .coaches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* 코치 카드 */
+        .coach-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .coach-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
+        }
+
+        .coach-card-header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            padding: 24px;
+            position: relative;
+        }
+
+        .coach-rank-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .coach-avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .coach-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .coach-specialty {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .coach-badges {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .coach-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .coach-card-body {
+            padding: 24px;
+        }
+
+        .coach-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .coach-stat {
+            text-align: center;
+        }
+
+        .coach-stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1F2937;
+        }
+
+        .coach-stat-label {
+            font-size: 12px;
+            color: #64748B;
+        }
+
+        .coach-bio {
+            font-size: 14px;
+            color: #64748B;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .coach-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .coach-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+        }
+
+        .coach-btn.primary {
+            background: #8B5CF6;
+            color: white;
+        }
+
+        .coach-btn.primary:hover {
+            background: #7C3AED;
+        }
+
+        .coach-btn.secondary {
+            background: white;
+            border: 2px solid #8B5CF6;
+            color: #8B5CF6;
+        }
+
+        .coach-btn.secondary:hover {
+            background: #F5F3FF;
+        }
+
+        /* 모달 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            padding: 24px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-header .coach-avatar {
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+        }
+
+        .modal-header .coach-name {
+            font-size: 20px;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-form-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 8px;
+        }
+
+        .modal-form-label .required {
+            color: #EF4444;
+        }
+
+        .modal-form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .modal-form-input:focus {
+            border-color: #8B5CF6;
+        }
+
+        .modal-form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .modal-form-textarea:focus {
+            border-color: #8B5CF6;
+        }
+
+        .modal-form-hint {
+            font-size: 12px;
+            color: #94A3B8;
+            margin-top: 6px;
+        }
+
+        .modal-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-submit-btn:hover {
+            background: #7C3AED;
+        }
+
+        /* 알림 모달 */
+        .alert-modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .alert-message {
+            margin-bottom: 20px;
+            color: #1F2937;
+        }
+
+        .alert-btn {
+            padding: 12px 32px;
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .coaches-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-item {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .search-wrapper {
+                flex-direction: column;
+            }
+
+            .coach-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-inner">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <a href="index.html" class="back-link">← HDH Fintech</a>
+                <h1 class="header-title">HDH 실전 운영자 커뮤니티</h1>
+            </div>
+            <div class="header-user">
+                <div class="user-info">
+                    <span class="user-name">김철수</span>
+                    <span class="user-type">코치</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <main class="main-container">
+        <!-- 목록으로 -->
+        <a href="community.html" class="back-to-list">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            커뮤니티로 돌아가기
+        </a>
+
+        <!-- 페이지 헤더 -->
+        <div class="page-header">
+            <h1 class="page-title">
+                <span class="page-title-icon">🎓</span>
+                코치 목록
+            </h1>
+            <p class="page-desc">HDH 솔루션 실전 운영자들끼리 정보를 공유하고 코치들의 도움을 받아 함께 성장하세요</p>
+        </div>
+
+        <!-- 검색 -->
+        <div class="search-section">
+            <div class="search-wrapper">
+                <div class="search-input-wrapper">
+                    <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="코치 이름 또는 전문 분야로 검색">
+                </div>
+                <button class="search-btn">검색</button>
+            </div>
+        </div>
+
+        <!-- 통계 -->
+        <div class="stats-section">
+            <div class="stat-item">
+                <div class="stat-value">12</div>
+                <div class="stat-label">전체 코치</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">1,234</div>
+                <div class="stat-label">총 답변 수</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">98%</div>
+                <div class="stat-label">답변 만족도</div>
+            </div>
+        </div>
+
+        <!-- 코치 그리드 -->
+        <div class="coaches-grid">
+            <!-- 코치 1 - 박영수 -->
+            <div class="coach-card">
+                <div class="coach-card-header">
+                    <span class="coach-rank-badge">🥇 1위</span>
+                    <div class="coach-avatar">👨‍💼</div>
+                    <div class="coach-name">박영수 코치</div>
+                    <div class="coach-specialty">84:16 전략 전문</div>
+                    <div class="coach-badges">
+                        <span class="coach-badge">답변왕</span>
+                        <span class="coach-badge">펀디드 마스터</span>
+                    </div>
+                </div>
+                <div class="coach-card-body">
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">342</div>
+                            <div class="coach-stat-label">총 답변</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">4.9</div>
+                            <div class="coach-stat-label">평점</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">12h</div>
+                            <div class="coach-stat-label">평균 응답</div>
+                        </div>
+                    </div>
+                    <p class="coach-bio">
+                        10년차 트레이더입니다. 84:16 자금 관리 전략의 창시자로, 안정적인 수익을 추구하는 트레이딩 방법을 가르치고 있습니다. 초보자부터 고수까지 모두 환영합니다.
+                    </p>
+                    <div class="coach-actions">
+                        <button class="coach-btn primary" onclick="openAskModal('박영수', '84:16 전략 전문')">질문하기</button>
+                        <a href="community.html?filter=coach&coach=park" class="coach-btn secondary">게시글 보기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 코치 2 - 김지훈 -->
+            <div class="coach-card">
+                <div class="coach-card-header">
+                    <span class="coach-rank-badge">🥈 2위</span>
+                    <div class="coach-avatar">👨‍🏫</div>
+                    <div class="coach-name">김지훈 코치</div>
+                    <div class="coach-specialty">시장 분석 전문</div>
+                    <div class="coach-badges">
+                        <span class="coach-badge">분석가</span>
+                    </div>
+                </div>
+                <div class="coach-card-body">
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">287</div>
+                            <div class="coach-stat-label">총 답변</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">4.8</div>
+                            <div class="coach-stat-label">평점</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">8h</div>
+                            <div class="coach-stat-label">평균 응답</div>
+                        </div>
+                    </div>
+                    <p class="coach-bio">
+                        매주 시장 분석 리포트를 제공하며, 기술적 분석과 기본적 분석을 결합한 트레이딩 전략을 전문으로 합니다. FOMC, 고용지표 등 주요 이벤트 분석을 담당합니다.
+                    </p>
+                    <div class="coach-actions">
+                        <button class="coach-btn primary" onclick="openAskModal('김지훈', '시장 분석 전문')">질문하기</button>
+                        <a href="community.html?filter=coach&coach=kim" class="coach-btn secondary">게시글 보기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 코치 3 - 이현우 -->
+            <div class="coach-card">
+                <div class="coach-card-header">
+                    <span class="coach-rank-badge">🥉 4위</span>
+                    <div class="coach-avatar">👨‍💻</div>
+                    <div class="coach-name">이현우 코치</div>
+                    <div class="coach-specialty">리스크 관리 전문</div>
+                    <div class="coach-badges">
+                        <span class="coach-badge">리스크 전문가</span>
+                    </div>
+                </div>
+                <div class="coach-card-body">
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">198</div>
+                            <div class="coach-stat-label">총 답변</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">4.9</div>
+                            <div class="coach-stat-label">평점</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">6h</div>
+                            <div class="coach-stat-label">평균 응답</div>
+                        </div>
+                    </div>
+                    <p class="coach-bio">
+                        손절 타이밍, 포지션 사이징, 드로우다운 관리 등 리스크 관리의 모든 것을 가르칩니다. "생존이 먼저, 수익은 그 다음"이라는 철학으로 안전한 트레이딩을 추구합니다.
+                    </p>
+                    <div class="coach-actions">
+                        <button class="coach-btn primary" onclick="openAskModal('이현우', '리스크 관리 전문')">질문하기</button>
+                        <a href="community.html?filter=coach&coach=lee" class="coach-btn secondary">게시글 보기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 코치 4 - 정민수 -->
+            <div class="coach-card">
+                <div class="coach-card-header">
+                    <span class="coach-rank-badge">5위</span>
+                    <div class="coach-avatar">👨‍🔬</div>
+                    <div class="coach-name">정민수 코치</div>
+                    <div class="coach-specialty">펀디드 합격 전문</div>
+                    <div class="coach-badges">
+                        <span class="coach-badge">합격률 97%</span>
+                    </div>
+                </div>
+                <div class="coach-card-body">
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">156</div>
+                            <div class="coach-stat-label">총 답변</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">4.7</div>
+                            <div class="coach-stat-label">평점</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">10h</div>
+                            <div class="coach-stat-label">평균 응답</div>
+                        </div>
+                    </div>
+                    <p class="coach-bio">
+                        챌린지 합격에 특화된 전략과 노하우를 공유합니다. 50+ 회원의 펀디드 합격을 도왔으며, 챌린지 규칙에 맞는 최적의 트레이딩 방법을 가르칩니다.
+                    </p>
+                    <div class="coach-actions">
+                        <button class="coach-btn primary" onclick="openAskModal('정민수', '펀디드 합격 전문')">질문하기</button>
+                        <a href="community.html?filter=coach&coach=jung" class="coach-btn secondary">게시글 보기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 코치 5 - 최서윤 -->
+            <div class="coach-card">
+                <div class="coach-card-header">
+                    <span class="coach-rank-badge">7위</span>
+                    <div class="coach-avatar">👩‍💼</div>
+                    <div class="coach-name">최서윤 코치</div>
+                    <div class="coach-specialty">심리 트레이딩 전문</div>
+                    <div class="coach-badges">
+                        <span class="coach-badge">멘탈 코치</span>
+                    </div>
+                </div>
+                <div class="coach-card-body">
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">134</div>
+                            <div class="coach-stat-label">총 답변</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">4.8</div>
+                            <div class="coach-stat-label">평점</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">4h</div>
+                            <div class="coach-stat-label">평균 응답</div>
+                        </div>
+                    </div>
+                    <p class="coach-bio">
+                        트레이딩 심리와 감정 관리의 중요성을 강조합니다. FOMO, 복구 매매, 오버 트레이딩 등 심리적 함정을 극복하는 방법을 전문으로 코칭합니다.
+                    </p>
+                    <div class="coach-actions">
+                        <button class="coach-btn primary" onclick="openAskModal('최서윤', '심리 트레이딩 전문')">질문하기</button>
+                        <a href="community.html?filter=coach&coach=choi" class="coach-btn secondary">게시글 보기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 코치 6 - 한도영 -->
+            <div class="coach-card">
+                <div class="coach-card-header">
+                    <span class="coach-rank-badge">9위</span>
+                    <div class="coach-avatar">👨‍🎓</div>
+                    <div class="coach-name">한도영 코치</div>
+                    <div class="coach-specialty">초보자 교육 전문</div>
+                    <div class="coach-badges">
+                        <span class="coach-badge">친절한 답변</span>
+                    </div>
+                </div>
+                <div class="coach-card-body">
+                    <div class="coach-stats">
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">117</div>
+                            <div class="coach-stat-label">총 답변</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">5.0</div>
+                            <div class="coach-stat-label">평점</div>
+                        </div>
+                        <div class="coach-stat">
+                            <div class="coach-stat-value">2h</div>
+                            <div class="coach-stat-label">평균 응답</div>
+                        </div>
+                    </div>
+                    <p class="coach-bio">
+                        트레이딩 입문자를 위한 기초 교육을 담당합니다. 어떤 질문이든 친절하고 자세하게 답변드리며, 처음 시작하는 분들의 눈높이에 맞춰 설명해드립니다.
+                    </p>
+                    <div class="coach-actions">
+                        <button class="coach-btn primary" onclick="openAskModal('한도영', '초보자 교육 전문')">질문하기</button>
+                        <a href="community.html?filter=coach&coach=han" class="coach-btn secondary">게시글 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 질문 모달 -->
+    <div class="modal-overlay" id="askModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" onclick="closeAskModal()">×</button>
+                <div class="coach-avatar" id="modalAvatar">👨‍💼</div>
+                <div class="coach-name" id="modalCoachName">박영수 코치</div>
+                <div class="coach-specialty" id="modalSpecialty">84:16 전략 전문</div>
+            </div>
+            <div class="modal-body">
+                <form id="askForm" onsubmit="submitQuestion(event)">
+                    <div class="modal-form-group">
+                        <label class="modal-form-label">
+                            질문 제목<span class="required">*</span>
+                        </label>
+                        <input type="text" class="modal-form-input" id="questionTitle" placeholder="질문 제목을 입력하세요" required>
+                    </div>
+                    <div class="modal-form-group">
+                        <label class="modal-form-label">
+                            질문 내용<span class="required">*</span>
+                        </label>
+                        <textarea class="modal-form-textarea" id="questionContent" placeholder="코치님께 드리고 싶은 질문을 자세히 작성해주세요.
+
+예시:
+- 어떤 상황에서 문제가 발생하는지
+- 지금까지 시도해본 방법
+- 원하는 결과물" required></textarea>
+                        <p class="modal-form-hint">구체적인 질문일수록 더 좋은 답변을 받을 수 있습니다.</p>
+                    </div>
+                    <button type="submit" class="modal-submit-btn">
+                        🎓 코치에게 질문 등록
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 알림 모달 -->
+    <div class="modal-overlay" id="alertModal">
+        <div class="alert-modal-content">
+            <p class="alert-message" id="alertMessage"></p>
+            <button class="alert-btn" onclick="closeAlertModal()">확인</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedCoach = null;
+
+        function openAskModal(name, specialty) {
+            selectedCoach = name;
+            document.getElementById('modalCoachName').textContent = name + ' 코치';
+            document.getElementById('modalSpecialty').textContent = specialty;
+            document.getElementById('askModal').classList.add('show');
+        }
+
+        function closeAskModal() {
+            document.getElementById('askModal').classList.remove('show');
+            document.getElementById('askForm').reset();
+        }
+
+        function submitQuestion(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('questionTitle').value;
+            const content = document.getElementById('questionContent').value;
+
+            if (!title.trim() || !content.trim()) {
+                showAlert('제목과 내용을 모두 입력해주세요.');
+                return;
+            }
+
+            closeAskModal();
+            showAlert(`${selectedCoach} 코치에게 질문이 등록되었습니다.\n답변이 등록되면 알림을 보내드립니다.`);
+        }
+
+        function showAlert(message) {
+            document.getElementById('alertMessage').textContent = message;
+            document.getElementById('alertModal').classList.add('show');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alertModal').classList.remove('show');
+        }
+
+        // 모달 외부 클릭시 닫기
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

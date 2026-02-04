@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.1 WTG 프롭펌 가입 - HDH Fintech</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .close-btn {
+            background: #E5E7EB;
+            color: #6B7280;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #D1D5DB;
+            color: #374151;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .content-box {
+            background: white;
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            color: #64748B;
+            margin-bottom: 24px;
+        }
+
+        .breadcrumb a {
+            color: #F59E0B;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 16px;
+        }
+
+        .intro-text {
+            font-size: 16px;
+            color: #64748B;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .content-section {
+            margin-bottom: 32px;
+        }
+
+        .content-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0F172A;
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 4px solid #F59E0B;
+        }
+
+        .content-item {
+            padding: 16px 0;
+            color: #475569;
+            font-size: 15px;
+            line-height: 1.8;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .content-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #F59E0B;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .info-box {
+            background: #FFFBF5;
+            border-left: 4px solid #F59E0B;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #D97706;
+            margin-bottom: 12px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: #92400E;
+            line-height: 1.7;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #F59E0B;
+        }
+
+        .footer {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 32px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content-box {
+                padding: 32px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .footer-links {
+                gap: 24px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">HDH Fintech</a>
+            <a href="index.html" class="close-btn">×</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="content-box">
+            <div class="breadcrumb">
+                <a href="index.html">홈</a> > 매뉴얼 > WTG (프롭펌 플랫폼) > 1.1 WTG 프롭펌 가입
+            </div>
+
+            <h1>1.1 WTG 프롭펌 가입</h1>
+            <p class="intro-text">WTG 프롭펌 플랫폼 가입 절차를 안내합니다.</p>
+
+            <div class="content-section">
+                <h2>WTG 홈페이지 회원가입</h2>
+                <div class="content-item">WTG 공식 홈페이지에 접속하여 회원가입을 진행합니다.</div>
+                <div class="content-item">이메일 주소와 비밀번호를 설정합니다.</div>
+                <div class="content-item">이메일 인증을 완료합니다.</div>
+            </div>
+
+            <div class="content-section">
+                <h2>고객인증 설문지 작성</h2>
+                <div class="content-item">투자 경험 및 재무 상태에 대한 설문지를 작성합니다.</div>
+                <div class="content-item">모든 항목을 정확하게 입력해야 합니다.</div>
+            </div>
+
+            <div class="content-section">
+                <h2>주소지 인증 및 신분증 인증</h2>
+                <div class="content-item">주소지를 증명할 수 있는 서류(공과금 고지서 등)를 제출합니다.</div>
+                <div class="content-item">신분증 사본을 업로드합니다.</div>
+                <div class="content-item">인증 완료까지 1-2일 소요됩니다.</div>
+            </div>
+
+            <div class="content-section">
+                <h2>영문등본 준비 및 제출</h2>
+                <div class="content-item">주민센터에서 영문 주민등록등본을 발급받습니다.</div>
+                <div class="content-item">발급받은 영문등본을 스캔하여 제출합니다.</div>
+            </div>
+
+            <div class="info-box">
+                <h3>💡 준비 사항</h3>
+                <p>가입 전 신분증, 주소지 증빙서류, 영문등본을 미리 준비하시면 빠른 가입이 가능합니다.</p>
+            </div>
+
+            <a href="index.html" class="back-link">← 메인 페이지로 돌아가기</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="service-intro.html" class="footer-link">서비스 소개</a>
+                <a href="terms.html" class="footer-link">이용약관</a>
+                <a href="privacy.html" class="footer-link">개인정보처리방침</a>
+                <a href="contact.html" class="footer-link">고객센터</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 HDH Fintech. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

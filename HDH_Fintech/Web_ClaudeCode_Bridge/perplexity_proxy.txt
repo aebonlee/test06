@@ -1,0 +1,43 @@
+// Perplexity API 엔드포인트
+app.post('/perplexity/ask', async (req, res) => {
+    try {
+        const { question } = req.body;
+
+        if (!question) {
+            return res.status(400).json({
+                success: false,
+                error: '질문이 필요합니다.'
+            });
+        }
+
+        console.log('🔮 Perplexity 질문:', question.substring(0, 50) + '...');
+
+        // AI_Link 서버로 프록시
+        const aiResponse = await fetch('http://localhost:3031/ask-perplexity', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question })
+        });
+
+        const result = await aiResponse.json();
+
+        if (result.success) {
+            console.log('✅ Perplexity 응답 성공');
+            res.json({
+                success: true,
+                question: question,
+                answer: result.answer,
+                timestamp: new Date().toISOString()
+            });
+        } else {
+            throw new Error(result.error || 'Perplexity API 오류');
+        }
+
+    } catch (error) {
+        console.error('❌ Perplexity API 오류:', error.message);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});

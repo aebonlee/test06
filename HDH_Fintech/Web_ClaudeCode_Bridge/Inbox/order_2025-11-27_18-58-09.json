@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251127-34",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "와우 와우 우리는 수정됐어\n그런데 어 테스트를 해보겠다 자동으로 답변이 올라오는지 테스트를 해보겠다 그래서 지금 오더 시트를 만들어서 보내니까 어 귀추가 주목된다 그리고 만약 이게 성공하면 이거 진짜 굉장히 가치가 있는 거다 메모리의 문제를 해결할 뿐만 아니라 업무 편리성이 엄청나게 높아진다 이건 아마 세계 최초로 하는 것일지도 모른다 근데 이게 꼭 제이슨 파일이어야 되는가 엠디 파일은 안 되는가 그것도 답을 해주라\n\n이번에는 제대로 돼야 할 텐데 귀추가 주목된다",
+  "content_english": "Wow, wow, we've fixed it.\nBut let's test it. Let's test if the answers are automatically generated. So, I've created an order sheet and sent it out. It's drawing attention. And if it's successful, it'll be incredibly valuable. Not only will it solve the memory problem, but it'll also dramatically improve work convenience. This might be the first of its kind in the world. But does it have to be a JSON file? Can't it be an MD file? Please answer that too.\n\nThis time, it has to be done right. It's drawing attention.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-27T18:58:09.506Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

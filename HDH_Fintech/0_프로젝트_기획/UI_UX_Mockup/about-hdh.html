@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDH란? - HDH Fintech</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .close-btn {
+            background: #E5E7EB;
+            color: #6B7280;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #D1D5DB;
+            color: #374151;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .content-box {
+            background: white;
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 16px;
+        }
+
+        .intro-text {
+            font-size: 17px;
+            color: #64748B;
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-bottom: 48px;
+            padding: 32px;
+            border-left: 4px solid #F59E0B;
+            background: #FFFBF5;
+            border-radius: 8px;
+        }
+
+        .section:last-of-type {
+            margin-bottom: 32px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #F59E0B;
+            margin-bottom: 20px;
+        }
+
+        .section-content {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #475569;
+            white-space: pre-line;
+        }
+
+        .section-content strong {
+            color: #0F172A;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: #FFF7ED;
+            border: 2px solid #FED7AA;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .highlight-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #D97706;
+            margin-bottom: 16px;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .highlight-box li {
+            padding: 8px 0 8px 24px;
+            position: relative;
+            color: #92400E;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .highlight-box li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #F59E0B;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .back-link:hover {
+            color: #F59E0B;
+        }
+
+        .footer {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 32px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content-box {
+                padding: 32px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .section {
+                padding: 24px 20px;
+            }
+
+            .section h2 {
+                font-size: 20px;
+            }
+
+            .section-content {
+                font-size: 15px;
+            }
+
+            .highlight-box {
+                padding: 20px 16px;
+            }
+
+            .footer-links {
+                gap: 24px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-box {
+                padding: 24px 16px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .section h2 {
+                font-size: 18px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">HDH Fintech</a>
+            <a href="index.html" class="close-btn">×</a>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="main-content">
+        <div class="content-box">
+            <h1>HDH란?</h1>
+            <p class="intro-text">HDH Fintech는 10년간 검증된 극저위험 자동화 핀테크 솔루션입니다. ProActive Senior를 위한 안정적인 수입 창출 시스템을 제공합니다.</p>
+
+            <!-- HDH의 의미 -->
+            <div class="section">
+                <h2>HDH의 의미</h2>
+                <div class="section-content">
+HDH는 이 솔루션을 개발한 세 사람의 이름에서 영어 철자 한 개씩을 가져와서 만들어진 것입니다.
+'하', '대', '호' - 세 글자의 영문 이니셜 H, D, H를 조합하여 'HDH'가 되었습니다.
+
+<strong>10년간 세 명의 개발자가 함께 연구하고 검증한 결과물,
+그것이 바로 HDH Fintech입니다.</strong>
+                </div>
+            </div>
+
+            <!-- 왜 HDH Fintech인가? -->
+            <div class="section">
+                <h2>왜 HDH Fintech인가?</h2>
+                <div class="section-content">
+<strong>10년간 찾아낸 솔루션</strong>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>ProActive Senior의 현실</h3>
+                    <ul>
+                        <li>은퇴 후 안정적 수입원 필요</li>
+                        <li>연금만으로는 부족한 생활비</li>
+                        <li>자산은 있지만 활용 방법 모름</li>
+                        <li>일하고 싶지만 체력적 한계</li>
+                        <li>금융 투자는 위험하고 복잡함</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>HDH Fintech의 답</h3>
+                    <ul>
+                        <li>월 500만원 안정적 수입 (하루 1시간 내외 투입)</li>
+                        <li>극저위험 자동화 시스템 (10년 검증)</li>
+                        <li>복잡한 기술 불필요 (3일 교육으로 시작)</li>
+                        <li>5060세대 최적화 솔루션</li>
+                        <li>은퇴 후 경제적 자립의 해법</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 선순환 생태계 -->
+            <div class="section">
+                <h2>선순환 생태계</h2>
+                <div class="section-content">
+<strong>HDH Fintech가 만드는 지속 가능한 경제 생태계</strong>
+
+• 안정적 수입이 있으니까 웹서비스를 창업할 수 있고, 스타트업 서포팅이 가능합니다
+• ProActive Senior의 경험과 여유를 웹서비스 창업과 스타트업 멘토링에 투자
+• 경제적 자립 → 웹서비스 창업 & 사회 기여 → 지속 가능한 선순환
+
+<strong>HDH Fintech는 단순한 수익 창출을 넘어,
+ProActive Senior가 웹서비스를 창업하고 스타트업과 함께 성장하는 생태계의 시작점입니다.</strong>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-link">← 메인 페이지로 돌아가기</a>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="service-intro.html" class="footer-link">서비스 소개</a>
+                <a href="terms.html" class="footer-link">이용약관</a>
+                <a href="privacy.html" class="footer-link">개인정보처리방침</a>
+                <a href="contact.html" class="footer-link">고객센터</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 HDH Fintech. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

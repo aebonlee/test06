@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251128-29",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "실제로 가동이 된다고 실제로 가동이 된다면 이게 도착하는 즉시 메시지를 확인해",
+  "content_english": "If it actually works, check the message as soon as it arrives.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-28T02:57:42.659Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

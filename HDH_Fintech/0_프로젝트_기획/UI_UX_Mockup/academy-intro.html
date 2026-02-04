@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아카데미 교육 - HDH Fintech</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .close-btn {
+            background: #E5E7EB;
+            color: #6B7280;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #D1D5DB;
+            color: #374151;
+        }
+
+        .main-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .content-box {
+            background: white;
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 16px;
+        }
+
+        .intro-text {
+            font-size: 17px;
+            color: #64748B;
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        .day-section {
+            margin-bottom: 40px;
+            padding: 32px;
+            background: #FFFBF5;
+            border-left: 4px solid #F59E0B;
+            border-radius: 8px;
+        }
+
+        .day-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #F59E0B;
+            margin-bottom: 20px;
+        }
+
+        .day-content {
+            list-style: none;
+            padding: 0;
+        }
+
+        .day-content li {
+            padding: 12px 0 12px 28px;
+            position: relative;
+            color: #475569;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .day-content li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .info-section {
+            margin: 48px 0;
+            padding: 32px;
+            background: #F8FAFC;
+            border-radius: 12px;
+        }
+
+        .info-section h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .info-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748B;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .notice-box {
+            background: #FFF7ED;
+            border: 2px solid #FED7AA;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 32px 0;
+        }
+
+        .notice-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #D97706;
+            margin-bottom: 12px;
+        }
+
+        .notice-box p {
+            color: #92400E;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+
+        .notice-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .apply-btn {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 40px auto 0;
+            padding: 18px 32px;
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 32px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .back-link:hover {
+            color: #F59E0B;
+        }
+
+        .footer {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 32px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content-box {
+                padding: 32px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .day-section {
+                padding: 24px 20px;
+            }
+
+            .day-title {
+                font-size: 20px;
+            }
+
+            .day-content li {
+                font-size: 15px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .apply-btn {
+                font-size: 16px;
+                padding: 16px 28px;
+            }
+
+            .footer-links {
+                gap: 24px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-box {
+                padding: 24px 16px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">HDH Fintech</a>
+            <a href="index.html" class="close-btn">×</a>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="main-content">
+        <div class="content-box">
+            <h1>아카데미 교육</h1>
+            <p class="intro-text">HDH Fintech 솔루션을 체계적으로 학습하고 실전 운영 능력을 갖추는 집중 교육 프로그램입니다.</p>
+
+            <!-- 메인 교육 과정 -->
+            <div class="day-section">
+                <div class="day-title">메인 교육 과정</div>
+                <ul class="day-content">
+                    <li>프롭펌 WTG 및 챌린지 플랫폼(인피녹스) 가입</li>
+                    <li>2FA 인증 및 Google OTP 설치</li>
+                    <li>USDT 거래소(업비트/바이낸스) 회원가입 및 KYC 인증</li>
+                    <li>WTG 홈페이지 사용법 (지갑 주소, Network 설정)</li>
+                    <li>USDT 송금 방법 (업비트 → 바이낸스 → 프롭펌)</li>
+                    <li>MT5 차트 세팅 및 VIP Strategy 설정</li>
+                    <li>챌린지 계좌 거래 방법 (랏 계산, 동시 진입)</li>
+                    <li>스캘핑 계좌 운영 (양방향 헷지 전략)</li>
+                    <li>데모 계좌 실습 및 거래 연습</li>
+                </ul>
+            </div>
+
+            <!-- 사후 교육 과정 -->
+            <div class="day-section">
+                <div class="day-title">사후 교육 과정</div>
+                <ul class="day-content">
+                    <li>챌린지 계좌 재진입 가이드 및 계산기 사용법</li>
+                    <li>펀딩 계좌 재진입 가이드</li>
+                    <li>SL/TP 수정 방법</li>
+                    <li>Mw-wallet 설치 및 사용법 (선택)</li>
+                    <li>원화 입출금 및 내부이체 방법</li>
+                    <li>Q&A 및 원격 지원</li>
+                </ul>
+            </div>
+
+            <!-- 교육 정보 -->
+            <div class="info-section">
+                <h2>교육 안내</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">교육 방식</div>
+                        <div class="info-value">오프라인 교육</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">교육 기간</div>
+                        <div class="info-value">3일 (집중 과정)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">수강료</div>
+                        <div class="info-value">별도 문의</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">교육 장소</div>
+                        <div class="info-value">수강 신청 후 안내</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 안내사항 -->
+            <div class="notice-box">
+                <h3>📢 교육 안내사항</h3>
+                <p><strong>• 오프라인 교육:</strong> 현재 HDH Fintech 아카데미는 오프라인 교육으로만 진행됩니다.</p>
+                <p><strong>• 소수 정예:</strong> 1:1 밀착 지도를 위해 소수 인원으로 운영합니다.</p>
+                <p><strong>• 실습 중심:</strong> 이론 학습과 함께 실전 시뮬레이션을 통해 즉시 적용 가능한 능력을 키웁니다.</p>
+                <p><strong>• 사후 지원:</strong> 교육 이수 후에도 HDH Fintech 앱 사이트와 별도 커뮤니티를 통해 지속적으로 도움을 드립니다.</p>
+            </div>
+
+            <!-- 수강신청 버튼 -->
+            <a href="academy-apply.html" class="apply-btn">수강신청하기</a>
+
+            <a href="index.html" class="back-link">← 메인 페이지로 돌아가기</a>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="service-intro.html" class="footer-link">서비스 소개</a>
+                <a href="terms.html" class="footer-link">이용약관</a>
+                <a href="privacy.html" class="footer-link">개인정보처리방침</a>
+                <a href="contact.html" class="footer-link">고객센터</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 HDH Fintech. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

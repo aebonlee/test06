@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HDH 핀테크 솔루션 - 금 선물 기반 무위험 차익거래 전략</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+    /* ============================================
+       HDH FINTECH DESIGN SYSTEM
+       ============================================ */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Pretendard', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+        background: #F8FAFC;
+        color: #1F2937;
+        line-height: 1.6;
+    }
+
+    /* 헤더 */
+    .header {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        padding: 24px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -0.5px;
+    }
+
+    .header-subtitle {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    /* 목차 네비게이션 */
+    .toc {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        margin: 24px auto;
+        max-width: 1200px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .toc-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #F59E0B;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .toc-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 12px;
+        list-style: none;
+    }
+
+    .toc-list li a {
+        display: block;
+        padding: 12px 16px;
+        background: #F8FAFC;
+        border-radius: 8px;
+        color: #475569;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+    }
+
+    .toc-list li a:hover {
+        background: #FFF7ED;
+        color: #F59E0B;
+        border-color: #FED7AA;
+        transform: translateX(4px);
+    }
+
+    /* 컨테이너 */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    /* 섹션 카드 */
+    .section {
+        background: white;
+        border-radius: 12px;
+        padding: 32px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 타이포그래피 */
+    h1 {
+        font-size: 36px;
+        font-weight: 800;
+        color: #0F172A;
+        margin-bottom: 12px;
+        line-height: 1.2;
+    }
+
+    h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #F59E0B;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #FED7AA;
+    }
+
+    .section h2:first-child {
+        margin-top: 0;
+    }
+
+    h3 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #0F172A;
+        margin-top: 28px;
+        margin-bottom: 16px;
+    }
+
+    h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #475569;
+        margin-top: 20px;
+        margin-bottom: 12px;
+    }
+
+    p {
+        margin-bottom: 16px;
+        color: #475569;
+        font-size: 15px;
+    }
+
+    /* 강조 박스 */
+    .highlight-box {
+        background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+        border-left: 4px solid #F59E0B;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    .highlight-box strong {
+        color: #D97706;
+    }
+
+    .info-box {
+        background: #EFF6FF;
+        border-left: 4px solid #3B82F6;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    .success-box {
+        background: #ECFDF5;
+        border-left: 4px solid #10B981;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    .warning-box {
+        background: #FEF3C7;
+        border-left: 4px solid #F59E0B;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    .danger-box {
+        background: #FEE2E2;
+        border-left: 4px solid #EF4444;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    /* 테이블 */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    thead {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    }
+
+    th {
+        padding: 14px 12px;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+        font-size: 13px;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #E2E8F0;
+        color: #475569;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+        background: #F8FAFC;
+    }
+
+    tr:hover {
+        background: #FFF7ED;
+        transition: background 0.2s;
+    }
+
+    /* 합격 행 강조 */
+    tr.success-row {
+        background: #ECFDF5 !important;
+        font-weight: 600;
+    }
+
+    tr.success-row td {
+        color: #059669;
+    }
+
+    tr.success-row:hover {
+        background: #D1FAE5 !important;
+    }
+
+    /* 통계 카드 */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin: 24px 0;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border: 2px solid #E2E8F0;
+        transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        border-color: #FED7AA;
+    }
+
+    .stat-label {
+        font-size: 13px;
+        color: #64748B;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    .stat-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: #F59E0B;
+        line-height: 1;
+    }
+
+    .stat-value.success {
+        color: #10B981;
+    }
+
+    .stat-value.danger {
+        color: #EF4444;
+    }
+
+    /* 코드 블록 */
+    pre {
+        background: #0F172A;
+        color: #E2E8F0;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 20px 0;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    code {
+        background: #F1F5F9;
+        color: #DC2626;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 13px;
+    }
+
+    pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+    }
+
+    /* 리스트 */
+    ul, ol {
+        margin: 16px 0;
+        padding-left: 24px;
+        color: #475569;
+    }
+
+    li {
+        margin: 8px 0;
+        line-height: 1.6;
+    }
+
+    /* 구분선 */
+    hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #E2E8F0, transparent);
+        margin: 40px 0;
+    }
+
+    /* 푸터 */
+    .footer {
+        background: #0F172A;
+        color: #94A3B8;
+        padding: 40px 0;
+        margin-top: 60px;
+        text-align: center;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    .footer-logo {
+        font-size: 24px;
+        font-weight: 800;
+        color: #F59E0B;
+        margin-bottom: 12px;
+    }
+
+    .footer-text {
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 8px;
+    }
+
+    .footer-version {
+        font-size: 12px;
+        color: #64748B;
+        margin-top: 20px;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+        .header-inner {
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        .section {
+            padding: 20px;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        .toc-list {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        table {
+            font-size: 12px;
+        }
+
+        th, td {
+            padding: 8px 6px;
+        }
+
+        /* 테이블 가로 스크롤 */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        pre {
+            font-size: 11px;
+            padding: 12px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            font-size: 14px;
+        }
+
+        .section {
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        .highlight-box, .info-box, .success-box, .warning-box, .danger-box {
+            padding: 16px;
+        }
+    }
+
+    /* 프린트 스타일 */
+    @media print {
+        body {
+            background: white;
+        }
+
+        .header {
+            position: static;
+            box-shadow: none;
+        }
+
+        .section {
+            box-shadow: none;
+            page-break-inside: avoid;
+        }
+
+        .toc {
+            page-break-after: always;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="header">
+    <div class="header-inner">
+        <div class="logo">HDH Fintech</div>
+        <div class="header-subtitle">금 선물 기반 무위험 차익거래 전략 분석 리포트 v1.2</div>
+    </div>
+</div>
+
+<!-- 목차 -->
+<div class="container">
+    <div class="toc">
+        <div class="toc-title">📋 목차</div>
+        <ol class="toc-list">
+            <li><a href="#section1">1. 전략 개요</a></li>
+            <li><a href="#section2">2. 기초 용어 설명</a></li>
+            <li><a href="#section3">3. 계좌 구조</a></li>
+            <li><a href="#section4">4. 헷지 전략</a></li>
+            <li><a href="#section5">5. 수학적 분석</a></li>
+            <li><a href="#section6">6. 손익 계산</a></li>
+            <li><a href="#section7">7. 60회 시뮬레이션</a></li>
+            <li><a href="#section8">8. 비즈니스 모델</a></li>
+            <li><a href="#section9">9. 84:16 설계의 비밀</a></li>
+            <li><a href="#section10">10. 결론</a></li>
+        </ol>
+    </div>
+
+    <!-- 1. 전략 개요 -->
+    <div class="section" id="section1">
+        <h2>1. 전략 개요</h2>
+        <p>HDH 전략은 <strong>프롭펌(Proprietary Trading Firm)</strong> 챌린지 시스템을 활용한 무위험 차익거래 구조입니다. 금 선물(Gold Futures) 시장의 높은 변동성을 활용합니다.</p>
+
+        <div class="highlight-box">
+            <h3>💡 핵심 아이디어</h3>
+            <p>프롭펌에 $300 참가비를 내면 10배인 $3,000 가상 자금으로 트레이딩 챌린지에 참여할 수 있습니다. 이 챌린지 계좌와 별도의 보험금 계좌에서 반대 방향으로 동시 진입하여 헷지를 구현하고, 합격 시 <strong>펀딩 계좌 트레이딩 수익($3,000)</strong>을 순수익으로 확보합니다.</p>
+        </div>
+
+        <pre><code>┌─────────────────┐     ┌─────────────────┐
+│  챌린지 계좌    │     │  보험금 계좌    │
+│ (가상 $3,000)   │     │ (실제 $300)     │
+│                 │     │                 │
+│   Buy 📈        │ ←→  │   Sell 📉       │
+│  TP: 21.5p      │     │  TP: 4.1p       │
+│  SL: 참가비 소멸│     │  SL: 21.5p      │
+└────────┬────────┘     └────────┬────────┘
+         │                       │
+         └───────────┬───────────┘
+                     ▼
+              ✅ 완벽한 헷지</code></pre>
+    </div>
+
+    <!-- 2. 기초 용어 설명 -->
+    <div class="section" id="section2">
+        <h2>2. 기초 용어 설명</h2>
+
+        <h3>🏢 프롭펌 (Prop Firm)</h3>
+        <p>트레이더에게 회사 자본을 빌려주고, 수익이 나면 나눠 갖는 회사입니다. 챌린지 통과 시 최대 수백만 달러까지 운용할 수 있습니다.</p>
+        <p><strong>예</strong>: $300 참가비 → 챌린지 통과 → $3,000 실계좌 지급</p>
+
+        <h3>🥇 금 선물 (Gold Futures)</h3>
+        <p>미래 특정 시점에 금을 정해진 가격에 사고팔기로 약속하는 계약입니다. 실제 금을 보유하지 않고도 금 선물 가격 변동에 투자할 수 있습니다.</p>
+        <p><strong>예</strong>: 금 선물 가격 $2,000 → $2,010 상승 시 Buy 포지션 수익</p>
+
+        <h3>📊 Lot (랏) - 계약수</h3>
+        <p>금 선물 거래에서 계약수를 나타내는 단위입니다.</p>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>종류</th>
+                        <th>단위</th>
+                        <th>1 point당 가치</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Standard Lot</td>
+                        <td>1.0</td>
+                        <td>$100</td>
+                    </tr>
+                    <tr>
+                        <td>Mini Lot</td>
+                        <td>0.1</td>
+                        <td>$10</td>
+                    </tr>
+                    <tr>
+                        <td>Micro Lot</td>
+                        <td>0.01</td>
+                        <td>$1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p><strong>예</strong>: 0.9 lots × 1 point 이동 = $90 손익</p>
+
+        <h3>📏 Point (포인트) - 가격 변동 단위</h3>
+        <p>금 선물 가격의 변동 단위입니다.</p>
+        <p><strong>예</strong>: 금 선물 가격 $2,000.0 → $2,000.1 = 1 point 상승</p>
+
+        <h3>🎯 TP (Take Profit) - 익절</h3>
+        <p>목표 수익에 도달하면 자동으로 포지션을 청산하는 설정입니다.</p>
+        <p><strong>예</strong>: TP 4.1p = 4.1 point 수익 시 자동 종료</p>
+
+        <h3>🛡️ SL (Stop Loss) - 손절</h3>
+        <p>손실 한도에 도달하면 자동으로 포지션을 청산하는 설정입니다.</p>
+        <p><strong>예</strong>: SL 21.5p = 21.5 point 손실 시 자동 종료</p>
+
+        <h3>⚖️ 헷지 (Hedge)</h3>
+        <p>반대 방향 거래로 위험을 상쇄하는 전략입니다.</p>
+        <p><strong>예</strong>: A계좌 Buy + B계좌 Sell = 가격이 어디로 가든 손익 상쇄</p>
+
+        <h3>📈 Buy / 📉 Sell</h3>
+        <ul>
+            <li><strong>Buy (매수)</strong>: 가격 상승에 베팅. 가격이 오르면 수익, 내리면 손실.</li>
+            <li><strong>Sell (매도)</strong>: 가격 하락에 베팅. 가격이 내리면 수익, 오르면 손실.</li>
+        </ul>
+        <p><strong>예</strong>: 금 $2,000에서 Buy → $2,010이 되면 +$10 수익</p>
+    </div>
+
+    <!-- 3. 계좌 구조 -->
+    <div class="section" id="section3">
+        <h2>3. 계좌 구조 ($300 기준)</h2>
+
+        <h3>3.1 참가 구조</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>항목</th>
+                        <th>금액</th>
+                        <th>비고</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>참가비</td>
+                        <td>$300</td>
+                        <td>최대 손실</td>
+                    </tr>
+                    <tr>
+                        <td>챌린지 계좌</td>
+                        <td>$3,000</td>
+                        <td>가상 운용 자금 (10배)</td>
+                    </tr>
+                    <tr>
+                        <td>보험금 계좌</td>
+                        <td>$300</td>
+                        <td>실제 헷지 자금</td>
+                    </tr>
+                    <tr class="success-row">
+                        <td><strong>합격 시 펀딩 금액</strong></td>
+                        <td><strong>$3,000</strong></td>
+                        <td><strong>실제 운용 가능 자금</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>3.2 트레이딩 설정</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>챌린지 계좌</th>
+                        <th>보험금 계좌</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lot Size</td>
+                        <td>6.8 lots</td>
+                        <td>0.9 lots</td>
+                    </tr>
+                    <tr>
+                        <td>Take Profit</td>
+                        <td><strong>21.5p</strong></td>
+                        <td><strong>4.1p</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Stop Loss</td>
+                        <td>참가비 소멸</td>
+                        <td><strong>21.5p</strong></td>
+                    </tr>
+                    <tr>
+                        <td>방향</td>
+                        <td>Buy 📈</td>
+                        <td>Sell 📉</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info-box">
+            <h4>🔄 반대 방향도 가능!</h4>
+            <p>위 설정은 예시입니다. 챌린지 계좌 Sell + 보험금 계좌 Buy로 반대 방향 진입도 가능합니다. 중요한 것은 두 계좌가 서로 반대 방향이어야 한다는 점입니다.</p>
+        </div>
+    </div>
+
+    <!-- 4. 헷지 전략 -->
+    <div class="section" id="section4">
+        <h2>4. 헷지 전략</h2>
+
+        <h3>4.1 반대 포지션 동시 진입</h3>
+        <p>같은 시점에 두 계좌에서 반대 방향으로 진입합니다.</p>
+
+        <h3>4.2 TP/SL 대칭 설계</h3>
+        <div class="success-box">
+            <h4>💡 핵심 아이디어</h4>
+            <p>✅ <strong>챌린지 합격 → 보험금 계좌는 손절</strong></p>
+            <p>✅ <strong>챌린지 탈락 → 보험금 계좌는 익절</strong></p>
+            <p>→ 이렇게 손익을 상쇄합니다!</p>
+        </div>
+
+        <h3>4.3 시나리오별 결과</h3>
+
+        <h4>1차: 챌린지 단계</h4>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>시나리오</th>
+                        <th>챌린지 계좌</th>
+                        <th>보험금 계좌</th>
+                        <th>순 결과</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="success-row">
+                        <td>금 선물 가격 +21.5p 상승</td>
+                        <td>TP 도달 → 합격!<br><strong>펀딩 계좌 트레이딩 수익 +$3,000</strong><br>참가비 소멸 -$300</td>
+                        <td>SL 도달 → 손절<br>(0.9 lots × 21.5p × $100 = -$1,935)</td>
+                        <td><strong>+$165</strong> 🏆<br>($2,400 - $1,935 - $300)</td>
+                    </tr>
+                    <tr>
+                        <td>금 선물 가격 -4.1p 하락</td>
+                        <td>탈락<br>참가비 소멸 -$300</td>
+                        <td>TP 도달 → 익절<br>(0.9 lots × 4.1p × $100 = +$369)</td>
+                        <td><strong>+$69</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>2차: 펀딩 금액 트레이딩 단계</h4>
+        <p>챌린지 합격 후 받은 펀딩 계좌($3,000)는 즉시 현금화되지 않고, 추가 트레이딩 단계를 거칩니다.</p>
+
+        <div class="warning-box">
+            <p><strong>최종 정산:</strong><br>
+            - 트레이딩 완료 후 프롭펌과 80:20 정산<br>
+            - 최종 수령액: <strong>$3,000 × 80% = $2,400</strong></p>
+            <p>💡 <strong>본 문서의 수익 계산은 이 단계에서 정산 대상 수익($3,000)이 정상적으로 발생함을 가정합니다.</strong></p>
+        </div>
+    </div>
+
+    <!-- 5. 수학적 분석 -->
+    <div class="section" id="section5">
+        <h2>5. 수학적 분석</h2>
+
+        <h3>5.1 84:16 확률의 의미</h3>
+        <p>TP와 SL의 거리 비율이 확률을 결정합니다:</p>
+
+        <pre><code>익절 확률 = SL ÷ (TP + SL) = 21.5 ÷ (4.1 + 21.5) = 21.5 ÷ 25.6 ≈ 84%
+손절 확률 = TP ÷ (TP + SL) = 4.1 ÷ 25.6 ≈ 16%</code></pre>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">보험금 계좌 익절</div>
+                <div class="stat-value">84%</div>
+                <p style="margin-top: 8px; font-size: 13px; color: #64748B;">챌린지 탈락, 보험금 계좌 수익 발생</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">챌린지 합격!</div>
+                <div class="stat-value success">16%</div>
+                <p style="margin-top: 8px; font-size: 13px; color: #64748B;">펀딩 계좌 트레이딩 수익 $3,000 획득</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. 손익 계산 -->
+    <div class="section" id="section6">
+        <h2>6. 손익 계산</h2>
+
+        <h3>6.1 1회 거래 손익</h3>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">보험금 계좌 익절 (84%)</div>
+                <div class="stat-value success">+$369</div>
+                <p style="margin-top: 8px; font-size: 12px; color: #64748B;">0.9 lots × 4.1p × $100</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">보험금 계좌 손절 (16%)</div>
+                <div class="stat-value danger">-$1,935</div>
+                <p style="margin-top: 8px; font-size: 12px; color: #64748B;">0.9 lots × 21.5p × $100</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">챌린지 합격 (16%)</div>
+                <div class="stat-value success">+$2,400</div>
+                <p style="margin-top: 8px; font-size: 12px; color: #64748B;">펀딩 계좌 트레이딩 수익 $3,000 × 80%</p>
+            </div>
+        </div>
+
+        <h3>6.2 기대값 검증</h3>
+        <div class="success-box">
+            <pre><code>기대값 = (84% × $369) + (16% × -$1,935)
+      = $310 - $310 = ≈ $0 (완벽한 헷지!) ✅</code></pre>
+        </div>
+    </div>
+
+    <!-- 7. 60회 시뮬레이션 -->
+    <div class="section" id="section7">
+        <h2>7. 60회 시뮬레이션</h2>
+        <p>84:16 확률로 60회 거래 시, 약 10회 챌린지 합격 (보험금 계좌 손절)이 발생합니다.</p>
+
+        <h3>📊 60회 시뮬레이션 요약</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>항목</th>
+                        <th>계산</th>
+                        <th>금액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>보험금 계좌 익절 50회</td>
+                        <td>50 × $369</td>
+                        <td>+$18,450</td>
+                    </tr>
+                    <tr>
+                        <td>보험금 계좌 손절 10회</td>
+                        <td>10 × $1,935</td>
+                        <td>-$19,350</td>
+                    </tr>
+                    <tr>
+                        <td><strong>보험금 계좌 순손익</strong></td>
+                        <td></td>
+                        <td><strong>-$900</strong></td>
+                    </tr>
+                    <tr class="success-row">
+                        <td><strong>합격 10회 펀딩 계좌 트레이딩 수익 (80%)</strong></td>
+                        <td><strong>10 × $3,000 × 80%</strong></td>
+                        <td><strong>+$24,000</strong></td>
+                    </tr>
+                    <tr>
+                        <td>합격 10회 참가비 손실</td>
+                        <td>10 × $300</td>
+                        <td>-$3,000</td>
+                    </tr>
+                    <tr>
+                        <td>탈락 50회 참가비 손실</td>
+                        <td>50 × $300</td>
+                        <td>-$15,000</td>
+                    </tr>
+                    <tr class="success-row">
+                        <td><strong>최종 순수익</strong></td>
+                        <td></td>
+                        <td><strong>+$6,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">60회 최종 순수익</div>
+                <div class="stat-value success">+$6,000</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">월 수익률</div>
+                <div class="stat-value">20.0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">합격 횟수</div>
+                <div class="stat-value">10회</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. 비즈니스 모델 -->
+    <div class="section" id="section8">
+        <h2>8. 비즈니스 모델</h2>
+
+        <div class="highlight-box">
+            <p><strong>Win‑Win 구조</strong></p>
+            <ul>
+                <li><strong>프롭펌 (Prop Firm)</strong>: 참가비 수입은 펀딩 지급으로 상쇄(Zero-Sum)되나, <strong>펀딩 계좌 트레이딩 수익 발생 시 20%($600)를 배분</strong>받아 수익 창출</li>
+                <li><strong>참가자 (Participant)</strong>: 보험금 계좌 헷지로 리스크를 제거하고, <strong>펀딩 계좌 트레이딩 수익의 80%($2,400)를 배분</strong>받아 수익 창출</li>
+                <li><strong>결과</strong>: 프롭펌은 안정적으로 <strong>펀딩 계좌 트레이딩 수익을 배분</strong>받고, 참가자는 무위험 트레이딩 기회를 통해 <strong>펀딩 계좌 트레이딩 수익을 배분</strong>받는 <strong>이상적인 상생 모델</strong></li>
+            </ul>
+        </div>
+
+        <h3>8.1 참가 대상자</h3>
+        <ul>
+            <li>직장인 및 투자 실패 경험이 있는 초보 트레이더</li>
+            <li>투자에 대한 지속 가능한 수익 구조를 찾는 사람</li>
+            <li>감정에 휘둘리지 않고 원칙 기반 트레이딩을 원하는 투자자</li>
+        </ul>
+    </div>
+
+    <!-- 9. 84:16 설계의 비밀 -->
+    <div class="section" id="section9">
+        <h2>9. 84:16 설계의 비밀</h2>
+
+        <h3>9.1 왜 84:16인가?</h3>
+        <p>이 비율은 임의로 정한 것이 아닙니다. <strong>보험금 계좌의 손익분기점(BEP)</strong>을 정확히 맞추기 위한 수학적 해답입니다.</p>
+
+        <div class="info-box">
+            <ul>
+                <li><strong>익절(TP) 4.1p</strong> : <strong>손절(SL) 21.5p</strong></li>
+                <li>이 비율이 정확히 16 : 84의 확률 분포를 만들어냅니다.</li>
+            </ul>
+        </div>
+
+        <h3>9.2 심리적 최적점</h3>
+        <p><strong>84:16은 "손해 보는 느낌 없이 무한 반복 가능한" 심리적 최적점입니다.</strong></p>
+
+        <div class="success-box">
+            <p>💡 <strong>핵심 통찰</strong>: 이 전략은 합격률 0%여도 수익이 발생하는 구조입니다! 보험금 계좌의 헷지 효과로 최악의 경우에도 +$4,140의 수익이 발생합니다.</p>
+        </div>
+    </div>
+
+    <!-- 10. 결론 -->
+    <div class="section" id="section10">
+        <h2>10. 결론</h2>
+
+        <h3>🎯 이 전략이 천재적인 이유</h3>
+        <ol>
+            <li><strong>무손실 구조</strong> - 합격률 0%여도 +$4,140 수익! 손실 날 가능성이 전혀 없음</li>
+            <li><strong>수학적 완벽성</strong> - 84:16 확률로 보험금 계좌 완벽한 헷지 구현</li>
+            <li><strong>심리적 안정</strong> - 어떤 결과가 나와도 수익, 무한 반복 가능</li>
+            <li><strong>사업 모델</strong> - 참가자와 프롭펌 모두 Win-Win</li>
+            <li><strong>변동성 활용</strong> - 금 선물의 높은 변동성이 오히려 유리</li>
+            <li><strong>합법적 구조</strong> - 플랫폼에서 승인한 정당한 전략</li>
+        </ol>
+
+        <h3>10.1 자금 운용 계획 (60회 기준)</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>금액</th>
+                        <th>용도</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>보험금 계좌</td>
+                        <td>$20,000</td>
+                        <td>마진 + 최대 손실 대비 (10회 연속 합격 시)</td>
+                    </tr>
+                    <tr>
+                        <td>참가비 운용자금</td>
+                        <td>$10,000</td>
+                        <td>초기 자금 (회수 재투자, 회수 기간 약 15일)</td>
+                    </tr>
+                    <tr class="success-row">
+                        <td><strong>총 필요자본</strong></td>
+                        <td><strong>$30,000</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>10.2 예상 월 수익</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">월 순수익</div>
+                <div class="stat-value success">+$6,000</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">월 수익률</div>
+                <div class="stat-value">20.0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">최저 수익 (합격률 0%)</div>
+                <div class="stat-value success">+$4,140</div>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>💡 자금 부담이 되시나요?</strong></p>
+            <p>본 문서는 월 $6,000 수익을 위한 최적 세팅($30,000)을 기준으로 작성되었습니다. 자금 상황에 따라 <strong>$100 계좌</strong>로 축소하거나 거래 횟수를 조절하여 <strong>약 $5,000(600~700만 원)</strong>으로도 충분히 시작할 수 있는 <strong>확장성(Scalability)</strong>을 갖추고 있습니다.</p>
+        </div>
+
+        <div class="danger-box">
+            <h4>⚠️ 리스크 고지</h4>
+            <p><strong>슬리피지 리스크 관리</strong> - 급격한 변동성으로 인한 수익 축소나 손실 가능성은 있으나, 소액 계좌 운용으로 충분히 통제 가능합니다.</p>
+            <p><strong>타이밍 리스크</strong> - 펀딩 계좌 트레이딩 단계에서 손절 시 반대 계좌를 즉시 익절해야 하며, AI 자동화로 최소화 예정입니다.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>💰 최종 결론</h3>
+            <h4>$30,000으로 월 $6,000 (수익률 20.0%) - 손실 불가능 구조!</h4>
+            <p><strong>🔥 핵심 포인트:</strong></p>
+            <ul>
+                <li>✅ <strong>합격률 0%여도 +$4,140 수익 발생</strong></li>
+                <li>✅ <strong>합격률 16%면 +$6,000 월 수익</strong></li>
+                <li>✅ <strong>손실 날 가능성이 전혀 없는 구조</strong></li>
+                <li>✅ <strong>보험금 계좌 헷지로 완벽한 리스크 제거</strong></li>
+            </ul>
+            <p>수학적으로 정교하게 설계된 무손실 차익거래 구조입니다. 플랫폼이 승인한 합법적 전략이며, 양방향 헷지로 어떤 결과가 나와도 반드시 수익이 발생합니다. 🏆</p>
+        </div>
+    </div>
+</div>
+
+<!-- 푸터 -->
+<div class="footer">
+    <div class="footer-content">
+        <div class="footer-logo">HDH Fintech Solution</div>
+        <div class="footer-text">Gold Futures Trading Strategy Report - $300 Account Analysis</div>
+        <div class="footer-text">⚠️ 본 문서는 교육 및 분석 목적으로 작성되었습니다. 실제 투자 결정 전 충분한 검토가 필요합니다.</div>
+        <div class="footer-version">버전 1.2 - 2025-12-08</div>
+    </div>
+</div>
+
+</body>
+</html>

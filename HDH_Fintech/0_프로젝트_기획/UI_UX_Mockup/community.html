@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDH 실전 운영자 커뮤니티</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            min-height: 100vh;
+        }
+
+        /* 헤더 - 심플하게 */
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 16px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .user-level {
+            background: #10B981;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .user-rank {
+            background: #EF4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .user-type {
+            background: #8B5CF6;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.9;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        /* 메인 컨테이너 */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* 페이지 타이틀 */
+        .page-intro {
+            margin-bottom: 24px;
+        }
+
+        .page-intro p {
+            color: #D97706;
+            font-size: 20px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border-left: 4px solid #F59E0B;
+            text-align: center;
+        }
+
+        /* 검색 섹션 */
+        .search-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            gap: 12px;
+        }
+
+        .search-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid #F59E0B;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #D97706;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #F59E0B;
+        }
+
+        .search-btn {
+            padding: 14px 32px;
+            background: #F59E0B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-btn:hover {
+            background: #D97706;
+        }
+
+        /* 탭 메뉴 + 글쓰기 버튼 */
+        .tab-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 16px;
+        }
+
+        .tab-menu {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* 코치에게 묻기 버튼 */
+        .ask-coach-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+            white-space: nowrap;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ask-coach-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .tab-btn:not(.active) {
+            background: white;
+            color: #64748B;
+            border-color: #E2E8F0;
+        }
+
+        .tab-btn:not(.active):hover {
+            border-color: #F59E0B;
+            color: #F59E0B;
+        }
+
+        /* 특별 탭 색상 */
+        .tab-btn.coach.active {
+            background: #8B5CF6;
+        }
+
+        .tab-btn.coach:not(.active) {
+            border-color: #8B5CF6;
+            color: #8B5CF6;
+        }
+
+        .write-btn {
+            padding: 12px 24px;
+            background: #F59E0B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+            white-space: nowrap;
+        }
+
+        .write-btn:hover {
+            background: #D97706;
+            transform: translateY(-1px);
+        }
+
+        /* 정렬 옵션 */
+        .sort-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .post-count {
+            font-size: 14px;
+            color: #64748B;
+        }
+
+        .post-count strong {
+            color: #1F2937;
+        }
+
+        .sort-select {
+            padding: 8px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* 게시글 목록 */
+        .post-list {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .post-item {
+            padding: 20px 24px;
+            border-bottom: 1px solid #F1F5F9;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .post-item:hover {
+            background: #FAFAFA;
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .post-badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-notice {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .badge-hot {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .badge-coach {
+            background: #EDE9FE;
+            color: #7C3AED;
+        }
+
+        .badge-board {
+            background: #F1F5F9;
+            color: #64748B;
+        }
+
+        .post-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .post-content-preview {
+            font-size: 14px;
+            color: #64748B;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #94A3B8;
+            flex-wrap: wrap;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .author-name {
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .author-name.coach {
+            color: #7C3AED;
+        }
+
+        .author-level {
+            color: white;
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* 레벨별 색상 (Lv.1~10) */
+        .author-level.lv-1 { background: #94A3B8; }
+        .author-level.lv-2 { background: #64748B; }
+        .author-level.lv-3 { background: #059669; }
+        .author-level.lv-4 { background: #10B981; }
+        .author-level.lv-5 { background: #3B82F6; }
+        .author-level.lv-6 { background: #6366F1; }
+        .author-level.lv-7 { background: #8B5CF6; }
+        .author-level.lv-8 { background: #A855F7; }
+        .author-level.lv-9 { background: #EC4899; }
+        .author-level.lv-10 { background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%); }
+
+        .author-rank {
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* 순위별 색상 (1~10위만, 11위 이후는 검정) */
+        .author-rank.rank-1 { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; }
+        .author-rank.rank-2 { background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%); color: #000; }
+        .author-rank.rank-3 { background: linear-gradient(135deg, #CD7F32 0%, #B87333 100%); color: white; }
+        .author-rank.rank-4 { background: #EF4444; color: white; }
+        .author-rank.rank-5 { background: #F97316; color: white; }
+        .author-rank.rank-6 { background: #F59E0B; color: white; }
+        .author-rank.rank-7 { background: #84CC16; color: white; }
+        .author-rank.rank-8 { background: #22C55E; color: white; }
+        .author-rank.rank-9 { background: #14B8A6; color: white; }
+        .author-rank.rank-10 { background: #06B6D4; color: white; }
+        .author-rank.rank-normal { background: #1F2937; color: white; }
+
+        .author-type-badge {
+            background: #8B5CF6;
+            color: white;
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* 소속 센터 */
+        .author-center {
+            background: #E0F2FE;
+            color: #0369A1;
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* 검색 결과 없음 */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748B;
+        }
+        .no-results-icon { font-size: 48px; margin-bottom: 16px; }
+        .no-results-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #1F2937; }
+        .no-results-desc { font-size: 14px; }
+
+        .meta-divider {
+            width: 1px;
+            height: 12px;
+            background: #E2E8F0;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .meta-item.likes {
+            color: #EF4444;
+        }
+
+        /* 페이지네이션 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .page-btn {
+            padding: 8px 14px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            background: white;
+            color: #64748B;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .page-btn:hover {
+            border-color: #F59E0B;
+            color: #F59E0B;
+        }
+
+        .page-btn.active {
+            background: #F59E0B;
+            color: white;
+            border-color: #F59E0B;
+        }
+
+        /* 글쓰기 모달 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 12px;
+        }
+
+        .modal-desc {
+            color: #64748B;
+            margin-bottom: 24px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .modal-btn.primary {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            background: #D97706;
+        }
+
+        .modal-btn.coach {
+            background: #8B5CF6;
+            color: white;
+        }
+
+        .modal-btn.coach:hover {
+            background: #7C3AED;
+        }
+
+        .modal-btn.cancel {
+            background: #F1F5F9;
+            color: #64748B;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #E2E8F0;
+        }
+
+        .modal-btn.disabled {
+            background: #E2E8F0;
+            color: #94A3B8;
+            cursor: not-allowed;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .tab-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .tab-menu {
+                justify-content: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .ask-coach-btn,
+            .write-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .post-meta {
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-wrapper {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-inner">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <a href="index.html" class="back-link">← HDH Fintech</a>
+                <h1 class="header-title">HDH 실전 운영자 커뮤니티</h1>
+            </div>
+            <div class="header-user">
+                <div class="user-info">
+                    <span class="user-name">김철수</span>
+                    <span class="user-type">코치</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <main class="main-container">
+        <!-- 페이지 소개 -->
+        <div class="page-intro">
+            <p>HDH 솔루션 실전 운영자들끼리 정보를 공유하고 코치들의 도움을 받아 함께 성장하세요</p>
+        </div>
+
+        <!-- 검색 섹션 -->
+        <section class="search-section">
+            <div class="search-wrapper">
+                <div class="search-input-wrapper">
+                    <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="제목, 내용, 작성자로 검색">
+                </div>
+                <button class="search-btn">검색</button>
+            </div>
+        </section>
+
+        <!-- 탭 메뉴 + 글쓰기 -->
+        <div class="tab-section">
+            <div class="tab-menu">
+                <button class="tab-btn active" data-board="all">전체</button>
+                <button class="tab-btn" data-board="notice">📢 공지사항</button>
+                <button class="tab-btn" data-board="greeting">👋 가입인사</button>
+                <button class="tab-btn coach" data-board="coach">🎓 코치</button>
+                <button class="tab-btn" data-board="qna">❓ Q&A</button>
+                <button class="tab-btn" data-board="info_share">📁 정보공유</button>
+                <button class="tab-btn" data-board="free">💬 자유</button>
+            </div>
+            <div class="action-buttons">
+                <a href="community-coaches.html" class="ask-coach-btn">🎓 코치에게 묻기</a>
+                <button class="write-btn" onclick="openWriteModal()">글쓰기</button>
+            </div>
+        </div>
+
+        <!-- 정렬 옵션 -->
+        <div class="sort-section">
+            <div class="post-count">
+                총 <strong>156</strong>개의 게시글
+            </div>
+            <select class="sort-select">
+                <option value="latest">최신순</option>
+                <option value="popular">공감순</option>
+                <option value="views">조회순</option>
+            </select>
+        </div>
+
+        <!-- 게시글 목록 -->
+        <div class="post-list">
+            <!-- 공지사항 -->
+            <div class="post-item" data-board="notice" data-author="관리자" onclick="location.href='community-post-detail.html'">
+                <div class="post-header">
+                    <span class="post-badge badge-notice">공지</span>
+                    <span class="post-badge badge-board">공지사항</span>
+                    <span class="post-title">12월 커뮤니티 이용 안내 및 규칙</span>
+                </div>
+                <p class="post-content-preview">
+                    안녕하세요, HDH 실전 운영자 여러분! 커뮤니티를 더욱 활발하고 건전하게 운영하기 위한 안내사항을 공유드립니다...
+                </p>
+                <div class="post-meta">
+                    <div class="author-info">
+                        <span class="author-name">관리자</span>
+                    </div>
+                    <span class="meta-divider"></span>
+                    <span>2024.12.09 10:00</span>
+                    <span class="meta-divider"></span>
+                    <span class="meta-item">👁 324</span>
+                    <span class="meta-item likes">👍 45</span>
+                    <span class="meta-item">💬 12</span>
+                </div>
+            </div>
+
+            <!-- 코치 게시글 -->
+            <div class="post-item" data-board="coach" data-author="박영수" onclick="location.href='community-post-detail.html'">
+                <div class="post-header">
+                    <span class="post-badge badge-hot">Hot</span>
+                    <span class="post-badge badge-coach">코치</span>
+                    <span class="post-title">84:16 전략 실전 적용 노하우 공유합니다</span>
+                </div>
+                <p class="post-content-preview">
+                    안녕하세요, 코치 박영수입니다. 많은 분들이 84:16 전략에 대해 궁금해하셔서 제가 실전에서 적용하는 방법을 공유해드립니다...
+                </p>
+                <div class="post-meta">
+                    <div class="author-info">
+                        <span class="author-name coach">박영수</span>
+                    </div>
+                    <span class="meta-divider"></span>
+                    <span>2024.12.08 14:30</span>
+                    <span class="meta-divider"></span>
+                    <span class="meta-item">👁 892</span>
+                    <span class="meta-item likes">👍 156</span>
+                    <span class="meta-item">💬 48</span>
+                </div>
+            </div>
+
+            <!-- Q&A 게시글 -->
+            <div class="post-item" data-board="qna" data-author="이민준" onclick="location.href='community-post-detail.html'">
+                <div class="post-header">
+                    <span class="post-badge badge-board">Q&A</span>
+                    <span class="post-title">챌린지 계좌 손절 타이밍에 대해 질문드립니다</span>
+                </div>
+                <p class="post-content-preview">
+                    안녕하세요, 초보 운영자입니다. 챌린지 계좌에서 손절을 어느 시점에 해야 하는지 고민이 됩니다. 선배님들의 조언 부탁드립니다...
+                </p>
+                <div class="post-meta">
+                    <div class="author-info">
+                        <span class="author-name">이민준</span>
+                        <span class="author-level lv-3">Lv.3</span>
+                        <span class="author-rank rank-normal">156위</span>
+                        <span class="author-center">서울센트럴</span>
+                    </div>
+                    <span class="meta-divider"></span>
+                    <span>2024.12.08 11:20</span>
+                    <span class="meta-divider"></span>
+                    <span class="meta-item">👁 156</span>
+                    <span class="meta-item likes">👍 23</span>
+                    <span class="meta-item">💬 15</span>
+                </div>
+            </div>
+
+            <!-- 정보공유 게시글 -->
+            <div class="post-item" data-board="info_share" data-author="김서연" onclick="location.href='community-post-detail.html'">
+                <div class="post-header">
+                    <span class="post-badge badge-board">정보공유</span>
+                    <span class="post-title">유용한 경제 캘린더 사이트 모음 공유합니다</span>
+                </div>
+                <p class="post-content-preview">
+                    트레이딩에 도움이 되는 경제 캘린더 사이트들을 정리해봤습니다. Investing.com, ForexFactory 등 각 사이트별 장단점도 함께 정리했어요...
+                </p>
+                <div class="post-meta">
+                    <div class="author-info">
+                        <span class="author-name">김서연</span>
+                        <span class="author-level lv-6">Lv.6</span>
+                        <span class="author-rank rank-8">8위</span>
+                        <span class="author-center">서울센트럴</span>
+                    </div>
+                    <span class="meta-divider"></span>
+                    <span>2024.12.07 16:45</span>
+                    <span class="meta-divider"></span>
+                    <span class="meta-item">👁 234</span>
+                    <span class="meta-item likes">👍 67</span>
+                    <span class="meta-item">💬 21</span>
+                </div>
+            </div>
+
+            <!-- 가입인사 게시글 -->
+            <div class="post-item" data-board="greeting" data-author="최동현" onclick="location.href='community-post-detail.html'">
+                <div class="post-header">
+                    <span class="post-badge badge-board">가입인사</span>
+                    <span class="post-title">안녕하세요! 신규 가입했습니다 🙋‍♂️</span>
+                </div>
+                <p class="post-content-preview">
+                    안녕하세요, 이번에 HDH 솔루션에 가입한 최동현입니다. 아카데미 교육도 마치고 이제 본격적으로 시작하려고 합니다. 잘 부탁드립니다!
+                </p>
+                <div class="post-meta">
+                    <div class="author-info">
+                        <span class="author-name">최동현</span>
+                        <span class="author-level lv-1">Lv.1</span>
+                        <span class="author-rank rank-normal">892위</span>
+                        <span class="author-center">서울센트럴</span>
+                    </div>
+                    <span class="meta-divider"></span>
+                    <span>2024.12.07 09:30</span>
+                    <span class="meta-divider"></span>
+                    <span class="meta-item">👁 45</span>
+                    <span class="meta-item likes">👍 18</span>
+                    <span class="meta-item">💬 8</span>
+                </div>
+            </div>
+
+            <!-- 자유게시판 게시글 -->
+            <div class="post-item" data-board="free" data-author="정하늘" onclick="location.href='community-post-detail.html'">
+                <div class="post-header">
+                    <span class="post-badge badge-board">자유</span>
+                    <span class="post-title">드디어 첫 Funded 달성했습니다! 🎉</span>
+                </div>
+                <p class="post-content-preview">
+                    3개월 만에 드디어 첫 Funded 달성했습니다! 중간에 포기하고 싶을 때도 많았는데, 커뮤니티 분들 덕분에 여기까지 올 수 있었습니다. 감사합니다!
+                </p>
+                <div class="post-meta">
+                    <div class="author-info">
+                        <span class="author-name">정하늘</span>
+                        <span class="author-level lv-5">Lv.5</span>
+                        <span class="author-rank rank-normal">42위</span>
+                        <span class="author-center">서울센트럴</span>
+                    </div>
+                    <span class="meta-divider"></span>
+                    <span>2024.12.06 18:20</span>
+                    <span class="meta-divider"></span>
+                    <span class="meta-item">👁 312</span>
+                    <span class="meta-item likes">👍 89</span>
+                    <span class="meta-item">💬 34</span>
+                </div>
+            </div>
+
+            <!-- 코치 게시글 2 -->
+            <div class="post-item" data-board="coach" data-author="김지훈" onclick="location.href='community-post-detail.html'">
+                <div class="post-header">
+                    <span class="post-badge badge-coach">코치</span>
+                    <span class="post-title">이번 주 시장 분석 및 주의사항 안내</span>
+                </div>
+                <p class="post-content-preview">
+                    이번 주는 FOMC 회의와 고용지표 발표가 예정되어 있습니다. 변동성이 커질 수 있으니 포지션 관리에 유의하시기 바랍니다...
+                </p>
+                <div class="post-meta">
+                    <div class="author-info">
+                        <span class="author-name coach">김지훈</span>
+                    </div>
+                    <span class="meta-divider"></span>
+                    <span>2024.12.06 08:00</span>
+                    <span class="meta-divider"></span>
+                    <span class="meta-item">👁 567</span>
+                    <span class="meta-item likes">👍 98</span>
+                    <span class="meta-item">💬 27</span>
+                </div>
+            </div>
+
+            <!-- 검색 결과 없음 메시지 -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-icon">🔍</div>
+                <div class="no-results-title">검색 결과가 없습니다</div>
+                <div class="no-results-desc">다른 검색어를 입력하거나 다른 게시판을 선택해보세요</div>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+            <button class="page-btn">←</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
+            <button class="page-btn">→</button>
+        </div>
+    </main>
+
+    <!-- 글쓰기 모달 -->
+    <div class="modal-overlay" id="writeModal">
+        <div class="modal-content">
+            <h2 class="modal-title">게시판 선택</h2>
+            <p class="modal-desc">어떤 게시판에 글을 작성하시겠습니까?</p>
+            <div class="modal-buttons">
+                <a href="community-post-create.html?board=greeting" class="modal-btn primary">👋 가입인사</a>
+                <a href="community-post-create.html?board=qna" class="modal-btn primary">❓ Q&A</a>
+                <a href="community-post-create.html?board=info_share" class="modal-btn primary">📁 정보공유</a>
+                <a href="community-post-create.html?board=free" class="modal-btn primary">💬 자유게시판</a>
+                <a href="community-post-create.html?board=coach" class="modal-btn coach" id="coachBtn">🎓 코치 게시판</a>
+                <button class="modal-btn cancel" onclick="closeWriteModal()">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 현재 필터 상태
+        let currentBoard = 'all';
+        let currentSearch = '';
+
+        // 게시글 필터링 함수
+        function filterPosts() {
+            const posts = document.querySelectorAll('.post-item');
+            const noResults = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            posts.forEach(post => {
+                const postBoard = post.dataset.board;
+                const postAuthor = post.dataset.author || '';
+                const postTitle = post.querySelector('.post-title').textContent.toLowerCase();
+                const postContent = post.querySelector('.post-content-preview').textContent.toLowerCase();
+
+                // 게시판 필터
+                const boardMatch = currentBoard === 'all' || postBoard === currentBoard;
+
+                // 검색 필터
+                const searchTerm = currentSearch.toLowerCase();
+                const searchMatch = !searchTerm ||
+                    postTitle.includes(searchTerm) ||
+                    postContent.includes(searchTerm) ||
+                    postAuthor.includes(searchTerm);
+
+                if (boardMatch && searchMatch) {
+                    post.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+
+            // 검색 결과 없음 표시
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // 탭 전환
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentBoard = this.dataset.board;
+                filterPosts();
+            });
+        });
+
+        // 검색 기능
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-btn');
+
+        searchBtn.addEventListener('click', function() {
+            currentSearch = searchInput.value.trim();
+            filterPosts();
+        });
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                currentSearch = searchInput.value.trim();
+                filterPosts();
+            }
+        });
+
+        // 실시간 검색 (입력할 때마다)
+        searchInput.addEventListener('input', function() {
+            currentSearch = searchInput.value.trim();
+            filterPosts();
+        });
+
+        // 글쓰기 모달
+        function openWriteModal() {
+            document.getElementById('writeModal').classList.add('show');
+        }
+
+        function closeWriteModal() {
+            document.getElementById('writeModal').classList.remove('show');
+        }
+
+        // 모달 외부 클릭 시 닫기
+        document.getElementById('writeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWriteModal();
+            }
+        });
+
+        // 코치가 아닌 경우 코치 게시판 버튼 비활성화 (데모용)
+        // 실제 구현에서는 서버에서 사용자 권한 확인
+        const isCoach = true; // 데모: true로 설정
+        if (!isCoach) {
+            const coachBtn = document.getElementById('coachBtn');
+            coachBtn.classList.add('disabled');
+            coachBtn.onclick = function(e) {
+                e.preventDefault();
+                alert('코치만 작성할 수 있는 게시판입니다.');
+            };
+        }
+    </script>
+</body>
+</html>

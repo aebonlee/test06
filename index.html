@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUNNY ECONOMIC ECOSYSTEM</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-container {
+            min-height: 100vh;
+            background: #FFFFFF;
+        }
+
+        .main-content {
+            padding: 20px 20px 40px 20px;
+        }
+
+        /* 헤더 */
+        header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            padding: 24px 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Roboto Condensed', sans-serif;
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-name {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .btn-login, .btn-logout, .btn-signup {
+            background: white;
+            color: #D97706;
+            border: 2px solid white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover, .btn-logout:hover, .btn-signup:hover {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-signup {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-signup:hover {
+            background: white;
+            color: #D97706;
+        }
+
+        /* 메인 타이틀 */
+        .main-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-title h2 {
+            color: #000000;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .ecosystem-desc {
+            max-width: 900px;
+            margin: 0 auto 32px;
+            padding: 32px;
+            background: #F8FAFC;
+            border-radius: 16px;
+            border: 2px solid #E2E8F0;
+        }
+
+        .ecosystem-desc p:first-child {
+            color: #000000;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .ecosystem-desc p:nth-child(2) {
+            color: #000000;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        /* 캐치프레이즈 */
+        .catchphrase {
+            max-width: 900px;
+            margin: 0 auto 32px;
+            padding: 32px;
+            background: #F8FAFC;
+            border-radius: 16px;
+            border: 2px solid #E2E8F0;
+        }
+
+        .catchphrase-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #F59E0B;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .catchphrase-subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            color: #D97706;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .catchphrase-intro {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000000;
+            text-align: center;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .catchphrase-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .catchphrase-item {
+            font-size: 15px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .item-number {
+            font-weight: 700;
+            color: #D97706;
+        }
+
+        .highlight-gold {
+            color: #F59E0B;
+            font-weight: 700;
+        }
+
+        .highlight-green {
+            color: #10B981;
+            font-weight: 700;
+        }
+
+        .service-intro {
+            color: #333333;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* 서비스 카드 */
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services-section {
+            margin-bottom: 48px;
+        }
+
+        .services-section-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid #F59E0B;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-section-notice {
+            text-align: center;
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 32px;
+        }
+
+        .services-row {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 32px;
+            width: 340px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #10B981;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .service-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 48px;
+        }
+
+        /* 황금쌀 로고 */
+        .rice-logo {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transform: rotate(-15deg);
+        }
+
+        .rice-grain {
+            width: 12px;
+            height: 22px;
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            border-radius: 40%;
+            box-shadow: 0 2px 4px rgba(217, 119, 6, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+            display: inline-block;
+        }
+
+        .rice-grain:nth-child(1) {
+            transform: rotate(-5deg);
+        }
+
+        .rice-grain:nth-child(2) {
+            transform: rotate(5deg);
+            margin-top: 2px;
+        }
+
+        .rice-grain:nth-child(3) {
+            transform: rotate(-3deg);
+            margin-top: -1px;
+        }
+
+        .service-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 8px;
+            white-space: pre-line;
+        }
+
+        .service-subtitle {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .service-description {
+            font-size: 15px;
+            color: #333333;
+            margin-bottom: 28px;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .btn-enter {
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        /* 푸터 */
+        .footer {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            padding: 20px 20px;
+            box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            color: white;
+        }
+
+        .footer-credit {
+            font-size: 16px;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* 상세 페이지 */
+        .detail-container {
+            background: #FFFFFF;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .detail-card {
+            width: 100%;
+            background: white;
+        }
+
+        .detail-header {
+            padding: 12px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .detail-header-icon {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .detail-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .detail-header p {
+            margin: 3px 0 0;
+            opacity: 0.9;
+            font-size: 13px;
+        }
+
+        .detail-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 40px;
+        }
+
+        .detail-sections-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .detail-section {
+            padding: 20px;
+            background: #F8FAFC;
+            border-radius: 12px;
+            border-left: 5px solid;
+        }
+
+        .detail-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .detail-section p {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        .detail-section ul {
+            margin-top: 12px;
+            padding-left: 20px;
+        }
+
+        .detail-section li {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        .requirements-title {
+            margin-bottom: 16px;
+            margin-top: 24px;
+            color: #333;
+            font-size: 17px;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #F8FAFC;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .requirement-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            margin-right: 12px;
+            font-size: 13px;
+        }
+
+        .btn-activate {
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        .btn-back {
+            background: #E2E8F0;
+            color: #64748B;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #10B981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 40px;
+        }
+
+        .success-title {
+            color: #10B981;
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+
+        .success-message {
+            color: #666;
+            margin-bottom: 32px;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* 모바일 전용 줄바꿈 - PC에서는 숨김 */
+        .mobile-br {
+            display: none;
+        }
+
+        /* 모바일 반응형 디자인 */
+        @media (max-width: 768px) {
+            /* 헤더 */
+            header {
+                padding: 16px 20px;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+                align-items: center;
+            }
+
+            h1 {
+                font-size: 24px;
+                text-align: center;
+                letter-spacing: 1px;
+            }
+
+            .user-info {
+                width: 100%;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .btn-login, .btn-logout, .btn-signup {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            /* 메인 콘텐츠 */
+            .main-content {
+                padding: 24px 16px;
+            }
+
+            .main-title {
+                font-size: 28px;
+                margin-bottom: 24px;
+            }
+
+            .intro-section {
+                margin-bottom: 32px;
+            }
+
+            .intro-section p {
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            /* 서비스 섹션 */
+            .services-section {
+                margin-bottom: 32px;
+            }
+
+            .services-section-title {
+                font-size: 20px;
+                margin-bottom: 12px;
+                padding-bottom: 12px;
+            }
+
+            .services-section-notice {
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+            /* 서비스 카드 - 세로 배치 */
+            .services-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .service-card {
+                width: 100%;
+                max-width: 380px;
+                padding: 32px 24px;
+            }
+
+            .service-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+                margin-bottom: 20px;
+            }
+
+            .service-title {
+                font-size: 22px;
+                margin-bottom: 8px;
+            }
+
+            .service-subtitle {
+                font-size: 14px;
+                margin-bottom: 14px;
+            }
+
+            .service-description {
+                font-size: 14px;
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+
+            .btn-more {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            /* 상세 페이지 */
+            .detail-header {
+                padding: 16px 24px;
+            }
+
+            .detail-header-icon {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            .detail-header h2 {
+                font-size: 20px;
+            }
+
+            .detail-header p {
+                font-size: 13px;
+            }
+
+            .detail-content {
+                padding: 24px 16px;
+            }
+
+            /* 상세 페이지 그리드 - 모바일에서 1열 */
+            .detail-sections-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .detail-section {
+                margin-bottom: 0;
+                padding: 16px;
+            }
+
+            .detail-section h3 {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            .detail-section p {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .detail-section ul {
+                padding-left: 16px;
+            }
+
+            .detail-section li {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            .section-title {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+
+            .section-content {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            /* 버튼 */
+            .btn-activate, .btn-back {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            /* 푸터 */
+            footer {
+                padding: 24px 20px;
+                font-size: 13px;
+            }
+
+            /* 모바일에서 줄바꿈 표시 */
+            .mobile-br {
+                display: inline;
+            }
+        }
+
+        /* 작은 모바일 (360px 이하) */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .main-title {
+                font-size: 24px;
+            }
+
+            .service-card {
+                padding: 24px 20px;
+            }
+
+            .service-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 36px;
+            }
+
+            .service-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 메인 페이지 -->
+    <div id="mainPage" class="main-container">
+        <!-- 헤더 -->
+        <header>
+            <div class="header-inner">
+                <h1>SUNNY ECONOMIC ECOSYSTEM</h1>
+                <div class="user-info">
+                    <span id="userName" class="user-name hidden"></span>
+                    <button id="btnSignup" class="btn-signup">회원가입</button>
+                    <button id="btnLogin" class="btn-login">로그인</button>
+                    <button id="btnLogout" class="btn-logout hidden">로그아웃</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content">
+        <!-- 메인 타이틀 -->
+        <div class="main-title">
+            <h2>for ProActive Senior & Startup Growth</h2>
+
+            <!-- SUNNY ECONOMIC ECOSYSTEM 설명 -->
+            <div class="ecosystem-desc">
+                <p>
+                    SUNNY ECONOMIC ECOSYSTEM은
+                </p>
+                <p>
+                    <span class="highlight-gold">ProActive Senior</span>와 <span class="highlight-green">스타트업</span>이 함께 성장하는 선순환 경제 생태계입니다.
+                </p>
+            </div>
+
+            <!-- 캐치프레이즈 -->
+            <div class="catchphrase">
+                <h3 class="catchphrase-title">SEE the Future</h3>
+                <p class="catchphrase-subtitle">당신의 황금기는 지금부터입니다</p>
+                <p class="catchphrase-intro">
+                    <span class="highlight-gold">ProActive Senior</span> 여러분, <span class="highlight-gold">SEE Member</span>가 되어 다음 세 가지를 함께 합시다!
+                </p>
+                <div class="catchphrase-items">
+                    <p class="catchphrase-item"><span class="item-number">1.</span> 검증된 HDH 핀테크 솔루션을 직접 운영하여, 매월 500만원 이상의 안정적인 고정 수입을 만듭시다.</p>
+                    <p class="catchphrase-item"><span class="item-number">2.</span> AI를 활용한 웹 서비스를 직접 개발하여 새로운 수익을 창출하고, 그 혁신적 사업을 자녀에게 물려줍시다.</p>
+                    <p class="catchphrase-item"><span class="item-number">3.</span> 평생 쌓아온 당신의 지식과 경험, 그리고 자본으로 대한민국 미래를 이끌 수많은 스타트업을 함께 키웁시다.</p>
+                </div>
+            </div>
+        </div>
+        <!-- 서비스 카드 -->
+        <div class="services-container">
+            <!-- Basic Services Section -->
+            <div class="services-section">
+                <h3 class="services-section-title">Basic Services</h3>
+                <p class="services-section-notice">※ 추가 인증 절차를 거쳐 이용 가능합니다.</p>
+                <div class="services-row" id="coreServices"></div>
+            </div>
+
+            <!-- Extended Services Section -->
+            <div class="services-section">
+                <h3 class="services-section-title">Extended Services</h3>
+                <p class="services-section-notice">※ 순차적으로 오픈 예정입니다.</p>
+                <div class="services-row" id="connectedServices"></div>
+            </div>
+        </div>
+
+        <!-- 상세 페이지 (서비스 영역 내부) -->
+        <div id="detailPage" class="detail-container hidden">
+            <div class="detail-card">
+                <div id="detailHeader" class="detail-header">
+                    <div id="detailIcon" class="detail-header-icon"></div>
+                    <h2 id="detailTitle"></h2>
+                    <p id="detailSubtitle"></p>
+                </div>
+
+                <div class="detail-content">
+                    <div id="detailSections"></div>
+                    <div id="requirementsSection"></div>
+                    <button id="btnBack" class="btn-back">← 포털로 돌아가기</button>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        <!-- main-content 끝 -->
+
+        <!-- 푸터 -->
+        <div class="footer">
+            <div class="footer-inner">
+                <p class="footer-credit">© 2025 SUNNY ECONOMIC ECOSYSTEM.<br class="mobile-br"> All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 데이터
+        const services = [
+            // 기본 서비스 (Basic Services)
+            // 1. HDH Fintech - 황금색 (메인)
+            {
+                id: 'hdh',
+                title: 'HDH Fintech',
+                subtitle: '극저위험 · 자동화 핀테크 솔루션',
+                description: '월 500만원 내외의 안정적 수입을 창출하는 극저위험 자동화 핀테크 솔루션\n(하루 1시간 내외 투입)',
+                color: '#F59E0B',
+                icon: '💰',
+                hasDetailPage: true,
+                requirements: ['투자 여력 확인 (₩4,500만원)', '적합성 검사', '자동화 시스템 교육']
+            },
+            // 2. SSAL Works - 네이비
+            {
+                id: 'ssal',
+                title: 'SSAL Works',
+                subtitle: 'AI 창업 실행 플랫폼',
+                description: 'AI와 함께 나만의 웹서비스를 직접 만들어서 운영하는 창업 실행 플랫폼\n(1인 or 공동 창업 가능)',
+                color: '#2C4A8A',
+                icon: '🎯',
+                hasDetailPage: true,
+                requirements: ['창업 아이디어 준비', '플랫폼 이용약관 동의']
+            },
+            // 3. Startup Supporter - 초록색
+            {
+                id: 'startup',
+                title: 'Startup Supporter',
+                subtitle: '스타트업 성장 지원 플랫폼',
+                description: 'ProActive Senior들이 전문성과 경험을 바탕으로 스타트업을 멘토링하고 투자도 하여 성장시키는 플랫폼',
+                color: '#10B981',
+                icon: '🚀',
+                hasDetailPage: true,
+                isComingSoon: true,
+                requirements: ['전문성 검증', '투자 재원 확인', '멘토 심사']
+            },
+            // 확장 서비스 (Extended Services) - 보라색 계열
+            {
+                id: 'sites',
+                title: 'Service Site Hub',
+                subtitle: 'AI 기반 전문 서비스 통합 허브',
+                description: 'ProActive Senior들이 SSAL Works로 직접 제작한 7개 분야의 AI 기반 전문 서비스를 제공하는 통합 플랫폼',
+                color: '#8B5CF6',
+                icon: '🌐',
+                hasDetailPage: true
+            },
+            {
+                id: 'valuation',
+                title: 'Company Valuation Platform',
+                subtitle: 'AI 기반 기업가치 평가 플랫폼',
+                description: 'AI와 공인회계사가 협업하여 기업가치 평가부터 투자자 매칭까지 원스톱으로 제공하는 통합 플랫폼',
+                color: '#A855F7',
+                icon: '📊',
+                hasDetailPage: true,
+                isComingSoon: true
+            },
+            {
+                id: 'hipus',
+                title: 'HIPUS\nAI',
+                subtitle: 'AI 기반 실시간 경영정보 시스템',
+                description: '회계·인사·매입매출·전자결재 데이터를 실시간으로 연결하여 현금흐름 중심의 경영정보를 AI가 자동 생성하는 시스템',
+                color: '#7C3AED',
+                icon: '📈',
+                hasDetailPage: true,
+                isComingSoon: true
+            }
+        ];
+
+        const detailContent = {
+            hdh: {
+                sections: [
+                    {
+                        title: 'HDH의 의미',
+                        content: `HDH는 이 솔루션을 개발한 세 사람의 이름에서 영어 철자 한 개씩을 가져와서 만들어진 것입니다.
+'하', '대', '호' - 세 글자의 영문 이니셜 H, D, H를 조합하여 'HDH'가 되었습니다.
+
+10년간 세 명의 개발자가 함께 연구하고 검증한 결과물,
+그것이 바로 HDH Fintech입니다.`
+                    },
+                    {
+                        title: '왜 HDH Fintech인가?',
+                        content: `10년간 찾아낸 솔루션
+
+ProActive Senior의 현실:
+• 은퇴 후 안정적 수입원 필요
+• 연금만으로는 부족한 생활비
+• 자산은 있지만 활용 방법 모름
+• 일하고 싶지만 체력적 한계
+• 금융 투자는 위험하고 복잡함
+
+HDH Fintech의 답:
+• 월 500만원 안정적 수입 (하루 1시간 내외 투입)
+• 극저위험 자동화 시스템 (10년 검증)
+• 복잡한 기술 불필요 (3일 교육으로 시작)
+• 5060세대 최적화 솔루션
+• 은퇴 후 경제적 자립의 해법`
+                    },
+                    {
+                        title: '선순환 생태계',
+                        content: `HDH Fintech가 만드는 지속 가능한 경제 생태계
+
+• 안정적 수입이 있어야 스타트업 서포팅 가능
+• ProActive Senior의 경험과 여유를 스타트업 멘토링에 투자
+• 경제적 자립 → 사회 기여 → 지속 가능한 선순환
+
+HDH Fintech는 단순한 수익 창출을 넘어,
+ProActive Senior와 스타트업이 함께 성장하는 생태계의 시작점입니다.`
+                    },
+                    {
+                        title: '10년간 축적된 데이터 기반의 최적화 정보 서비스',
+                        content: `수백 명이 10년간 실제로 검증한 극저위험 자동화 핀테크 솔루션
+
+실적 데이터:
+• 월 500만원 내외 안정적 수입 (보수적 추정, 실제 더 높음)
+• 하루 1시간 내외 투입
+• 초기 투자금: 5천만원
+• 5060세대 ProActive Senior 대상
+• 10년간 축적된 데이터 기반 지속 최적화
+• 커뮤니티 기반 상호 지원`
+                    },
+                    {
+                        title: '핵심 솔루션 구조',
+                        content: `프롭펌 챌린지 + 헷지 전략 기반 금선물 CFD 거래
+
+시스템 구조:
+• 프롭펌(Prop Firm) 챌린지 시스템 활용
+• 금선물 CFD 거래 (높은 변동성 활용)
+• 챌린지 계좌 + 스캘핑 계좌 반대 포지션
+• 완벽한 헷지로 리스크 상쇄
+
+AI 자동화 시스템:
+• 원클릭 동시 진입 (2개 계좌 동시 실행, 50ms 이내)
+• 음성 명령 지원 (설정 및 거래)
+• 조건 도달 시 자동 청산
+• 리스크 관리 완전 자동화
+• 감정적 판단 개입 최소화`
+                    },
+                    {
+                        title: '추천인 제도 & 시작하기',
+                        content: `검증된 사용자를 통한 안전한 확산
+
+회원 등급:
+• 열람 회원 (무료) - 정보 확인
+• 활동 회원 (추천인 필요) - 실제 운영
+
+가입 절차:
+• 추천인 코드 확보 → 투자 여력 확인 → 적합성 검사 → 교육 이수 → 운영 시작
+
+운영 방식:
+• 기존 사용자의 1:1 가이드
+• 실시간 모니터링 대시보드 제공
+• 초보자도 3일 교육으로 운영 가능
+• 책임감 있는 성장 관리`
+                    }
+                ]
+            },
+            ssal: {
+                sections: [
+                    {
+                        title: '기술은 몰라도, 내 사이트는 내가 만든다',
+                        content: `SSAL Works는 코딩을 배우지 않고도 AI와 협업하여 실제 웹서비스를 만들고 운영하는 창업 실행 플랫폼입니다.
+
+핵심 가치:
+• 기술 장벽 제로 - 컴퓨터로 글을 쓸 수 있으면 OK
+• 교육이 아닌 실행 - 배우면서 바로 만듭니다
+• AI가 개발 파트너 - Claude Code가 함께 작업
+• 1인 또는 공동 창업 모두 가능
+• PROJECT SSAL GRID로 체계적 프로젝트 관리
+• 학습 콘텐츠 (Books) 제공`
+                    },
+                    {
+                        title: '가격 정책 (가치 기반)',
+                        content: `빌더 계정 개설비: ₩3,000,000 (VAT 포함)
+• 플랫폼 설치 및 초기 세팅
+• 초기 AI 크레딧 ₩50,000 제공
+• 학습 콘텐츠 전체 액세스
+• 멘토링 및 자문 포함
+
+플랫폼 이용료: ₩50,000/월 (VAT 포함)
+• 처음 3개월 면제 (적응 기간)
+• 4개월차부터 월 ₩50,000
+• 플랫폼 풀 액세스
+• CPA + 엑셀러레이터 자문 포함`
+                    },
+                    {
+                        title: 'AI 크레딧 시스템',
+                        content: `크레딧 차감 방식으로 필요할 때만 사용
+
+• ChatGPT, Gemini, Perplexity API 연동
+• 각 AI 서비스를 별도로 유료 구독하지 않아도 됨
+• 빌더 계정 개설 시 웰컴 크레딧 ₩50,000 제공
+• 크레딧 충전: ₩10,000 / ₩20,000 / ₩30,000 / ₩50,000
+
+ChatGPT: 코드 작성, 문서 생성, 개발 질문 답변
+Gemini: 코드 리뷰, 설계 관련 질문 답변
+Perplexity: 검색 기반 정확한 정보, 최신 기술 동향`
+                    },
+                    {
+                        title: '50% 환불 + 전문가 자문',
+                        content: `3개월 내 성공 시 개설비 50% 환불 (₩1,500,000)
+
+성공 조건 (모두 달성):
+• 웹사이트 완성 및 공개 URL 배포
+• 도메인 연결하여 서비스 런칭
+• 고객 30명 확보
+
+CPA + 엑셀러레이터 자문 (플랫폼 이용료 포함):
+• 공인회계사(CPA)의 세무/회계 자문
+• 엑셀러레이터의 비즈니스 전략 자문
+• "써니에게 묻기" 기능으로 24-48시간 내 응답
+• 기술 + 비즈니스 토탈 솔루션`
+                    }
+                ]
+            },
+            startup: {
+                sections: [
+                    {
+                        title: 'ProActive Senior가 스타트업을 키운다',
+                        content: `전문성과 다양한 경험을 가진 ProActive Senior들이 스타트업을 멘토링하고 투자하여 성장시키는 플랫폼입니다.
+
+서비스 개요:
+• ProActive Senior: 은퇴 후에도 활동적으로 전문성 발휘
+• 스타트업: 경험 많은 멘토 + 투자 동시 확보
+• 상호 성장하는 Win-Win 생태계
+
+ProActive Senior가 제공하는 가치:
+• 실전 경험 기반의 멘토링 (이론이 아닌 실무)
+• 투자 + 멘토링 동시 제공 (자금 + 노하우)
+• 네트워크 연결 (업계 인맥 활용)
+• 성장 동반자로서의 지속적 지원`
+                    },
+                    {
+                        title: '전문 영역',
+                        content: `각 분야 최고 전문가들이 멘토로 활동합니다
+
+• 회계/세무/재무 - CPA, CFA, 재무전문가 (자금 관리, 세무 전략, 투자 유치 지원)
+• 법률/특허 - 변호사, 변리사 (법률 리스크 관리, 특허/IP 전략)
+• 기술/R&D - CTO, 수석연구원 (기술 개발 방향성, R&D 전략)
+• 마케팅/영업 - CMO, 영업본부장 (시장 진입 전략, 영업 조직 구축)
+• 경영전략 - CEO, COO (비즈니스 모델, 성장 전략)
+• 생산/SCM - 공장장, SCM 전문가 (생산 최적화, 공급망 관리)
+• HR/조직문화 - CHRO, 인사전문가 (조직 구성, 인재 채용/육성)`
+                    },
+                    {
+                        title: 'ProActive Senior에게 제공되는 것',
+                        content: `은퇴 후 새로운 활동 기회와 수익 창출
+
+활동 방식:
+• 비상근 프리랜서 (시간 자유)
+• 스타트업 5개사 선정하여 멘토링
+• 월 2~4회 멘토링 세션
+• 상장사 미등기 특별임원 지위
+• 계약 기간: 2년 (연장 가능)
+
+보상:
+• 멘토 1명당 ₩5억 투자 (스타트업 5개사 × ₩1억)
+• 월 고정급: ₩300,000~₩500,000 (스타트업당)
+• 성과 보너스 (성장 마일스톤 달성 시)
+• EXIT 성공 시 추가 인센티브
+
+핵심 가치:
+• 평생 쌓은 전문성을 사회에 환원
+• 새로운 여정과 성취감
+• 젊은 스타트업과 함께 성장
+• 경제적 수익 + 사회적 가치 실현`
+                    },
+                    {
+                        title: '소규모 상장사 경유 스타트업 투자 시스템',
+                        content: `소규모 상장사를 통한 투자로 유동성 문제 해결
+
+시스템 구조:
+• ProActive Senior 100명당 → 소규모 상장사 1개 인수/협력
+• 목표: 5,000명 확보 → 소규모 상장사 50개 확보
+• 모든 투자는 소규모 상장사를 경유하여 집행
+
+최종 목표:
+• 총 5,000개 성공 스타트업 육성
+• 성공 기준: 기업가치 ₩1,000억원 이상
+• ProActive Senior 1명당 평균 1개 성공 스타트업 배출
+
+투자 프로세스:
+1. ProActive Senior가 멘토링하며 유망 스타트업 발견
+2. 소규모 상장사에 투자 건의 및 제안
+3. 소규모 상장사가 실사 및 투자심사 진행
+4. 투자 결정 시 → 해당 멘토들이 소규모 상장사 유상증자 참여
+5. 유상증자로 모집한 자금으로 스타트업 투자 집행
+6. 소규모 상장사 + ProActive Senior가 함께 지속 지원
+
+핵심 장점:
+• 소규모 상장사 주식 보유로 유동성 확보 (현금화 가능)
+• 기존 엑셀러레이터의 유동성 문제 완벽 해결
+• 소규모 상장사 실사 + 멘토 검증 이중 안전장치
+• ProActive Senior는 현금 필요 시 소규모 상장사 주식 매도 가능
+• 스타트업 직접 투자의 장기 Lock-up 문제 해소
+
+소규모 상장사의 역할:
+• 투자 대상 스타트업 실사 및 심사
+• 투자 집행 및 관리
+• 스타트업 지원 활동 주도
+• ProActive Senior 멘토링 지원`
+                    },
+                    {
+                        title: '스타트업에게 제공되는 것',
+                        content: `멘토링 + 투자를 동시에 받는 성장 플랫폼
+
+스타트업이 얻는 것:
+• 초기 투자금 ₩1억 확보
+• 분야별 최고 전문가의 멘토링
+• 실전 경험 기반의 실질적 조언
+• 업계 네트워크 연결 (투자자/파트너사)
+• 추가 투자 유치 지원
+• Company Valuation Platform을 통한 객관적 평가
+• 상장사의 체계적 지원
+
+선정 기준:
+• 혁신적인 비즈니스 모델
+• 명확한 타겟 시장
+• 실행 가능한 팀
+• 성장 가능성 (Scalability)`
+                    }
+                ]
+            },
+            hipus: {
+                sections: [
+                    {
+                        title: 'HIPUS AI란?',
+                        content: `HIPUS (Hyper-Intelligent Pulse for Unified Systems)
+
+HIPUS AI는 기업의 중추신경계처럼 작동하는 AI 기반 경영정보 생성 시스템입니다.
+
+회계·인사·매입매출·전자결재 데이터를 하나의 실시간 신경망으로 연결하여,
+현금흐름 중심의 의사결정과 경영통제를 가능하게 합니다.
+
+단순한 데이터 집계가 아닌, AI가 데이터의 '맥동(pulse)'을 감지하여
+경영자에게 즉시 필요한 '신호(signal)'를 전달하는 지능형 시스템입니다.`
+                    },
+                    {
+                        title: '왜 HIPUS AI인가?',
+                        content: `전통적 경영 시스템의 한계
+
+기존 방식:
+• 회계·인사·매입매출이 각각 따로 관리됨
+• 데이터 통합은 주기적 배치 작업으로만 가능
+• 경영정보는 '과거' 데이터 중심의 정적 리포트
+• 의사결정 시점과 정보 제공 시점의 시차 발생
+
+HIPUS AI의 해법:
+• 모든 데이터를 실시간 신경망으로 통합
+• 발생 즉시 현금흐름에 반영되는 이벤트 기반 구조
+• AI가 맥동을 감지하여 예측적 인사이트 제공
+• 의사결정 순간에 필요한 정보를 즉시 생성`
+                    },
+                    {
+                        title: '핵심 차별점',
+                        content: `기업의 신경계로 작동하는 실시간 시스템
+
+전통적 시스템과의 차이:
+• 데이터 연계: 배치/주기적 수집 → 실시간 이벤트 스트림
+• 분석 방식: 과거 통계/집계 → AI 예측/맥동 분석
+• 정보 제공: 정적 보고서 → 동적 신호 감지
+• 현금흐름: 회계 결과로만 파악 → 실시간 중심축
+• 의사결정: 보고 중심 → 감지 중심
+
+HIPUS AI는 '보고'가 아닌 '감지'의 철학으로 설계되었습니다.
+
+기존 ERP/EIS는 데이터를 '보여주지만',
+HIPUS AI는 데이터를 '이해하고 예측'합니다.`
+                    },
+                    {
+                        title: '통합 데이터 구조',
+                        content: `하나의 신경망으로 연결되는 4대 핵심 영역
+
+회계 시스템:
+• 발생주의 회계 → 실시간 현금흐름 예측으로 전환
+• 모든 거래가 즉시 자금 Pulse로 변환
+
+인사 시스템:
+• 급여·근태 → 인건비 자금 흐름에 통합
+• 인력 변동이 즉시 현금흐름 예측에 반영
+
+매입·매출 시스템:
+• 거래 데이터 → 자금 유입·유출 신호로 직결
+• 매출채권·매입채무가 현금흐름 타임라인에 자동 배치
+
+전자결재 시스템:
+• 단순 승인 경로 → 실시간 의사결정 트리거
+• 결재 이벤트가 즉시 자금계획에 반영`
+                    },
+                    {
+                        title: 'AI 인사이트 생성',
+                        content: `데이터 맥동을 감지하는 지능형 분석
+
+실시간 맥동(Pulse) 감지:
+• 매출 패턴 변화 감지 → 현금흐름 예측 자동 조정
+• 인건비 증가 신호 → 자금 부족 사전 경고
+• 매입 집중 구간 탐지 → 지급 계획 최적화 제안
+• 결재 병목 인식 → 의사결정 지연 알림
+
+AI 자동 생성 정보:
+• 향후 3개월 현금흐름 예측
+• 부서별 수익성 실시간 분석
+• 자금 부족 시점 사전 경고
+• 의사결정 최적 타이밍 제안
+• 경영 이상 신호 자동 탐지`
+                    },
+                    {
+                        title: '스타트업을 위한 가치',
+                        content: `성장하는 스타트업의 필수 경영 도구
+
+스타트업이 얻는 것:
+• 복잡한 회계·인사·매입매출 시스템을 하나로 통합
+• 전문 인력 없이도 AI가 경영정보 자동 생성
+• 실시간 현금흐름 모니터링으로 자금 리스크 예방
+• 투자 유치 시 신뢰도 높은 경영 데이터 제공
+• Company Valuation Platform과 연동하여 기업가치 평가 자동화
+
+HIPUS AI는 스타트업이 '감'이 아닌 '데이터'로
+경영하도록 돕는 지능형 파트너입니다.`
+                    }
+                ]
+            },
+            valuation: {
+                sections: [
+                    {
+                        title: 'Company Valuation Platform이란?',
+                        content: `AI와 공인회계사가 함께하는 스마트 기업가치평가
+
+Company Valuation Platform은 AI 기술과 공인회계사의 전문성을 결합한
+국내 최초의 "평가 → 랭킹 → 투자매칭" 통합 플랫폼입니다.
+
+평가의 혁신:
+• 5가지 평가방법을 목적별로 선택 가능
+• AI 초안 작성 + 공인회계사 검증으로 빠르고 정확한 평가
+• 기존 2~3주 소요 → 3~7일로 단축
+
+플랫폼의 차별성:
+• 평가 후 자동 랭킹 시스템으로 투자자 노출 극대화
+• AI 아바타가 24시간 IR 대응 (다국어 지원)
+• 투자자 관심도를 실시간 추적하여 데이터 기반 IR 전략 수립
+• 포인트 순환경제로 평가 비용 회수 가능
+
+통합 생태계:
+평가받기 → 랭킹 노출 → AI 아바타 IR → 투자자 매칭
+→ 관심도 분석 → 전략적 IR → 투자 유치 성공`
+                    },
+                    {
+                        title: '5가지 평가방법과 AI 기술',
+                        content: `목적에 맞는 최적의 평가방법 선택
+
+DCF 평가법:
+• 투자유치, M&A에 최적화
+• 미래 현금흐름 기반 이론적 완성도 최고
+• WACC, 성장률 민감도 분석 포함
+
+상대가치평가법:
+• 간편 비교 평가, 시장 수용도 최고
+• PER, PBR, EV/EBITDA 등 시장 배수 활용
+
+자산가치평가법:
+• 자산 중심 기업, 지주회사, 부동산 기업
+• 순자산가치(NAV) 기반 객관적 하한선 제시
+
+자본시장법 평가법:
+• 합병/분할, 주식매수청구권, Pre-IPO 증자
+• 법적 강제성, 분쟁해결 기준
+• 자산가치 40% + 수익가치 60% 가중평균
+
+상증세법 평가법:
+• 가업승계, 상속/증여세 신고
+• 세무 리스크 최소화
+• 순손익가치 60% + 순자산가치 40% 가중평균
+
+AI Multi-Role 평가 엔진:
+• 5단계 AI 작업 프로세스 (기획 → 작성 → 검토 → 비판 → 최종수정)
+• 완성된 DCF 평가 엔진 (오차율 0.03%)
+• 5가지 평가법 통합 Master Engine 개발 중`
+                    },
+                    {
+                        title: '플랫폼 핵심 기술',
+                        content: `6가지 시스템의 유기적 통합
+
+실시간 랭킹 시스템:
+• 평가액, 성장성, 재무건전성, 시장지위, 경영진 역량 종합 평가
+• 카테고리별 랭킹: 이달의 TOP 10, 저평가 기업, 급성장 기업
+• 투자자에게 검증된 평가 데이터 제공
+
+AI 아바타 IR 서비스:
+• 24시간 365일 무인 투자자 질의응답
+• 다국어 지원 (한/영/중/일), 평균 3초 이내 응답
+• IR 비용 90% 절감, 글로벌 투자자 접근성 향상
+
+투자자 매칭 시스템:
+• 섹터, 투자규모, 단계, 지역, 리스크 프로파일 기반 자동 매칭
+• 투자자 행동 데이터 분석으로 최적 기업 발굴
+• 양측 관심 확인 후 연결로 투자 성공률 향상
+
+관심도 리포트:
+• 페이지 조회, 체류시간, AI 대화, 보고서 다운로드 등 행동 데이터 정량화
+• 투자자별 관심도 점수 산출 및 추이 분석
+• 데이터 기반 전략적 IR 수립 가능
+
+포인트 순환경제:
+• 투자자의 보고서 구매 수익 50%를 기업에 포인트 환급
+• 프리미엄 노출, AI 아바타, 관심도 리포트에 사용
+• 평가 비용 회수 가능한 지속 가능한 생태계`
+                    },
+                    {
+                        title: '스타트업을 위한 가치',
+                        content: `투자 유치의 첫걸음, 신뢰할 수 있는 기업가치평가
+
+스타트업이 얻는 것:
+• AI와 공인회계사 협업으로 전문가 수준의 기업가치평가
+• 평가 후 자동 랭킹으로 투자자 노출 극대화
+• AI 아바타로 24시간 투자자 대응, IR 비용 대폭 절감
+• 투자자 관심도 데이터로 전략적 IR 가능
+• 보고서 판매 수익 포인트 환급으로 비용 부담 감소
+
+투자자 매칭:
+• 기업과 투자자의 프로파일 기반 최적 매칭
+• 섹터, 투자규모, 단계, 지역 선호도 고려
+• 행동 데이터 분석으로 진짜 관심있는 투자자 발굴
+
+SUNNY ECONOMIC ECOSYSTEM 연계:
+• Company Valuation Platform으로 객관적 기업가치 평가
+• 평가 결과를 Startup Supporter에 자동 연동
+• ProActive Senior 멘토 매칭 시 신뢰도 높은 데이터 제공
+• HIPUS AI와 연동하여 실시간 경영정보 반영
+• 투자 유치, 멘토링, 경영관리를 통합 지원
+
+Company Valuation Platform은 스타트업이 '감'이 아닌 '데이터'로
+투자를 유치하도록 돕는 혁신적 파트너입니다.`
+                    }
+                ]
+            },
+            sites: {
+                sections: [
+                    {
+                        title: 'Service Site Hub란?',
+                        content: `ProActive Senior의 전문성과 경험이 AI를 만나서 탄생한 서비스 허브
+
+Service Site Hub는 수십년 실무 경험을 가진 ProActive Senior들이
+SSAL Works로 직접 제작한 AI 기반 전문 서비스를 제공하는 통합 플랫폼입니다.
+
+핵심 가치:
+• 경영지원부터 생활 전 영역까지 포괄하는 AI 기반 서비스
+• AI를 활용한 커뮤니티 기반 검색, 평가, 연결, 추천, 중개, 마켓, 소통 서비스 플랫폼
+• 단순한 수익 창출이 아닌 사회적 가치 창출
+
+서비스 제공 구조:
+ProActive Senior가 SSAL Works로 AI 기반 서비스 제작
+→ AI 품질 심사 통과
+→ Service Sites에 등록
+→ 사용자 이용 (기업/개인/단체)
+→ 수익 창출 (제공자 80% / 플랫폼 20%)
+
+차별화된 서비스 특징:
+
+실무 경험 + AI 기술:
+• 수십년 현장 경험을 가진 전문가가 직접 설계한 AI 서비스
+• 이론이 아닌 실전 노하우가 담긴 실용적 솔루션
+
+합리적 비용:
+• 대기업 컨설팅/서비스 대비 저렴한 비용
+• 스타트업과 중소기업이 실제로 이용 가능한 가격
+
+수시 업데이트 가능:
+• SSAL Works로 제작되어 빠른 개선 및 기능 추가
+• 시장 변화와 고객 피드백에 즉시 대응
+
+검증된 품질:
+• AI 품질 심사를 통과한 서비스만 제공
+• 사용자 평가 및 피드백 기반 지속 개선
+
+맞춤형 서비스:
+• 실제 니즈에 최적화된 서비스
+• 자율적 요금제 (월 구독, 건당 과금 등)
+• 필요한 기능만 선택하여 이용 가능`
+                    },
+                    {
+                        title: '2개 대분류 서비스 체계',
+                        content: `전문성과 AI 기술이 만드는 두 가지 서비스 영역
+
+분류 1: 스타트업 & 중소기업 경영지원
+ProActive Senior의 전문성과 수십년 실무 경험을 AI로 구현한 전문 경영지원 서비스
+
+회계/세무/재무:
+• AI 기반 재무제표 분석, 세무 최적화, 자금 관리 서비스
+• CPA 전문가의 실무 경험이 AI로 구현
+
+법률/특허:
+• AI 기반 계약서 검토, 특허 검색, 법률 리스크 분석 서비스
+• 변호사/변리사의 전문성을 AI로 확장
+
+기술/R&D:
+• AI 기반 기술 동향 분석, R&D 전략 수립, 기술 평가 서비스
+• CTO/수석연구원의 노하우가 담긴 AI 서비스
+
+마케팅/영업:
+• AI 기반 시장 분석, 마케팅 전략, 영업 최적화 서비스
+• CMO/영업본부장의 경험을 AI로 체계화
+
+경영전략:
+• AI 기반 비즈니스 모델 분석, 성장 전략, 경쟁 분석 서비스
+• CEO/COO의 전략적 사고를 AI로 구현
+
+생산/SCM:
+• AI 기반 생산 최적화, 공급망 관리, 품질 관리 서비스
+• 공장장/SCM 전문가의 현장 경험이 AI로 전환
+
+HR/조직문화:
+• AI 기반 인재 채용, 조직 진단, 교육 설계 서비스
+• CHRO/인사전문가의 인사이트를 AI로 활용
+
+분류 2: 경제·사회·문화·정치 커뮤니티 서비스
+AI를 활용한 커뮤니티 기반 검색, 평가, 연결, 추천, 중개, 마켓 서비스 플랫폼
+
+[경제 영역]
+• AI 커뮤니티: AI 제품/서비스 비교·평가·추천
+• 로봇 커뮤니티: 로봇 제품 비교·평가·추천·거래
+• 기타 경제생활 관련 커뮤니티 플랫폼
+
+[사회 영역]
+• 음식 커뮤니티: 음식점 비교·평가·추천·예약
+• 숙박업소 커뮤니티: 숙박 시설 비교·평가·추천·예약
+• 기타 사회생활 관련 커뮤니티 플랫폼
+
+[문화 영역]
+• 음악 커뮤니티: 음악 비교·평가·추천
+• 영화 커뮤니티: 영화 비교·평가·추천
+• 기타 문화생활 관련 커뮤니티 플랫폼
+
+[정치 영역]
+• 정치인 평가 서비스: 정치인 비교·평가·추천
+• 정책 분석 커뮤니티: 정책 비교·평가·토론
+• 기타 정치 관련 커뮤니티 플랫폼
+
+📘 <a href="finder_world_guide.html" target="_blank" style="color: #4CAF50; text-decoration: underline; font-weight: bold;">Finder World 종합 가이드: 카테고리 현황, 선별기준 및 사업화 전략 보기</a>`
+                    },
+                    {
+                        title: 'SUNNY ECONOMIC ECOSYSTEM 통합 연계',
+                        content: `생태계 전체가 함께 성장하는 선순환 구조
+
+SSAL Works 연계:
+• ProActive Senior가 SSAL Works로 AI 서비스 직접 제작
+• 전문성을 웹서비스로 구현하여 확장
+• 지속적인 업데이트와 개선으로 서비스 가치 증대
+
+HDH Fintech 연계:
+• ProActive Senior의 안정적 수입 기반 확보
+• 경제적 여유를 바탕으로 양질의 서비스 제작
+• 지속 가능한 서비스 제공 생태계 구축
+
+Startup Supporter 연계:
+• 멘토링 받는 스타트업에 실무 서비스 제공
+• ProActive Senior 멘토가 추천하는 검증된 서비스
+• 멘토링 + 실무 서비스로 스타트업 성공률 극대화
+• 소규모 상장사 투자 시 Service Sites 활용으로 기업 성장 지원
+
+경영지원 서비스 간 연계:
+• 회계/재무 ↔ 사업계획서 작성 ↔ 법률 서비스 통합
+• 스타트업/중소기업 원스톱 경영지원 체계 구축
+• 각 서비스의 데이터가 상호 연동되어 시너지 창출
+
+커뮤니티 서비스 확장:
+• 58개 Finder World 커뮤니티 단계적 출시
+• 경제·사회·문화·정치 전 영역 커버
+• AI를 활용한 커뮤니티 기반 검색, 평가, 연결, 추천, 중개, 마켓, 소통 서비스 플랫폼으로 성장
+
+Service Site Hub는 단순한 서비스 플랫폼이 아니라,
+SUNNY ECONOMIC ECOSYSTEM 전체를 연결하고 ProActive Senior의 전문성을
+사회 전체로 확산시키는 핵심 허브입니다.`
+                    }
+                ]
+            }
+        };
+
+        // 상태
+        let isLoggedIn = true;
+        let userName = '홍길동';
+        let serviceStatus = {
+            hdh: false,
+            ssal: false,
+            startup: false,
+            sites: false,
+            valuation: false,
+            hipus: false
+        };
+
+        // 초기화
+        function init() {
+            renderServices();
+            setupEventListeners();
+            updateLoginUI();
+        }
+
+        // 서비스 카드 렌더링
+        function renderServices() {
+            const coreContainer = document.getElementById('coreServices');
+            const connectedContainer = document.getElementById('connectedServices');
+
+            // 기본 서비스 (0-2)
+            coreContainer.innerHTML = services.slice(0, 3).map(service => createServiceCard(service)).join('');
+
+            // 확장 서비스 (3-5)
+            connectedContainer.innerHTML = services.slice(3, 6).map(service => createServiceCard(service)).join('');
+        }
+
+        function createServiceCard(service) {
+            // 기본 서비스: 더 보기 버튼
+            const button = service.hasDetailPage
+                ? `<button class="btn-enter" style="background: ${service.color};">더 보기 →</button>`
+                : '';
+
+            // SSAL Works는 황금쌀 로고 사용
+            const iconHTML = service.id === 'ssal'
+                ? `<span class="rice-logo">
+                    <span class="rice-grain"></span>
+                    <span class="rice-grain"></span>
+                    <span class="rice-grain"></span>
+                   </span>`
+                : service.icon;
+
+            // Service Site Hub는 카드에서 줄바꿈 표시
+            const displayTitle = service.id === 'sites'
+                ? service.title.replace('Service Site Hub', 'Service Site<br>Hub')
+                : service.title;
+
+            return `
+                <div class="service-card" ${service.hasDetailPage ? `onclick="handleServiceClick('${service.id}')"` : ''} style="${!service.hasDetailPage ? 'cursor: default;' : ''}">
+                    <div class="service-icon" style="background: ${service.color};">
+                        ${iconHTML}
+                    </div>
+                    <h3 class="service-title">${displayTitle}</h3>
+                    <p class="service-subtitle" style="color: ${service.color};">${service.subtitle}</p>
+                    <p class="service-description">${service.description}</p>
+                    ${button}
+                </div>
+            `;
+        }
+
+        // 이벤트 리스너
+        function setupEventListeners() {
+            document.getElementById('btnSignup').addEventListener('click', handleSignup);
+            document.getElementById('btnLogin').addEventListener('click', handleLogin);
+            document.getElementById('btnLogout').addEventListener('click', handleLogout);
+            document.getElementById('btnBack').addEventListener('click', handleBack);
+        }
+
+        function handleSignup() {
+            alert('회원가입 페이지로 이동합니다.');
+        }
+
+        function handleLogin() {
+            isLoggedIn = true;
+            userName = '홍길동';
+            updateLoginUI();
+        }
+
+        function handleLogout() {
+            isLoggedIn = false;
+            userName = '';
+            serviceStatus = {
+                hdh: false,
+                ssal: false,
+                startup: false,
+                sites: false,
+                valuation: false,
+                hipus: false
+            };
+            updateLoginUI();
+            renderServices();
+        }
+
+        function updateLoginUI() {
+            const userNameElement = document.getElementById('userName');
+            const btnSignup = document.getElementById('btnSignup');
+            const btnLogin = document.getElementById('btnLogin');
+            const btnLogout = document.getElementById('btnLogout');
+
+            if (isLoggedIn) {
+                userNameElement.textContent = `👤 ${userName}님`;
+                userNameElement.classList.remove('hidden');
+                btnSignup.classList.add('hidden');
+                btnLogin.classList.add('hidden');
+                btnLogout.classList.remove('hidden');
+            } else {
+                userNameElement.classList.add('hidden');
+                btnSignup.classList.remove('hidden');
+                btnLogin.classList.remove('hidden');
+                btnLogout.classList.add('hidden');
+            }
+        }
+
+        function handleServiceClick(serviceId) {
+            const service = services.find(s => s.id === serviceId);
+
+            if (!service.hasDetailPage) {
+                return;
+            }
+
+            showDetailPage(service);
+        }
+
+        function showDetailPage(service) {
+            // 서비스 컨테이너만 숨김
+            document.querySelector('.services-container').classList.add('hidden');
+            document.getElementById('detailPage').classList.remove('hidden');
+
+            // 헤더 설정
+            const detailHeader = document.querySelector('.detail-header');
+            detailHeader.style.background = service.color;
+            document.getElementById('detailIcon').textContent = service.icon;
+            document.getElementById('detailTitle').textContent = service.title;
+            document.getElementById('detailSubtitle').textContent = service.subtitle;
+
+            // 상세 섹션 렌더링 (2열 그리드)
+            const sections = detailContent[service.id].sections;
+            const sectionsHTML = `
+                <div class="detail-sections-grid">
+                    ${sections.map(section => `
+                        <div class="detail-section" style="border-left-color: ${service.color};">
+                            <h3 style="color: ${service.color};">${section.title}</h3>
+                            <p>${section.content}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('detailSections').innerHTML = sectionsHTML;
+
+            // 요구사항 섹션 (로그인 상태 및 서비스 준비 상태에 따라)
+            let requirementsHTML = '';
+
+            // 서비스 준비 중인 경우 (HIPUS AI 등)
+            if (service.isComingSoon) {
+                requirementsHTML = `
+                    <div style="text-align: center; padding: 40px 32px; background: #F3F4F6; border-radius: 12px; margin-top: 20px; margin-bottom: 16px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🚧</div>
+                        <h3 style="color: #6B7280; font-size: 20px; margin-bottom: 12px; font-weight: 700;">서비스 준비 중</h3>
+                        <p style="color: #9CA3AF; font-size: 15px; line-height: 1.6;">
+                            ${service.title.replace(/\n/g, ' ')}는 현재 개발 중입니다.<br/>
+                            빠른 시일 내에 여러분을 만나뵙겠습니다.
+                        </p>
+                    </div>
+                `;
+            } else if (!isLoggedIn) {
+                // 로그인 안 했을 때: 로그인 유도
+                requirementsHTML = `
+                    <div style="text-align: center; padding: 32px; background: #FEF3C7; border-radius: 12px; margin-bottom: 16px;">
+                        <p style="color: #92400E; font-size: 16px; margin-bottom: 16px;">
+                            ⚠️ 서비스 이용을 위해서는 먼저 회원가입을 하시고 아래의 입장하기 버튼을 눌러주세요.
+                        </p>
+                        <button class="btn-activate" style="background: ${service.color};" onclick="handleBack(); setTimeout(() => document.getElementById('btnSignup').click(), 100);">
+                            입장하기
+                        </button>
+                    </div>
+                `;
+            } else {
+                // 로그인 했을 때: 바로 입장하기 버튼
+                requirementsHTML = `
+                    <div style="text-align: center; padding: 32px; margin-top: 20px;">
+                        <button class="btn-activate" style="background: ${service.color};" onclick="handleActivate('${service.id}', '${service.color}')">
+                            입장하기
+                        </button>
+                    </div>
+                `;
+            }
+
+            document.getElementById('requirementsSection').innerHTML = requirementsHTML;
+        }
+
+        function handleActivate(serviceId, color) {
+            const service = services.find(s => s.id === serviceId);
+
+            // 각 서비스별 페이지 URL 매핑
+            const serviceUrls = {
+                hdh: 'HDH_Fintech/0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EA%B8%B0%ED%9A%8D/UI_UX_Mockup/index.html',
+                ssal: 'http://www.ssalworks.ai.kr',
+                startup: null,  // 준비 중
+                sites: 'service-hub.html',
+                valuation: null,
+                hipus: null
+            };
+
+            const pageUrl = serviceUrls[serviceId];
+
+            if (pageUrl) {
+                // 해당 서비스 페이지로 이동
+                window.location.href = pageUrl;
+            } else {
+                // 준비 중인 서비스
+                alert(`${service.title} 서비스는 현재 준비 중입니다.`);
+                serviceStatus[serviceId] = true;
+                handleBack();
+            }
+        }
+
+        function handleBack() {
+            document.getElementById('detailPage').classList.add('hidden');
+            document.querySelector('.services-container').classList.remove('hidden');
+            renderServices();
+        }
+
+        // 초기화 실행
+        init();
+    </script>
+</body>
+</html>

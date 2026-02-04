@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251124-72",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "자 그 다음번에 이제 작업할 내용을 음 얘기하겠다\n얻으면 대시보드에 추가할 기능들을 얘기하겠다\n1번째 FAQ 에 질문과 답을 작성할 수 있는 기능을 만들어라\n2번째 써니에게 묻기 예 질문을 저장하고 답을 음 쓸 수 있는 기능을 만들어라 그리고 컨트롤 보드랑 몇 개가 와서 몇 몇 개가 질문이 와서 몇 개가 답을 해서 몇 개가 남았다 이런 컨트롤 보드도 있어야 된다\n그다음에 에 돈 받는 거 관련해가지고 사용료 받는 거 그래서 그 결제와 결제 받고 뭐 하는 거 결제 관련된 어 것을 관리할 수 있는 것이 있어야 된다 기능이 있어야 된다 그다음에 크레딧 관리하는 기능이 있어야 된다 그다음에 회원 관리 기능이 있어야 된다 사용자 회원 사용자 관리 기능이 있어야 된다 자 이런 내용들인데 이걸 읽어보고 어떻게 작업을 해야 되겠다는 작업계획을 세워서 나한테 얘기해 봐",
+  "content_english": "Okay, next time, I'll talk about what we're working on.\nOnce we get that, I'll talk about features to add to the dashboard.\nFirst, create a feature for FAQs that allows users to write questions and answers.\nSecond, create a feature for asking Sunny questions and saving answers. Also, there needs to be a control board with several questions and answers, so there's a few left.\nNext, regarding receiving payments, there needs to be a feature that can manage usage fees, payments, and other payment-related functions. Next, there needs to be a credit management feature. Next, there needs to be a membership management feature. There needs to be a user management feature. So, read through this and come up with a work plan for how you'll proceed, and share it with me.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-24T15:26:07.976Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

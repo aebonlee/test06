@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251130-72",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "포드 시트 처리 워더시트 처리 관련해서 오더시트 어 수신 알림 기능이 구현됐다고 하는데 진짜 구현됐는지 한번 확인을 해보겠다 그런 차원에서 의도시트를 보내겠다",
+  "content_english": "Regarding Ford sheet processing and Warder sheet processing, I heard that an order sheet receipt notification function has been implemented. I will check to see if it has actually been implemented. I will send you an intent sheet for that purpose.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-30T13:22:55.394Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

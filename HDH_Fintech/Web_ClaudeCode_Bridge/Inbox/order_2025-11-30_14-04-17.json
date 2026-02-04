@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251130-97",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "이 오더 시트를 발견하는 즉시 반응을 해주기 바란다",
+  "content_english": "Please respond as soon as you find this order sheet.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-30T14:04:17.891Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

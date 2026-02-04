@@ -1,0 +1,4406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDH Fintech</title>
+    <style>
+        /*
+        ============================================
+        UNIFIED COLOR SYSTEM (통합 색상 시스템)
+        ============================================
+
+        ## 기본 배경색 (Default Backgrounds):
+        - White Cards/Links: #FFFFFF (순수 흰색)
+        - Light Gray Areas: #F8FAFC (연한 회색)
+        - Page Background: #F8FAFC (연한 회색)
+
+        ## 호버 규칙 - 영역별 색상 (Hover Rules by Section):
+
+        ### 좌측 사이드바 (Left Sidebar) - GOLD 계열:
+        - Menu Items: #FFF7ED 배경 + #F59E0B 텍스트
+        - Download Links: 기존 그라데이션 유지 + 상승 효과
+
+        ### 중앙 콘텐츠 (Center) - GOLD 계열:
+        - Process Steps: 기존 스타일 유지
+        - Simulator: 기존 스타일 유지
+
+        ### 우측 사이드바 (Right Sidebar) - GREEN 계열:
+        - Notice Items: #ECFDF5 배경 + #A7F3D0 테두리
+        - Diary Items: #ECFDF5 배경 + #A7F3D0 테두리
+        - Settings Items: #ECFDF5 배경 + #10B981 텍스트
+        - View More: #ECFDF5 배경 + #059669 텍스트
+        - Warning Items: #FEE2E2 배경 (빨강 계열 유지)
+
+        ### 바로가기/외부 링크 (Shortcuts) - BLUE 계열:
+        - Favorites: #EFF6FF 배경 + #93C5FD 테두리 + #3B82F6 텍스트
+        - Community Link: #EFF6FF 배경 + #93C5FD 테두리
+
+        ### 공통 규칙:
+        - Primary Buttons: 색상 유지 + translateY(-2px) + 그림자 강화
+        - Secondary Buttons: #F8FAFC 배경 + 진한 테두리
+        - Table Rows: #F8FAFC 배경만
+        - Modal Close: #FEE2E2 배경 + #DC2626 텍스트
+        - Simulator Close: #475569 배경 (회색)
+        ============================================
+        */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+            background: #F8FAFC;
+            color: #212529;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            height: 70px;
+            padding: 0 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 32px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: white;
+        }
+
+        .notification {
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #EF4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-1px);
+        }
+
+        /* 메인 레이아웃 */
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: 300px minmax(400px, 720px) 300px;
+            gap: 12px;
+            width: 100%;
+            justify-content: center;
+            padding: 12px 20px 20px 20px;
+            min-height: calc(100vh - 84px);
+        }
+
+        /* 중앙 컬럼 */
+        .center-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* 정체성 배너 */
+        .identity-banner {
+            background: #F8FAFC;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 16px 24px;
+            margin-bottom: 12px;
+        }
+
+        .identity-text {
+            font-size: 18.5px;
+            color: #F59E0B;
+            font-weight: 700;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* 좌측 사이드바 (준비) */
+        .left-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-section {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #64748B;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-icon {
+            font-size: 18px;
+        }
+
+        .menu-item {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            color: #475569;
+            background: white;
+            border: 1px solid #E2E8F0;
+        }
+
+        .menu-item:hover {
+            background: #FFF7ED;
+            color: #F59E0B;
+            border-color: #FED7AA;
+        }
+
+        .menu-item.active {
+            background: #FEF3C7;
+            color: #D97706;
+            font-weight: 600;
+        }
+
+        .submenu-item {
+            padding: 8px 12px 8px 24px;
+            margin-bottom: 4px;
+            font-size: 13px;
+            color: #64748B;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .submenu-item:hover {
+            background: #FFF7ED;
+            color: #F59E0B;
+        }
+        .submenu-item.download-btn:hover {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+            color: white !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .submenu-list {
+            display: none;
+            margin-top: 4px;
+        }
+
+        .submenu-list.active {
+            display: block;
+        }
+
+        .menu-item.expandable {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .expand-arrow {
+            font-size: 10px;
+            transition: transform 0.2s;
+        }
+
+        .menu-item.expanded .expand-arrow {
+            transform: rotate(90deg);
+        }
+
+        .link-button {
+            display: block;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+
+        /* 중앙 콘텐츠 (실행) */
+        .center-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-main {
+            flex: 1;
+        }
+
+        .welcome-banner {
+            background: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .welcome-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0F172A;
+            margin-bottom: 4px;
+        }
+
+        .welcome-subtitle {
+            font-size: 13px;
+            color: #64748B;
+        }
+
+        .process-container {
+            margin-top: 20px;
+        }
+
+        .process-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .process-step {
+            background: #EFF6FF;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3B82F6;
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.1);
+            transition: all 0.3s;
+        }
+
+        .process-step.completed {
+            background: #F8FAFC;
+            border-left-color: #E5E7EB;
+            box-shadow: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: #3B82F6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .process-step.completed .step-number {
+            background: #E5E7EB;
+            color: #64748B;
+        }
+
+        .step-status {
+            margin-left: auto;
+            font-size: 20px;
+            color: #3B82F6;
+            font-weight: 700;
+        }
+
+        .step-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1F2937;
+        }
+
+        .step-description {
+            margin-left: 44px;
+            font-size: 13px;
+            color: #64748B;
+        }
+
+        /* 커뮤니티 바로가기 */
+        .community-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 16px;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #E2E8F0;
+        }
+
+        .community-link:hover {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+            transform: translateX(2px);
+        }
+
+        .community-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .community-text {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            transition: all 0.2s;
+        }
+
+        .community-link:hover .community-text {
+            color: #10B981;
+        }
+
+        .community-arrow {
+            font-size: 18px;
+            font-weight: 700;
+            color: #64748B;
+            transition: all 0.2s;
+        }
+
+        .community-link:hover .community-arrow {
+            color: #10B981;
+        }
+
+        /* 즐겨찾기 */
+        .favorites-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .favorite-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #E2E8F0;
+        }
+
+        .favorite-link:hover {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+            transform: translateX(2px);
+        }
+
+        .favorite-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .favorite-name {
+            font-size: 13px;
+            font-weight: 400;
+            color: #475569;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .favorite-link:hover .favorite-name {
+            color: #10B981;
+        }
+
+        /* 우측 사이드바 (결과/공지) */
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* 우측 사이드바 menu-item 초록색 계열 오버라이드 */
+        .right-sidebar .menu-item:hover {
+            background: #ECFDF5;
+            color: #10B981;
+            border-color: #A7F3D0;
+        }
+
+        .right-sidebar .menu-item.active {
+            background: #D1FAE5;
+            color: #059669;
+            font-weight: 600;
+            border-color: #6EE7B7;
+        }
+
+        .right-sidebar .submenu-item:hover {
+            background: #ECFDF5;
+            color: #10B981;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .widget-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .widget-icon {
+            font-size: 18px;
+        }
+
+        .notice-item {
+            padding: 8px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #475569;
+            border: 1px solid #E2E8F0;
+            border-left: 3px solid #F59E0B;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .notice-item:hover {
+            background: #FFF7ED;
+            border-color: #FED7AA;
+            border-left-color: #F59E0B;
+        }
+
+        .notice-date {
+            font-size: 11px;
+            color: #94A3B8;
+            margin-bottom: 4px;
+        }
+
+        .warning-item {
+            padding: 8px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #991B1B;
+            border: 1px solid #E2E8F0;
+            border-left: 3px solid #EF4444;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .warning-item:hover {
+            background: #FFF7ED;
+            border-color: #FED7AA;
+            border-left-color: #EF4444;
+        }
+
+        .result-value {
+            font-family: 'SF Pro Display', 'Roboto', 'Malgun Gothic', monospace;
+            font-size: 28px;
+            font-weight: 700;
+            color: #10B981;
+            text-align: center;
+            margin: 16px 0;
+            letter-spacing: -1px;
+        }
+
+        .result-label {
+            font-size: 12px;
+            color: #64748B;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .achievement {
+            text-align: center;
+            padding: 12px;
+            background: #ECFDF5;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .achievement-text {
+            font-size: 14px;
+            color: #059669;
+            font-weight: 600;
+        }
+
+        .diary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 6px;
+            background: white;
+            border-radius: 8px;
+            font-size: 13px;
+            border: 1px solid #E2E8F0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .diary-item:hover {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+        }
+
+        .diary-date {
+            color: #64748B;
+        }
+
+        .diary-amount {
+            font-family: 'SF Pro Display', 'Roboto', 'Malgun Gothic', monospace;
+            color: #10B981;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .diary-amount.negative {
+            color: #EF4444;
+        }
+
+        .settings-item {
+            cursor: pointer;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+            border: 1px solid #E2E8F0;
+            font-size: 13px;
+        }
+
+        .settings-item:hover {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+            color: #10B981 !important;
+        }
+
+        /* 트리 구조 스타일 */
+        .settings-item.tree-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings-item.tree-toggle.active {
+            background: #EFF6FF;
+            color: #2563EB;
+            font-weight: 600;
+            border-color: #93C5FD;
+        }
+
+        .arrow {
+            font-size: 10px;
+            color: #94A3B8;
+            transition: transform 0.3s;
+        }
+
+        .tree-content {
+            padding-left: 20px;
+            border-left: 2px solid #E2E8F0;
+            margin-left: 10px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tree-item {
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #475569;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #F1F5F9;
+        }
+
+        .tree-item:hover {
+            background: #F0F9FF;
+            color: #3B82F6;
+            transform: translateX(4px);
+            border-color: #BFDBFE;
+        }
+
+        .tree-content.sub-tree {
+            padding-left: 16px;
+            border-left: 2px solid #F1F5F9;
+            margin-left: 8px;
+        }
+
+        .tree-item.sub-item {
+            font-size: 12px;
+            padding: 8px 10px;
+            background: #FAFAFA;
+        }
+
+        .tree-item.sub-item:hover {
+            background: #F0F9FF;
+        }
+
+        .tree-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .view-more {
+            display: block;
+            text-align: center;
+            padding: 8px;
+            margin-top: 8px;
+            color: #10B981;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .view-more:hover {
+            background: #ECFDF5;
+            color: #059669;
+        }
+
+        /* 모달/팝업 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1F2937;
+        }
+
+        .modal-close {
+            font-size: 28px;
+            color: #94A3B8;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .diary-item-modal {
+            display: grid;
+            grid-template-columns: 80px 1fr 1fr;
+            align-items: center;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            font-size: 14px;
+            gap: 16px;
+        }
+
+        .diary-item-modal > * {
+            text-align: center;
+        }
+
+        .diary-item-modal:last-child {
+            margin-bottom: 0;
+        }
+
+        .diary-cumulative {
+            font-family: 'SF Pro Display', 'Roboto', 'Malgun Gothic', monospace;
+            color: #059669;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .modal-summary {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+            border: 2px solid #10B981;
+        }
+
+        .modal-summary-label {
+            font-size: 13px;
+            color: #059669;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .modal-summary-value {
+            font-family: 'SF Pro Display', 'Roboto', 'Malgun Gothic', monospace;
+            font-size: 32px;
+            font-weight: 700;
+            color: #10B981;
+            letter-spacing: -1px;
+        }
+
+        /* 설정 섹션 */
+        .settings-section {
+            margin-bottom: 24px;
+        }
+
+        .settings-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 8px;
+        }
+
+        .settings-description {
+            font-size: 13px;
+            color: #64748B;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .settings-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #0F172A;
+            font-family: 'Malgun Gothic', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .settings-input:focus {
+            outline: none;
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .settings-current {
+            margin-top: 12px;
+            padding: 12px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .settings-current-label {
+            color: #64748B;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .settings-current-value {
+            color: #0F172A;
+            font-weight: 600;
+        }
+
+        .settings-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn-settings-cancel {
+            padding: 10px 24px;
+            background: white;
+            color: #64748B;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-settings-cancel:hover {
+            background: #F8FAFC;
+            border-color: #94A3B8;
+        }
+
+        .btn-settings-save {
+            padding: 10px 24px;
+            background: #10B981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-settings-save:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* 시뮬레이터 스타일 */
+        .simulator-container {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            margin-top: 24px;
+        }
+
+        .simulator-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 8px;
+        }
+
+        .simulator-subtitle {
+            font-size: 13px;
+            color: #64748B;
+            margin-bottom: 32px;
+        }
+
+        .simulator-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .control-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-option {
+            padding: 8px 16px;
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #64748B;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-option:hover {
+            background: #ECFDF5;
+            border-color: #10B981;
+            color: #059669;
+        }
+
+        .btn-option.active {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            border-color: #10B981;
+            color: white;
+        }
+
+        .btn-simulate {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            margin: 8px auto 0;
+            width: 70%;
+            max-width: 300px;
+            display: block;
+        }
+
+        .btn-simulate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .simulator-results {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 2px solid #E2E8F0;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 24px;
+        }
+
+        .btn-close-results {
+            padding: 8px 16px;
+            background: #64748B;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-close-results:hover {
+            background: #475569;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .results-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .summary-card {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #E2E8F0;
+        }
+
+        .summary-card.summary-profit {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+            border-color: #10B981;
+        }
+
+        .summary-label {
+            font-size: 13px;
+            color: #64748B;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .summary-value {
+            font-family: 'SF Pro Display', 'Roboto', 'Malgun Gothic', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            color: #0F172A;
+            letter-spacing: -0.5px;
+        }
+
+        .summary-profit .summary-value {
+            color: #10B981;
+        }
+
+        .results-breakdown {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .breakdown-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0F172A;
+            margin-bottom: 16px;
+        }
+
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .breakdown-table tr {
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .breakdown-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-table td {
+            padding: 12px 0;
+            font-size: 14px;
+        }
+
+        .breakdown-table td:first-child {
+            color: #475569;
+        }
+
+        .breakdown-value {
+            text-align: right;
+            font-family: 'SF Pro Display', 'Roboto', 'Malgun Gothic', monospace;
+            font-weight: 600;
+            color: #0F172A;
+        }
+
+        .breakdown-positive {
+            color: #10B981;
+        }
+
+        .breakdown-negative {
+            color: #EF4444;
+        }
+
+        .breakdown-highlight {
+            background: #FFF7ED;
+        }
+
+        .breakdown-total {
+            background: #ECFDF5;
+            border-top: 2px solid #10B981;
+        }
+
+        .breakdown-total td {
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+
+        .detailed-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .detailed-table thead {
+            position: sticky;
+            top: 0;
+            background: #F59E0B;
+            color: white;
+            z-index: 10;
+        }
+
+        .detailed-table th {
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        .detailed-table th:nth-child(1) {
+            width: 50px;
+        }
+
+        .detailed-table th:nth-child(2) {
+            width: 80px;
+        }
+
+        .detailed-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .detailed-table tbody tr:hover {
+            background: #F8FAFC;
+        }
+
+        .detailed-table .pass-row {
+            background: #FFF7ED;
+        }
+
+        .detailed-table .pass-badge {
+            background: #F59E0B;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .detailed-table .fail-badge {
+            background: #10B981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .results-visualization {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 20px;
+            background: #F8FAFC;
+            border-radius: 12px;
+        }
+
+        .trade-result {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .trade-pass {
+            background: #F59E0B;
+        }
+
+        .trade-fail {
+            background: #10B981;
+        }
+
+        /* 버튼 스타일 */
+        .btn-alarm {
+            padding: 6px 16px;
+            background: #3B82F6;
+            color: white;
+            border: 1px solid #3B82F6;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-alarm:hover {
+            background: #2563EB;
+            border-color: #2563EB;
+            color: white;
+        }
+
+        /* Top 10 랭킹 위젯 - 표준 디자인 시스템 */
+        .ranking-widget {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .ranking-widget .widget-title {
+            color: #1F2937;
+            margin-bottom: 16px;
+        }
+
+        .ranking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .ranking-year {
+            font-size: 12px;
+            color: #10B981;
+            background: #ECFDF5;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .ranking-live {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #10B981;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ranking-item {
+            display: grid;
+            grid-template-columns: 24px 1fr 1fr 1fr;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .ranking-item:hover {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+            transform: translateY(-1px);
+        }
+
+        .ranking-item.top3 {
+            background: #FFFBEB;
+            border: 1px solid #FCD34D;
+        }
+
+        .ranking-item.top3:hover {
+            background: #FEF3C7;
+            border-color: #F59E0B;
+            transform: translateY(-1px);
+        }
+
+        .ranking-position {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            border-radius: 50%;
+            background: #94A3B8;
+            color: white;
+        }
+
+        /* 1-10위 랭킹 배지 색상 (레벨 색상과 동일) */
+        .ranking-position.rank-1 { background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%); }   /* 1위: 강렬한 빨강 */
+        .ranking-position.rank-2 { background: linear-gradient(135deg, #FB923C 0%, #F97316 100%); }   /* 2위: 주황 */
+        .ranking-position.rank-3 { background: linear-gradient(135deg, #FACC15 0%, #EAB308 100%); color: #1F2937; }   /* 3위: 노랑 */
+        .ranking-position.rank-4 { background: linear-gradient(135deg, #A3E635 0%, #84CC16 100%); color: #1F2937; }   /* 4위: 연두 */
+        .ranking-position.rank-5 { background: linear-gradient(135deg, #4ADE80 0%, #22C55E 100%); }   /* 5위: 초록 */
+        .ranking-position.rank-6 { background: linear-gradient(135deg, #34D399 0%, #10B981 100%); }   /* 6위: 민트 */
+        .ranking-position.rank-7 { background: linear-gradient(135deg, #2DD4BF 0%, #14B8A6 100%); }   /* 7위: 청록 */
+        .ranking-position.rank-8 { background: linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%); }   /* 8위: 하늘색 */
+        .ranking-position.rank-9 { background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%); }   /* 9위: 파랑 */
+        .ranking-position.rank-10 { background: linear-gradient(135deg, #94A3B8 0%, #64748B 100%); }  /* 10위: 회색 */
+
+        .ranking-info {
+            min-width: 0;
+        }
+
+        .ranking-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1F2937;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left;
+        }
+
+        .ranking-profit-amount {
+            font-size: 11px;
+            font-weight: 600;
+            color: #10B981;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .ranking-change {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .ranking-grade {
+            font-size: 11px;
+            color: #94A3B8;
+            margin-top: 2px;
+        }
+
+        .ranking-profit {
+            font-family: 'SF Pro Display', 'Roboto', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #10B981;
+            text-align: right;
+        }
+
+        .ranking-change.up {
+            color: #10B981;
+        }
+
+        .ranking-change.down {
+            color: #EF4444;
+        }
+
+        .ranking-change.same {
+            color: #64748B;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* Level 등급 색상 - 통일된 체계 (Lv.1 회색 → Lv.10 강렬한 빨강-금색) */
+        .grade-level-1 { background: linear-gradient(135deg, #94A3B8 0%, #64748B 100%); color: white; }      /* Lv.1: 회색 */
+        .grade-level-2 { background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%); color: white; }      /* Lv.2: 파랑 */
+        .grade-level-3 { background: linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%); color: white; }      /* Lv.3: 하늘색 */
+        .grade-level-4 { background: linear-gradient(135deg, #2DD4BF 0%, #14B8A6 100%); color: white; }      /* Lv.4: 청록 */
+        .grade-level-5 { background: linear-gradient(135deg, #34D399 0%, #10B981 100%); color: white; }      /* Lv.5: 민트 */
+        .grade-level-6 { background: linear-gradient(135deg, #4ADE80 0%, #22C55E 100%); color: white; }      /* Lv.6: 초록 */
+        .grade-level-7 { background: linear-gradient(135deg, #A3E635 0%, #84CC16 100%); color: #1F2937; }    /* Lv.7: 연두 */
+        .grade-level-8 { background: linear-gradient(135deg, #FACC15 0%, #EAB308 100%); color: #1F2937; }    /* Lv.8: 노랑 */
+        .grade-level-9 { background: linear-gradient(135deg, #FB923C 0%, #F97316 100%); color: white; }      /* Lv.9: 주황 */
+        .grade-level-10 { background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%); color: white; font-weight: 700; }  /* Lv.10: 강렬한 빨강 */
+
+        /* Level 통계 위젯 - 표준 디자인 시스템 */
+        .level-stats-widget {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #FED7AA;
+        }
+
+        .level-stats-widget .widget-title {
+            color: #1F2937;
+            margin-bottom: 16px;
+        }
+
+        .level-stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .level-stats-total {
+            font-size: 12px;
+            color: #64748B;
+        }
+
+        .level-stats-total span {
+            color: #1F2937;
+            font-weight: 600;
+        }
+
+        .level-stats-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .level-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 10px;
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .level-stat-item:hover {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+            transform: translateX(2px);
+        }
+
+        .level-stat-badge {
+            min-width: 48px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .level-stat-bar-container {
+            flex: 1;
+            height: 8px;
+            background: #E2E8F0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .level-stat-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .level-stat-info {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 4px;
+            min-width: 0;
+            flex-shrink: 0;
+        }
+
+        .level-stat-count {
+            font-size: 11px;
+            font-weight: 600;
+            color: #1F2937;
+            white-space: nowrap;
+        }
+
+        .level-stat-percent {
+            font-size: 9px;
+            font-weight: 400;
+            color: #94A3B8;
+            white-space: nowrap;
+        }
+
+        /* 써니에게 묻기 */
+        .support-input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .support-input-area textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            font-size: 12px;
+            resize: vertical;
+            line-height: 1.5;
+            color: #1F2937;
+            transition: all 0.2s;
+        }
+
+        .support-input-area textarea:focus {
+            outline: none;
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .support-input-area textarea::placeholder {
+            color: #94A3B8;
+            font-size: 12px;
+        }
+
+        .support-file-btn:hover,
+        .support-submit-btn:hover {
+            background: #10B981 !important;
+            border-color: #059669 !important;
+            color: white !important;
+        }
+
+        /* 반응형 - 태블릿 */
+        @media (max-width: 1400px) {
+            .main-wrapper {
+                grid-template-columns: 220px 1fr 260px;
+                gap: 16px;
+            }
+        }
+
+        /* 반응형 - 작은 태블릿 */
+        @media (max-width: 1200px) {
+            .main-wrapper {
+                grid-template-columns: 200px 1fr 240px;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 반응형 - 모바일 */
+        @media (max-width: 960px) {
+            .main-wrapper {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 16px;
+            }
+
+            /* 사이드바도 세로로 쌓임 - 숨기지 않음 */
+            .left-sidebar,
+            .right-sidebar {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: column;
+            }
+
+            .center-column {
+                width: 100% !important;
+                order: -1; /* 중앙 컨텐츠를 맨 위로 */
+            }
+
+            .links-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* 반응형 - 모바일 (768px) */
+        @media (max-width: 768px) {
+            /* 헤더 모바일 */
+            .header {
+                height: auto;
+                padding: 16px 20px;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .header-left {
+                justify-content: center;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .header-title {
+                font-size: 22px;
+            }
+
+            /* 메인 컨테이너 */
+            .main-wrapper {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            /* 중앙 콘텐츠 */
+            .center-content {
+                padding: 20px;
+            }
+
+            .welcome-banner {
+                padding: 16px 20px;
+            }
+
+            .welcome-title {
+                font-size: 18px;
+            }
+
+            /* 프로세스 스텝 */
+            .process-step {
+                padding: 16px;
+            }
+
+            .step-description {
+                margin-left: 0;
+                margin-top: 8px;
+            }
+
+            .step-header {
+                flex-wrap: wrap;
+            }
+
+            /* 시뮬레이터 */
+            .simulator-container {
+                padding: 20px;
+            }
+
+            .btn-group {
+                flex-wrap: wrap;
+            }
+
+            .btn-option {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+
+            .results-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .summary-value {
+                font-size: 22px;
+            }
+
+            /* 시뮬레이션 결과 모바일 */
+            .simulator-results {
+                margin-top: 24px;
+                padding-top: 24px;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 12px;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            .btn-close-results {
+                width: 100%;
+                padding: 10px;
+            }
+
+            /* 랭킹 위젯 모바일 최적화 */
+            .ranking-item {
+                grid-template-columns: 22px 1fr 1fr 1fr;
+                padding: 8px 10px;
+                gap: 6px;
+            }
+
+            .ranking-position {
+                width: 22px;
+                height: 22px;
+                min-width: 22px;
+                font-size: 11px;
+            }
+
+            .ranking-name {
+                font-size: 11px;
+            }
+
+            .ranking-profit-amount {
+                font-size: 10px;
+            }
+
+            .ranking-change {
+                font-size: 11px;
+            }
+
+            /* 레벨 분포 모바일 최적화 */
+            .level-stat-item {
+                padding: 8px 10px;
+                gap: 6px;
+            }
+
+            .level-stat-badge {
+                min-width: 38px;
+                padding: 4px 6px;
+                font-size: 10px;
+            }
+
+            .level-stat-count {
+                font-size: 10px;
+            }
+
+            .level-stat-percent {
+                font-size: 8px;
+            }
+
+            /* 테이블 모바일 스크롤 */
+            .results-breakdown {
+                padding: 16px;
+                overflow-x: auto;
+            }
+
+            .breakdown-title {
+                font-size: 14px;
+            }
+
+            .breakdown-table td {
+                font-size: 13px;
+                padding: 10px 0;
+            }
+
+            .detailed-table {
+                min-width: 600px;
+                font-size: 12px;
+            }
+
+            .detailed-table th,
+            .detailed-table td {
+                padding: 8px 4px;
+            }
+
+            /* 시각화 */
+            .results-visualization {
+                padding: 16px;
+                gap: 4px;
+            }
+
+            .trade-result {
+                width: 28px;
+                height: 28px;
+                font-size: 10px;
+            }
+
+            /* 모달 */
+            .modal-content {
+                padding: 20px;
+                margin: 10px;
+                width: calc(100% - 20px);
+            }
+
+            .modal-title {
+                font-size: 18px;
+            }
+
+            /* 위젯 */
+            .widget {
+                padding: 16px;
+            }
+
+            .result-value {
+                font-size: 24px;
+            }
+
+            /* 랭킹 위젯 모바일 */
+            .ranking-widget {
+                padding: 16px;
+            }
+
+            .ranking-item {
+                padding: 8px 10px;
+                gap: 10px;
+            }
+
+            .ranking-position {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+            }
+
+            .ranking-name {
+                font-size: 12px;
+            }
+
+            .ranking-profit {
+                font-size: 12px;
+            }
+
+            .grade-badge {
+                font-size: 9px;
+                padding: 2px 4px;
+            }
+
+            /* Level 통계 모바일 */
+            .level-stats-widget {
+                padding: 16px;
+            }
+
+            .level-stat-item {
+                padding: 6px 8px;
+                gap: 8px;
+            }
+
+            .level-stat-badge {
+                min-width: 42px;
+                padding: 3px 6px;
+                font-size: 10px;
+            }
+
+            .level-stat-info {
+                min-width: 80px;
+                gap: 4px;
+            }
+
+            .level-stat-count {
+                font-size: 10px;
+            }
+
+            .level-stat-percent {
+                font-size: 8px;
+            }
+        }
+
+        /* 작은 모바일 (480px) */
+        @media (max-width: 480px) {
+            .header-title {
+                font-size: 18px;
+            }
+
+            .logo {
+                font-size: 26px;
+            }
+
+            .user-info {
+                font-size: 14px;
+            }
+
+            .btn-logout {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            /* 프로세스 */
+            .process-title {
+                font-size: 16px;
+            }
+
+            .step-title {
+                font-size: 13px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+
+            .step-description {
+                font-size: 12px;
+            }
+
+            /* 시뮬레이터 */
+            .simulator-title {
+                font-size: 16px;
+            }
+
+            .btn-group {
+                gap: 6px;
+            }
+
+            .btn-option {
+                padding: 8px 10px;
+                font-size: 12px;
+                flex: 1;
+                min-width: calc(33% - 6px);
+                text-align: center;
+            }
+
+            .btn-simulate {
+                padding: 14px 24px;
+                font-size: 16px;
+            }
+
+            .results-summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .summary-card {
+                padding: 14px;
+            }
+
+            .summary-label {
+                font-size: 11px;
+            }
+
+            .summary-value {
+                font-size: 18px;
+            }
+
+            /* 시뮬레이션 결과 */
+            .results-header {
+                font-size: 14px;
+            }
+
+            .breakdown-title {
+                font-size: 13px;
+            }
+
+            .breakdown-table td {
+                font-size: 12px;
+            }
+
+            .trade-result {
+                width: 24px;
+                height: 24px;
+                font-size: 9px;
+                border-radius: 4px;
+            }
+
+            /* 사이드바 섹션 */
+            .sidebar-section {
+                padding: 14px;
+            }
+
+            .section-title {
+                font-size: 13px;
+            }
+
+            .menu-item {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            /* 위젯 */
+            .widget-title {
+                font-size: 13px;
+            }
+
+            .notice-item,
+            .warning-item {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .diary-item {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .result-value {
+                font-size: 22px;
+            }
+
+            /* 랭킹 위젯 480px 최적화 */
+            .ranking-item {
+                grid-template-columns: 20px 1fr 1fr 1fr;
+                padding: 6px 8px;
+                gap: 5px;
+            }
+
+            .ranking-position {
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+                font-size: 10px;
+            }
+
+            .ranking-name {
+                font-size: 10px;
+            }
+
+            .ranking-profit-amount {
+                font-size: 9px;
+            }
+
+            .ranking-change {
+                font-size: 10px;
+            }
+
+            /* 레벨 분포 480px 최적화 */
+            .level-stat-item {
+                padding: 6px 8px;
+                gap: 4px;
+            }
+
+            .level-stat-badge {
+                min-width: 35px;
+                padding: 3px 5px;
+                font-size: 9px;
+            }
+
+            .level-stat-info {
+                gap: 3px;
+            }
+
+            .level-stat-count {
+                font-size: 9px;
+            }
+
+            .level-stat-percent {
+                font-size: 7px;
+            }
+        }
+
+        /* 매우 작은 모바일 (360px) */
+        @media (max-width: 360px) {
+            .header {
+                padding: 12px 16px;
+            }
+
+            .header-title {
+                font-size: 16px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .main-wrapper {
+                padding: 8px;
+            }
+
+            .center-content {
+                padding: 16px;
+            }
+
+            .welcome-title {
+                font-size: 16px;
+            }
+
+            .welcome-subtitle {
+                font-size: 12px;
+            }
+
+            .btn-option {
+                padding: 6px 8px;
+                font-size: 11px;
+                min-width: calc(50% - 4px);
+            }
+
+            .btn-simulate {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .summary-value {
+                font-size: 16px;
+            }
+
+            .modal-content {
+                padding: 16px;
+            }
+
+            .modal-summary-value {
+                font-size: 24px;
+            }
+
+            /* 랭킹 위젯 360px 최적화 */
+            .ranking-item {
+                grid-template-columns: 18px 1fr 1fr 1fr;
+                padding: 5px 6px;
+                gap: 4px;
+            }
+
+            .ranking-position {
+                width: 18px;
+                height: 18px;
+                min-width: 18px;
+                font-size: 9px;
+            }
+
+            .ranking-name {
+                font-size: 9px;
+            }
+
+            .ranking-profit-amount {
+                font-size: 8px;
+            }
+
+            .ranking-change {
+                font-size: 9px;
+            }
+
+            /* 레벨 분포 360px 최적화 */
+            .level-stat-item {
+                padding: 5px 6px;
+                gap: 3px;
+            }
+
+            .level-stat-badge {
+                min-width: 32px;
+                padding: 2px 4px;
+                font-size: 8px;
+            }
+
+            .level-stat-info {
+                gap: 2px;
+            }
+
+            .level-stat-count {
+                font-size: 8px;
+            }
+
+            .level-stat-percent {
+                font-size: 7px;
+            }
+        }
+
+        /* 푸터 */
+        .footer {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 32px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .footer-links {
+                gap: 20px;
+            }
+        }
+
+        .footer-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            font-size: 16px;
+            font-weight: 400;
+            color: #FFFFFF;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .footer-admin {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .footer-admin-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 12px;
+            transition: opacity 0.2s;
+        }
+
+        .footer-admin-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="logo">💰</div>
+                <div class="header-title">HDH Fintech</div>
+            </div>
+            <div style="flex: 1; text-align: center;">
+                <div style="font-size: 19px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.5px;">
+                    세계 최초 극저위험 · 자동화 핀테크 솔루션
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="notification">
+                    🔔
+                    <div class="notification-badge">3</div>
+                </div>
+                <div class="user-info">
+                    <span>홍길동님</span>
+                </div>
+                <button type="button" class="btn-logout">로그아웃</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 래퍼 (사이드바 + 중앙 컨텐츠) -->
+    <div class="main-wrapper">
+        <!-- 좌측 사이드바 (준비) -->
+        <div class="left-sidebar">
+            <!-- 공지사항 -->
+            <div class="widget">
+                <div class="widget-title">
+                    <span class="widget-icon">📢</span>
+                    공지사항
+                </div>
+                <div class="notice-item">
+                    <div class="notice-date">2025-12-05 14:30</div>
+                    시스템 업데이트 완료
+                </div>
+                <div class="notice-item">
+                    <div class="notice-date">2025-12-03 09:15</div>
+                    12/25 크리스마스 휴장 안내
+                </div>
+                <div class="notice-item">
+                    <div class="notice-date">2025-12-01 16:45</div>
+                    신규 교육 콘텐츠 추가
+                </div>
+            </div>
+
+            <!-- 주의사항 -->
+            <div class="widget">
+                <div class="widget-title">
+                    <span class="widget-icon">⚠️</span>
+                    주의사항
+                </div>
+                <div class="warning-item">
+                    오늘 저녁 거래 전 손절 설정 확인 필요
+                </div>
+                <div class="warning-item">
+                    챌린지 계좌 잔고 모니터링 요망
+                </div>
+                <div class="warning-item">
+                    주말 시장 휴장 - 포지션 정리 권장
+                </div>
+            </div>
+
+            <!-- HDH 운영 개시 전 준비 프로세스 -->
+            <div class="sidebar-section">
+                <div class="section-title">
+                    <span class="section-icon">📚</span>
+                    HDH 운영 개시 전 준비 프로세스
+                </div>
+
+                <!-- HDH Fintech 솔루션 이해하기 -->
+                <div class="menu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSubmenu(this)}">
+                    <span>1. HDH Fintech 솔루션 이해하기</span>
+                    <span class="expand-arrow">▶</span>
+                </div>
+                <div class="submenu-list">
+                    <div class="submenu-item" onclick="window.location.href='solution-1.html'">1. HDH 개요</div>
+                    <div class="submenu-item" onclick="window.location.href='solution-2.html'">2. HDH 핵심 손익 구조</div>
+                    <div class="submenu-item" onclick="window.location.href='solution-monthly-500.html'">3. 5천만원으로 월 500만원 벌기</div>
+                    <div class="submenu-item" onclick="window.location.href='solution-4.html'">4. HDH Fintech 솔루션 상세</div>
+                </div>
+
+                <!-- 아카데미 교육 수강하기 -->
+                <div class="menu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSubmenu(this)}">
+                    <span>2. 아카데미 교육 수강하기</span>
+                    <span class="expand-arrow">▶</span>
+                </div>
+                <div class="submenu-list">
+                    <div class="submenu-item" onclick="window.location.href='academy-intro.html'">교육과정 소개</div>
+                    <div class="submenu-item" onclick="window.location.href='academy-apply.html'">수강신청하기</div>
+                </div>
+
+                <!-- 추천인 코드 신청하기 -->
+                <div class="menu-item" onclick="window.location.href='referral-apply.html'">3. 추천인 코드 신청하기</div>
+
+                <!-- 매뉴얼 숙지하기 -->
+                <div class="menu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSubmenu(this)}">
+                    <span>4. 매뉴얼 숙지하기</span>
+                    <span class="expand-arrow">▶</span>
+                </div>
+                <div class="submenu-list">
+                    <!-- 1. WTG -->
+                    <div class="submenu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this); event.stopPropagation();" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleSubmenu(this)}">
+                        <span>1. WTG (프롭펌 플랫폼)</span>
+                        <span class="expand-arrow">▶</span>
+                    </div>
+                    <div class="submenu-list" style="padding-left: 20px;">
+                        <div class="submenu-item" onclick="window.location.href='manual-wtg-1-1.html'">1.1 WTG 프롭펌 가입</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-wtg-1-2.html'">1.2 WTG 프롭펌 참가 신청</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-wtg-1-3.html'">1.3 WTG 홈페이지 사용법</div>
+                    </div>
+
+                    <!-- 2. 스캘핑 계좌 -->
+                    <div class="submenu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this); event.stopPropagation();" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleSubmenu(this)}">
+                        <span>2. 스캘핑 계좌 (실거래)</span>
+                        <span class="expand-arrow">▶</span>
+                    </div>
+                    <div class="submenu-list" style="padding-left: 20px;">
+                        <div class="submenu-item" onclick="window.location.href='manual-insurance-2-1.html'">2.1 스캘핑 계좌 이해</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-insurance-2-2.html'">2.2 스캘핑 계좌 개설</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-insurance-2-3.html'">2.3 스캘핑 계좌 운영</div>
+                    </div>
+
+                    <!-- 3. 챌린지 계좌 -->
+                    <div class="submenu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this); event.stopPropagation();" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleSubmenu(this)}">
+                        <span>3. 챌린지 계좌 (시험 거래)</span>
+                        <span class="expand-arrow">▶</span>
+                    </div>
+                    <div class="submenu-list" style="padding-left: 20px;">
+                        <div class="submenu-item" onclick="window.location.href='manual-challenge-3-1.html'">3.1 챌린지 플랫폼 설정</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-challenge-3-2.html'">3.2 챌린지 계좌 거래 방법</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-challenge-3-3.html'">3.3 챌린지 계좌 재진입</div>
+                    </div>
+
+                    <!-- 4. 펀딩 계좌 -->
+                    <div class="submenu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this); event.stopPropagation();" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleSubmenu(this)}">
+                        <span>4. 펀딩 계좌 (실거래)</span>
+                        <span class="expand-arrow">▶</span>
+                    </div>
+                    <div class="submenu-list" style="padding-left: 20px;">
+                        <div class="submenu-item" onclick="window.location.href='manual-funding-4-1.html'">4.1 펀딩 계좌 전환</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-funding-4-2.html'">4.2 펀딩 계좌 거래</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-funding-4-3.html'">4.3 펀딩 계좌 재진입</div>
+                    </div>
+
+                    <!-- 5. USDT 관리 -->
+                    <div class="submenu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this); event.stopPropagation();" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleSubmenu(this)}">
+                        <span>5. USDT 관리</span>
+                        <span class="expand-arrow">▶</span>
+                    </div>
+                    <div class="submenu-list" style="padding-left: 20px;">
+                        <div class="submenu-item" onclick="window.location.href='manual-usdt-5-1.html'">5.1 USDT 거래소</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-usdt-5-2.html'">5.2 USDT 송금</div>
+                        <div class="submenu-item" onclick="window.location.href='manual-usdt-5-3.html'">5.3 USDT 지갑</div>
+                    </div>
+                </div>
+
+                <!-- 커뮤니티 -->
+                <div class="menu-item" onclick="window.location.href='community.html'" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; margin-top: 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
+                    <span>💬 HDH 실전 운영자 커뮤니티</span>
+                </div>
+            </div>
+
+            <!-- 레벨별 회원 분포 -->
+            <div class="level-stats-widget">
+                <div class="widget-title">
+                    <span class="widget-icon">📊</span>
+                    레벨별 회원 분포
+                </div>
+                <div class="level-stats-header">
+                    <div class="level-stats-total">전체 회원: <span id="totalMembersDisplay">1,000명</span></div>
+                </div>
+                <div class="level-stats-list" id="levelStatsList">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+            </div>
+
+            <!-- 연간 누적 순이익 랭킹 Top 10 -->
+            <div class="sidebar-section ranking-widget">
+                <div class="section-title">
+                    <span class="section-icon">🏆</span>
+                    연간 누적 순이익 랭킹 Top 10
+                </div>
+                <div class="ranking-list" id="rankingList">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 중앙 콘텐츠 영역 -->
+        <div class="center-column">
+            <!-- 정체성 배너 -->
+            <div class="identity-banner">
+                <div class="identity-text">
+                    HDH 핀테크 솔루션 운영을 체계적으로 지원하는 회원 전용 웹사이트입니다.
+                </div>
+            </div>
+
+            <!-- 중앙 콘텐츠 (실행) -->
+            <div class="center-content">
+            <div class="content-main">
+                <!-- 환영 배너 -->
+                <div class="welcome-banner">
+                    <div class="welcome-title">환영합니다, 홍길동님! 👋</div>
+                    <div class="welcome-subtitle">활동 회원 | 가입일: 2025-01-15</div>
+                    <div style="display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 12px; color: #64748B;">레벨:</span>
+                            <span style="font-size: 16px; font-weight: 700; color: #EF4444;">Lv.10</span>
+                            <span style="font-size: 11px; color: #64748B;">(상위 1%)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 12px; color: #64748B;">랭킹:</span>
+                            <span style="font-size: 16px; font-weight: 700; color: #22C55E;">5위</span>
+                            <span style="font-size: 11px; color: #64748B;">(전체 1,000명 중)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1차: 챌린지 단계 프로세스 -->
+                <div class="process-container">
+                    <div class="process-title" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; padding: 16px; border-radius: 8px; box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4); margin-bottom: 12px; text-align: center;">1차: 챌린지 단계 프로세스</div>
+                    <div style="text-align: center; font-size: 13px; color: #64748B; margin-bottom: 16px;">
+                        💡 하루 3회 (오전/오후/저녁), 총 10회 내외 거래 | 합격하면 좋고, 탈락해도 수익 발생
+                    </div>
+
+                    <div class="process-steps">
+                        <!-- Step 1: 완료됨 -->
+                        <div class="process-step completed">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <div class="step-title">거래 시간 확인 + 알람 예약</div>
+                                <div class="step-status">✓</div>
+                            </div>
+                            <div class="step-description">
+                                <span style="color: #000000;">⏰ 오전 08:00 - 12:00 (4시간)</span> |
+                                <span style="color: #000000;">오후 16:00 - 24:00 (8시간)</span>
+                                <br>
+                                <span style="font-size: 12px; color: #94A3B8;">오전 3-4회, 오후 6-7회 권장</span>
+                                <br>
+                                <button type="button" class="btn-alarm" style="margin-top: 8px;" onclick="setAlarm()">🔔 알람 설정하기</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: 완료됨 -->
+                        <div class="process-step completed">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <div class="step-title">시스템 확인</div>
+                                <div class="step-status">✓</div>
+                            </div>
+                            <div class="step-description">
+                                <a href="#" onclick="checkMT5Connection(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ MT5 연결 확인</a> |
+                                <a href="#" onclick="manageChallengeAccount(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 챌린지 계좌</a> |
+                                <a href="#" onclick="manageInsuranceAccount(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 스캘핑 계좌</a>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: 완료됨 -->
+                        <div class="process-step completed">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <div class="step-title">USDT 매입 및 송금</div>
+                                <div class="step-status">✓</div>
+                            </div>
+                            <div class="step-description">
+                                <a href="#" onclick="buyUSDT(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ USDT 구매</a> <span style="color: #64748B;">(업비트 등)</span> |
+                                <a href="#" onclick="transferToWallet(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 전자지갑 송금</a> |
+                                <a href="#" onclick="checkExchangeDeposit(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 브로커 입금 확인</a>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: 할 일 -->
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <div class="step-title">챌린지 + 스캘핑 계좌 동시 거래 실행</div>
+                                <div class="step-status">⏳</div>
+                            </div>
+                            <div class="step-description">
+                                <a href="#" onclick="manageChallengeAccount(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 챌린지 계좌</a> <span style="color: #64748B;">(Buy/Sell, TP: 21.5 p, SL: 참가비 소멸)</span> |
+                                <a href="#" onclick="manageInsuranceAccount(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 스캘핑 계좌</a> <span style="color: #64748B;">(반대 방향, TP: 4.1 p, SL: 21.5 p)</span>
+                                <br>
+                                <span style="font-size: 12px; color: #94A3B8;">양방향 헷지로 어느 결과든 수익 발생</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: 할 일 -->
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">5</div>
+                                <div class="step-title">일일 결과 확인 및 기록</div>
+                                <div class="step-status">⏳</div>
+                            </div>
+                            <div class="step-description">
+                                <div style="margin-bottom: 8px;">
+                                    <strong>챌린지 탈락 시:</strong><br>
+                                    <span style="color: #10B981;">• 스캘핑 계좌 +$369 수익 발생</span><br>
+                                    <span style="color: #EF4444;">• 챌린지 참가비 -$300 소멸</span>
+                                </div>
+                                <div style="margin-bottom: 8px;">
+                                    <strong>챌린지 합격 시:</strong><br>
+                                    <span style="color: #10B981;">• 펀딩 계좌 +$3,000 획득</span><br>
+                                    <span style="color: #EF4444;">• 스캘핑 계좌 -$1,935 손실 발생</span>
+                                </div>
+                                <span style="font-size: 12px; color: #94A3B8;">($300 계좌 기준)</span>
+                                <br>
+                                <span style="font-size: 12px; color: #94A3B8;">펀딩 계좌 2개 확보 시 → 2차 단계 진입</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2차: 펀딩계좌 트레이딩 단계 프로세스 -->
+                <div class="process-container" style="margin-top: 32px;">
+                    <div class="process-title" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; padding: 16px; border-radius: 8px; box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4); margin-bottom: 12px; text-align: center;">2차: 펀딩계좌 트레이딩 단계 프로세스</div>
+                    <div style="text-align: center; font-size: 13px; color: #64748B; margin-bottom: 16px;">
+                        💡 펀딩 계좌 2개 확보 시 실행 (불규칙) | 양방향 헷지 후 발생 수익의 80% 정산금 수령
+                    </div>
+
+                    <div class="process-steps">
+                        <!-- Step 1: 할 일 -->
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <div class="step-title">펀딩 계좌 2개 확보 확인</div>
+                                <div class="step-status">⏳</div>
+                            </div>
+                            <div class="step-description">
+                                <span style="color: #64748B;">챌린지 2회 합격으로 펀딩 계좌($3,000) 2개 대기</span>
+                                <span style="font-size: 12px; color: #94A3B8;"> ($300 계좌 기준)</span>
+                                <br>
+                                <span style="font-size: 12px; color: #94A3B8;">평균 12-15회 거래 시 2개 확보</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: 할 일 -->
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <div class="step-title">양방향 헷지 포지션 설정</div>
+                                <div class="step-status">⏳</div>
+                            </div>
+                            <div class="step-description">
+                                <a href="#" onclick="manageFundingAccountA(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 펀딩 계좌 A</a> <span style="color: #64748B;">(상방 Buy)</span> |
+                                <a href="#" onclick="manageFundingAccountB(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 펀딩 계좌 B</a> <span style="color: #64748B;">(하방 Sell)</span>
+                                <br>
+                                <span style="font-size: 12px; color: #94A3B8;">가격이 어느 방향으로 가든 한쪽은 익절, 한쪽은 손절</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: 할 일 -->
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <div class="step-title">펀딩 계좌 트레이딩 실행</div>
+                                <div class="step-status">⏳</div>
+                            </div>
+                            <div class="step-description">
+                                <span style="color: #64748B;">한쪽 청산 시 반대쪽 즉시 청산</span>
+                                <br>
+                                <span style="font-size: 12px; color: #94A3B8;">이론적 순손익: ±$0 (한쪽 $6,000, 한쪽 $0)</span>
+                                <span style="font-size: 12px; color: #94A3B8;"> ($300 계좌 기준)</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: 할 일 -->
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <div class="step-title">정산 (1-2일 내 USDT 입금)</div>
+                                <div class="step-status">⏳</div>
+                            </div>
+                            <div class="step-description">
+                                <span style="color: #64748B; font-size: 13px;">한쪽 계좌 트레이딩 수익: $3,000</span>
+                                <br>
+                                <span style="color: #1F2937; font-weight: 600;">정산 금액: $3,000 × 80% = $2,400 (USDT)</span>
+                                <span style="font-size: 12px; color: #94A3B8;"> ($300 계좌 기준)</span>
+                                <br>
+                                <span style="font-size: 12px; color: #94A3B8;">프롭펌이 USDT로 지갑에 입금 (1-2일 소요)</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: 할 일 -->
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">5</div>
+                                <div class="step-title">출금 (USDT → 현금화 → 계좌 이체)</div>
+                                <div class="step-status">⏳</div>
+                            </div>
+                            <div class="step-description">
+                                <a href="#" onclick="transferToExchange(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 거래소 송금</a> |
+                                <a href="#" onclick="convertToCash(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">→ 현금화</a> |
+                                <a href="#" onclick="withdrawToBank(); return false;" style="color: #3B82F6; text-decoration: underline; font-weight: 600;">은행 계좌 출금</a>
+                                <br>
+                                <span style="font-size: 12px; color: #94A3B8;">$2,400 USDT 매각액</span>
+                                <span style="font-size: 12px; color: #94A3B8;"> ($300 계좌 기준)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HDH 운영 손익 시뮬레이터 -->
+                <div class="simulator-container" id="simulatorSection">
+                    <div class="simulator-title" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; padding: 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); margin-bottom: 12px; text-align: center;">HDH 운영손익 시뮬레이터</div>
+                    <div class="simulator-subtitle">계좌 규모, 거래 횟수, 챌린지 합격률을 설정하여 예상 손익을 시뮬레이션하세요</div>
+
+                    <div class="simulator-controls">
+                        <!-- 계좌 규모 -->
+                        <div class="control-group">
+                            <label class="control-label">계좌 규모 (챌린지 참가비)</label>
+                            <div class="btn-group">
+                                <button type="button" class="btn-option" onclick="selectAccount(100)">$100</button>
+                                <button type="button" class="btn-option active" onclick="selectAccount(300)">$300</button>
+                                <button type="button" class="btn-option" onclick="selectAccount(500)">$500</button>
+                            </div>
+                        </div>
+
+                        <!-- 거래 횟수 -->
+                        <div class="control-group">
+                            <label class="control-label">월간 거래 횟수 (월간 20일 거래 기준)</label>
+                            <div class="btn-group">
+                                <button type="button" class="btn-option active" onclick="selectTrades(20)">20회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(40)">40회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(60)">60회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(80)">80회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(100)">100회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(120)">120회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(140)">140회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(160)">160회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(180)">180회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(200)">200회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(300)">300회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(400)">400회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(500)">500회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(600)">600회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(700)">700회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(800)">800회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(900)">900회</button>
+                                <button type="button" class="btn-option" onclick="selectTrades(1000)">1000회</button>
+                            </div>
+                        </div>
+
+                        <!-- 합격률 -->
+                        <div class="control-group">
+                            <label class="control-label">챌린지 합격률</label>
+                            <div class="btn-group">
+                                <button type="button" class="btn-option" onclick="selectWinRate(100, 0)">0%</button>
+                                <button type="button" class="btn-option" onclick="selectWinRate(90, 10)">10%</button>
+                                <button type="button" class="btn-option active" onclick="selectWinRate(84, 16)">16%</button>
+                                <button type="button" class="btn-option" onclick="selectWinRate(80, 20)">20%</button>
+                                <button type="button" class="btn-option" onclick="selectWinRate(70, 30)">30%</button>
+                                <button type="button" class="btn-option" onclick="selectWinRate(60, 40)">40%</button>
+                                <button type="button" class="btn-option" onclick="selectWinRate(50, 50)">50%</button>
+                                <button type="button" class="btn-option" onclick="selectWinRate(40, 60)">60%</button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-simulate" onclick="runSimulation()">시뮬레이션 실행</button>
+                    </div>
+
+                    <!-- 결과 표시 영역 -->
+                    <div class="simulator-results" id="simulatorResults" style="display: none;">
+                        <div class="results-header">
+                            📊 시뮬레이션 결과
+                            <button type="button" class="btn-close-results" onclick="closeSimulationResults()">닫기 ✕</button>
+                        </div>
+
+                        <div class="results-summary">
+                            <div class="summary-card summary-profit">
+                                <div class="summary-label">최종 예상 순이익</div>
+                                <div class="summary-value" id="totalProfit">$0</div>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-label">챌린지 합격 횟수</div>
+                                <div class="summary-value" id="passCount">0회</div>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-label">챌린지 탈락(스캘핑 계좌 수익) 횟수</div>
+                                <div class="summary-value" id="failCount">0회</div>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-label">월 예상 순이익률</div>
+                                <div class="summary-value" id="monthlyReturn">0%</div>
+                            </div>
+                        </div>
+
+                        <div class="results-breakdown">
+                            <div class="breakdown-title">상세 예상손익</div>
+                            <table class="breakdown-table">
+                                <tr>
+                                    <td>스캘핑 계좌 익절(TP) 수익</td>
+                                    <td class="breakdown-value breakdown-positive" id="hedgeProfit">+$0</td>
+                                </tr>
+                                <tr>
+                                    <td>스캘핑 계좌 손절(SL) 손실</td>
+                                    <td class="breakdown-value breakdown-negative" id="hedgeLoss">-$0</td>
+                                </tr>
+                                <tr>
+                                    <td>스캘핑 계좌 순손익</td>
+                                    <td class="breakdown-value" id="hedgeNet">$0</td>
+                                </tr>
+                                <tr class="breakdown-highlight">
+                                    <td>챌린지 합격시 펀딩 수익 (참가비×10×합격횟수×80%)</td>
+                                    <td class="breakdown-value breakdown-positive" id="fundingProfit">+$0</td>
+                                </tr>
+                                <tr>
+                                    <td>참가비 소멸액 (참가비×참가횟수)</td>
+                                    <td class="breakdown-value breakdown-negative" id="entryLoss">-$0</td>
+                                </tr>
+                                <tr>
+                                    <td>스캘핑 계좌 수수료 ($18×참가횟수)</td>
+                                    <td class="breakdown-value breakdown-negative" id="insuranceFeeTotal">-$0</td>
+                                </tr>
+                                <tr>
+                                    <td>펀딩 계좌 수수료 ($32×합격횟수)</td>
+                                    <td class="breakdown-value breakdown-negative" id="fundingFeeTotal">-$0</td>
+                                </tr>
+                                <tr class="breakdown-total">
+                                    <td><strong>최종 예상 순이익</strong></td>
+                                    <td class="breakdown-value" id="finalProfit" style="font-size: 18px; font-weight: 700; color: #10B981;">$0</td>
+                                </tr>
+                            </table>
+                            <p style="margin-top: 12px; font-size: 12px; color: #94A3B8; text-align: center;">※ 거래 수수료 포함 (스캘핑 계좌 $18/회, 펀딩 계좌 $32/회)</p>
+                        </div>
+
+                        <div class="results-breakdown">
+                            <div class="breakdown-title">📋 회차별 상세 예상손익 및 현금흐름</div>
+                            <div style="max-height: 500px; overflow-y: auto; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                                <table class="detailed-table">
+                                    <thead>
+                                        <tr>
+                                            <th>회차</th>
+                                            <th>결과</th>
+                                            <th>스캘핑<br>계좌</th>
+                                            <th>챌린지<br>계좌</th>
+                                            <th>회차<br>손익</th>
+                                            <th>누적<br>손익</th>
+                                            <th>누적<br>순현금흐름</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detailedTableBody">
+                                        <!-- JavaScript로 동적 생성 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p style="margin-top: 12px; font-size: 12px; color: #94A3B8; text-align: center;">※ 챌린지 펀딩 수익이 15일 후에 입금되는 것을 전제로 하여 순현금흐름을 계산하였음</p>
+                        </div>
+
+                        <div class="results-visualization" id="resultsVisualization">
+                            <!-- 시뮬레이션 결과 시각화 (합격/탈락 표시) -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- 우측 사이드바 (결과/공지) -->
+        <div class="right-sidebar">
+            <!-- 즐겨찾기 -->
+            <div class="sidebar-section">
+                <div class="section-title">
+                    <span class="section-icon">⭐</span>
+                    즐겨찾기
+                </div>
+                <div class="favorites-grid">
+                    <a href="https://www.wetradergroup.com/" target="_blank" rel="noopener noreferrer" class="favorite-link" title="프롭펌 챌린지 플랫폼">
+                        <span class="favorite-name">WeTrader Group (위트레이더 그룹)</span>
+                    </a>
+                    <a href="https://ensomarket.com" target="_blank" rel="noopener noreferrer" class="favorite-link" title="실거래 계좌 브로커 (MT5)">
+                        <span class="favorite-name">Enso Markets (엔쏘마켓)</span>
+                    </a>
+                    <a href="https://infinox.com" target="_blank" rel="noopener noreferrer" class="favorite-link" title="모의거래 계좌 브로커 (MT5)">
+                        <span class="favorite-name">INFINOX (인피녹스)</span>
+                    </a>
+                    <a href="https://upbit.com" target="_blank" rel="noopener noreferrer" class="favorite-link" title="국내 암호화폐 거래소">
+                        <span class="favorite-name">Upbit (업비트)</span>
+                    </a>
+                    <a href="https://www.binance.com" target="_blank" rel="noopener noreferrer" class="favorite-link" title="글로벌 암호화폐 거래소">
+                        <span class="favorite-name">Binance (바이낸스)</span>
+                    </a>
+                    <a href="https://mw-wallet.io" target="_blank" rel="noopener noreferrer" class="favorite-link" title="암호화폐 입출금 허브">
+                        <span class="favorite-name">MW Wallet (MW 지갑)</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- AI 자동화 프로그램 다운로드 -->
+            <div class="sidebar-section">
+                <div class="section-title">
+                    <span class="section-icon">🤖</span>
+                    AI 자동화 프로그램 다운로드
+                </div>
+
+                <!-- AI 자동화 시스템 v1.1 -->
+                <div class="menu-item expandable" tabindex="0" role="button" onclick="toggleSubmenu(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSubmenu(this)}">
+                    <span>AI 자동화 시스템 v1.1</span>
+                    <span class="expand-arrow">▶</span>
+                </div>
+                <div class="submenu-list">
+                    <div class="submenu-item" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
+                        <div style="font-size: 11px; margin-bottom: 6px; font-weight: 600;">1차 챌린지 단계</div>
+                        <div style="font-size: 10px; padding-left: 12px; line-height: 1.7; margin-bottom: 2px; opacity: 0.9;">• 원클릭 동시 진입</div>
+                        <div style="font-size: 10px; padding-left: 12px; line-height: 1.7; margin-bottom: 2px; opacity: 0.9;">• 음성 명령 지원</div>
+                        <div style="font-size: 10px; padding-left: 12px; line-height: 1.7; opacity: 0.9;">• 조건 도달 시 자동 청산</div>
+                    </div>
+                    <div class="submenu-item" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
+                        <div style="font-size: 11px; margin-bottom: 6px; font-weight: 600;">2차 펀딩계좌 트레이딩 단계</div>
+                        <div style="font-size: 10px; padding-left: 12px; line-height: 1.7; margin-bottom: 2px; opacity: 0.9;">• 음성 명령 지원</div>
+                        <div style="font-size: 10px; padding-left: 12px; line-height: 1.7; margin-bottom: 2px; opacity: 0.9;">• SL 자동 감지</div>
+                        <div style="font-size: 10px; padding-left: 12px; line-height: 1.7; margin-bottom: 2px; opacity: 0.9;">• 반대 계좌 즉시 청산</div>
+                        <div style="font-size: 10px; padding-left: 12px; line-height: 1.7; opacity: 0.9;">• 타이밍 오차 20-80ms</div>
+                    </div>
+                    <div class="submenu-item" style="margin-bottom: 4px;">📖 설치 및 MT5 연동 가이드</div>
+                    <div class="submenu-item" style="margin-bottom: 10px;">📹 사용법 동영상</div>
+                    <div class="submenu-item download-btn" onclick="event.preventDefault(); alert('🚧 준비 중입니다.\n\nAI 자동화 프로그램은 곧 다운로드 가능합니다.');" style="background: #ECFDF5; color: #10B981; font-weight: 700; padding: 12px; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s; border: 1px solid #D1FAE5;">
+                        다운로드 하기
+                    </div>
+                </div>
+            </div>
+
+            <!-- My 설정 -->
+            <div class="widget">
+                <div class="widget-title">
+                    <span class="widget-icon">⚙️</span>
+                    My 설정
+                </div>
+
+                <!-- 거래 시작일 설정 (단순 클릭) -->
+                <div class="settings-item" onclick="openSettingsModal(event)">
+                    거래 시작일 설정
+                </div>
+
+                <!-- 누적손익 목표 설정 (단순 클릭) -->
+                <div class="settings-item" onclick="openGoalModal(event)">
+                    누적손익 목표 설정
+                </div>
+
+                <!-- 계좌 관리 (트리 구조 - 3단계까지) -->
+                <div class="settings-item tree-toggle" onclick="toggleTree(this)">
+                    <span>계좌 관리</span>
+                    <span class="arrow">▶</span>
+                </div>
+                <div class="tree-content" style="display: none;">
+                    <!-- 계좌 현황 -->
+                    <div class="tree-item" onclick="openAccountDashboard()">
+                        계좌 현황 보기
+                    </div>
+                    <div class="tree-item" onclick="openAccountModal(event)">
+                        새 계좌 추가
+                    </div>
+                    <div class="tree-item" onclick="openAccountList()">
+                        연결된 계좌 관리
+                    </div>
+                    <div class="tree-item" onclick="openAccountLog()">
+                        연동 로그
+                    </div>
+
+                    <!-- API 연결 설정 (2단계) -->
+                    <div class="tree-item tree-toggle" onclick="toggleTree(this)">
+                        <span>API 연결 설정</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="tree-content sub-tree" style="display: none;">
+                        <div class="tree-item sub-item" onclick="openAPIKeyManagement()">
+                            API 키 관리
+                        </div>
+                        <div class="tree-item sub-item" onclick="openConnectionTest()">
+                            연결 테스트
+                        </div>
+                        <div class="tree-item sub-item" onclick="openPermissionCheck()">
+                            권한 확인
+                        </div>
+                        <div class="tree-item sub-item" onclick="openUsageStats()">
+                            사용량 통계
+                        </div>
+                        <div class="tree-item sub-item" onclick="openExpiryAlert()">
+                            만료 알림 설정
+                        </div>
+                    </div>
+
+                    <!-- 데이터 관리 (2단계 - 3단계까지) -->
+                    <div class="tree-item tree-toggle" onclick="toggleTree(this)">
+                        <span>데이터 관리</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="tree-content sub-tree" style="display: none;">
+                        <!-- 데이터 다운로드 (3단계) -->
+                        <div class="tree-item sub-item tree-toggle" onclick="toggleTree(this)">
+                            <span>데이터 다운로드</span>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="tree-content sub-tree" style="display: none;">
+                            <div class="tree-item sub-item" onclick="downloadCSV()">
+                                CSV 거래 내역
+                            </div>
+                            <div class="tree-item sub-item" onclick="downloadPDF()">
+                                PDF 손익 리포트
+                            </div>
+                            <div class="tree-item sub-item" onclick="downloadLog()">
+                                TXT 연동 로그
+                            </div>
+                        </div>
+
+                        <!-- 데이터 삭제 (3단계) -->
+                        <div class="tree-item sub-item tree-toggle" onclick="toggleTree(this)">
+                            <span>데이터 삭제</span>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="tree-content sub-tree" style="display: none;">
+                            <div class="tree-item sub-item" onclick="deleteTradeHistory()">
+                                거래 내역 삭제
+                            </div>
+                            <div class="tree-item sub-item" onclick="deleteCache()">
+                                캐시 삭제
+                            </div>
+                        </div>
+
+                        <!-- 동기화 설정 -->
+                        <div class="tree-item sub-item" onclick="openSyncSettings()">
+                            동기화 설정
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 알림 설정 (트리 구조) -->
+                <div class="settings-item tree-toggle" onclick="toggleTree(this)">
+                    <span>알림 설정</span>
+                    <span class="arrow">▶</span>
+                </div>
+                <div class="tree-content" style="display: none;">
+                    <div class="tree-item" onclick="toggleNotification('position', event)">
+                        <input type="checkbox" checked> 포지션 청산 알림
+                    </div>
+                    <div class="tree-item" onclick="toggleNotification('account', event)">
+                        <input type="checkbox" checked> 계좌 연동 알림
+                    </div>
+                    <div class="tree-item" onclick="toggleNotification('sync', event)">
+                        <input type="checkbox" checked> 동기화 오류 알림
+                    </div>
+                    <div class="tree-item" onclick="toggleNotification('api', event)">
+                        <input type="checkbox" checked> API 오류 알림
+                    </div>
+                </div>
+
+                <!-- 프로필 관리 (트리 구조) -->
+                <div class="settings-item tree-toggle" onclick="toggleTree(this)">
+                    <span>프로필 관리</span>
+                    <span class="arrow">▶</span>
+                </div>
+                <div class="tree-content" style="display: none;">
+                    <div class="tree-item" onclick="changeProfilePhoto()">
+                        프로필 사진
+                    </div>
+                    <div class="tree-item" onclick="changeNickname()">
+                        닉네임 변경
+                    </div>
+                    <div class="tree-item" onclick="changeEmail()">
+                        이메일 변경
+                    </div>
+                    <div class="tree-item" onclick="changePhone()">
+                        전화번호 변경
+                    </div>
+                    <div class="tree-item" onclick="changePassword()">
+                        비밀번호 변경
+                    </div>
+                    <div class="tree-item" onclick="viewMemberInfo()">
+                        회원 정보
+                    </div>
+                    <div class="tree-item" onclick="withdrawMembership()">
+                        회원 탈퇴
+                    </div>
+                </div>
+            </div>
+
+            <!-- My 누적손익 -->
+            <div class="widget">
+                <div class="widget-title">
+                    <span class="widget-icon">📊</span>
+                    My 누적손익
+                </div>
+
+                <!-- 월 누적 손익 -->
+                <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #E2E8F0;">
+                    <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">월 누적 손익</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px; font-weight: 700; color: #10B981;">₩5,160,000</span>
+                        <span style="font-size: 11px; color: #10B981;">목표 달성률: 97% ✅</span>
+                    </div>
+                </div>
+
+                <!-- 연 누적 손익 -->
+                <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #E2E8F0;">
+                    <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">연 누적 손익</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px; font-weight: 700; color: #10B981;">₩58,920,000</span>
+                        <span style="font-size: 11px; color: #10B981;">목표 달성률: 84% ✅</span>
+                    </div>
+                </div>
+
+                <!-- My 레벨 -->
+                <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #E2E8F0;">
+                    <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">My 레벨</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px; font-weight: 700; color: #EF4444;">Lv.10</span>
+                        <span style="font-size: 11px; color: #64748B;">상위 1%</span>
+                    </div>
+                </div>
+
+                <!-- My 랭킹 -->
+                <div>
+                    <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">My 랭킹</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px; font-weight: 700; color: #22C55E;">5위</span>
+                        <span style="font-size: 11px; color: #64748B;">전체 1,000명 중</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My 손익 발생일지 (1년간) -->
+            <div class="widget">
+                <div class="widget-title">
+                    <span class="widget-icon">📝</span>
+                    My 손익 발생일지 (1년간)
+                </div>
+
+                <!-- 테이블 헤더 -->
+                <div style="display: grid; grid-template-columns: 60px 1fr 1fr; gap: 8px; padding: 8px 0; border-bottom: 1px solid #E2E8F0; margin-bottom: 8px;">
+                    <div style="font-size: 11px; font-weight: 600; color: #64748B; text-align: center;">날짜</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #64748B; text-align: center;">일별 손익</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #64748B; text-align: center;">누적 손익</div>
+                </div>
+
+                <!-- 데이터 행 -->
+                <div style="display: grid; grid-template-columns: 60px 1fr 1fr; gap: 8px; padding: 6px 0; align-items: center;">
+                    <div style="font-size: 11px; color: #475569; text-align: center;">12/06</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #10B981; text-align: center;">+167,000</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #1F2937; text-align: center;">5,160,000</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 60px 1fr 1fr; gap: 8px; padding: 6px 0; align-items: center;">
+                    <div style="font-size: 11px; color: #475569; text-align: center;">12/05</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #10B981; text-align: center;">+145,000</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #1F2937; text-align: center;">4,993,000</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 60px 1fr 1fr; gap: 8px; padding: 6px 0; align-items: center;">
+                    <div style="font-size: 11px; color: #475569; text-align: center;">12/04</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #10B981; text-align: center;">+189,000</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #1F2937; text-align: center;">4,848,000</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 60px 1fr 1fr; gap: 8px; padding: 6px 0; align-items: center;">
+                    <div style="font-size: 11px; color: #475569; text-align: center;">12/03</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #10B981; text-align: center;">+152,000</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #1F2937; text-align: center;">4,659,000</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 60px 1fr 1fr; gap: 8px; padding: 6px 0; align-items: center;">
+                    <div style="font-size: 11px; color: #475569; text-align: center;">12/02</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #10B981; text-align: center;">+178,000</div>
+                    <div style="font-size: 11px; font-weight: 600; color: #1F2937; text-align: center;">4,507,000</div>
+                </div>
+
+                <a href="#" class="view-more" onclick="openDiaryModal(event)" style="margin-top: 8px;">전체 보기 →</a>
+            </div>
+
+            <!-- 커뮤니티 바로가기 -->
+            <div class="widget">
+                <div class="widget-title">
+                    <span class="widget-icon">💬</span>
+                    커뮤니티 바로가기
+                </div>
+                <a href="community.html" class="community-link">
+                    <span class="community-text">HDH 실전 운영자 커뮤니티</span>
+                    <span class="community-arrow">→</span>
+                </a>
+            </div>
+
+            <!-- 써니에게 묻기 -->
+            <div class="widget">
+                <div class="widget-title">
+                    <span class="widget-icon">☀️</span>
+                    Sunny에게 묻기
+                </div>
+                <div class="support-input-area">
+                    <textarea id="supportQuestion"
+                        placeholder="사용법 문의, 문제 해결, 기능 제안, HDH 전략 검토, 트레이딩 멘토링까지! AI 활용 능력 고수 + 공인회계사 + 엑셀러레이터인 Sunny에게 자유롭게 문의하세요!"
+                        rows="4"></textarea>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" onclick="document.getElementById('supportFile').click()" class="support-file-btn"
+                            style="flex: 1; padding: 10px; font-size: 12px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px; cursor: pointer; color: #059669; font-weight: 500; transition: all 0.2s;">파일 첨부</button>
+                        <button type="button" onclick="submitSupport()" class="support-submit-btn"
+                            style="flex: 2; padding: 10px; font-size: 12px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px; cursor: pointer; color: #059669; font-weight: 600; transition: all 0.2s;">제출하기</button>
+                    </div>
+                    <input type="file" id="supportFile" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx"
+                        style="display: none;" onchange="handleSupportFileSelect(event)">
+                    <div id="supportFileList" style="font-size: 12px; color: #666; max-height: 60px; overflow-y: auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 손익 발생 일지 전체 보기 모달 -->
+    <div class="modal-overlay" id="diaryModal" role="dialog" aria-modal="true" aria-labelledby="diaryModalTitle" onclick="closeDiaryModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title" id="diaryModalTitle">📝 손익 발생 일지</div>
+                <button type="button" class="modal-close" onclick="closeDiaryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- 월간/연간 누적 손익 -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                    <div style="background: #F0FDF4; padding: 12px; border-radius: 8px; border: 1px solid #BBF7D0;">
+                        <div style="font-size: 11px; color: #166534; margin-bottom: 4px;">월간 누적 손익</div>
+                        <div style="font-size: 16px; font-weight: 700; color: #15803D;">₩5,160,000</div>
+                    </div>
+                    <div style="background: #ECFDF5; padding: 12px; border-radius: 8px; border: 1px solid #A7F3D0;">
+                        <div style="font-size: 11px; color: #065F46; margin-bottom: 4px;">연간 누적 손익</div>
+                        <div style="font-size: 16px; font-weight: 700; color: #047857;">₩58,920,000</div>
+                    </div>
+                </div>
+
+                <!-- 테이블 헤더 -->
+                <div style="display: grid; grid-template-columns: 80px 1fr 1fr; gap: 16px; padding: 10px 16px; background: #F1F5F9; border-radius: 6px; margin-bottom: 8px;">
+                    <div style="font-size: 12px; font-weight: 600; color: #475569; text-align: center;">일자</div>
+                    <div style="font-size: 12px; font-weight: 600; color: #475569; text-align: center;">일자별 손익</div>
+                    <div style="font-size: 12px; font-weight: 600; color: #475569; text-align: center;">누적 손익</div>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">12/06</span>
+                    <span class="diary-amount">+167,000원 ✅</span>
+                    <span class="diary-cumulative">₩5,160,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">12/05</span>
+                    <span class="diary-amount">+183,000원 ✅</span>
+                    <span class="diary-cumulative">₩4,993,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">12/04</span>
+                    <span class="diary-amount">+145,000원 ✅</span>
+                    <span class="diary-cumulative">₩4,810,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">12/03</span>
+                    <span class="diary-amount">+159,000원 ✅</span>
+                    <span class="diary-cumulative">₩4,665,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">12/02</span>
+                    <span class="diary-amount">+201,000원 ✅</span>
+                    <span class="diary-cumulative">₩4,506,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">12/01</span>
+                    <span class="diary-amount">+178,000원 ✅</span>
+                    <span class="diary-cumulative">₩4,305,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/30</span>
+                    <span class="diary-amount">+192,000원 ✅</span>
+                    <span class="diary-cumulative">₩4,127,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/29</span>
+                    <span class="diary-amount">+156,000원 ✅</span>
+                    <span class="diary-cumulative">₩3,935,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/28</span>
+                    <span class="diary-amount">+188,000원 ✅</span>
+                    <span class="diary-cumulative">₩3,779,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/27</span>
+                    <span class="diary-amount">+174,000원 ✅</span>
+                    <span class="diary-cumulative">₩3,591,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/26</span>
+                    <span class="diary-amount">+163,000원 ✅</span>
+                    <span class="diary-cumulative">₩3,417,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/25</span>
+                    <span class="diary-amount">+195,000원 ✅</span>
+                    <span class="diary-cumulative">₩3,254,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/24</span>
+                    <span class="diary-amount">+149,000원 ✅</span>
+                    <span class="diary-cumulative">₩3,059,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/23</span>
+                    <span class="diary-amount">+187,000원 ✅</span>
+                    <span class="diary-cumulative">₩2,910,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/22</span>
+                    <span class="diary-amount">+172,000원 ✅</span>
+                    <span class="diary-cumulative">₩2,723,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/21</span>
+                    <span class="diary-amount">+158,000원 ✅</span>
+                    <span class="diary-cumulative">₩2,551,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/20</span>
+                    <span class="diary-amount">+181,000원 ✅</span>
+                    <span class="diary-cumulative">₩2,393,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/19</span>
+                    <span class="diary-amount">+166,000원 ✅</span>
+                    <span class="diary-cumulative">₩2,212,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/18</span>
+                    <span class="diary-amount">+194,000원 ✅</span>
+                    <span class="diary-cumulative">₩2,046,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/17</span>
+                    <span class="diary-amount">+151,000원 ✅</span>
+                    <span class="diary-cumulative">₩1,852,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/16</span>
+                    <span class="diary-amount">+176,000원 ✅</span>
+                    <span class="diary-cumulative">₩1,701,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/15</span>
+                    <span class="diary-amount">+189,000원 ✅</span>
+                    <span class="diary-cumulative">₩1,525,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/14</span>
+                    <span class="diary-amount">+162,000원 ✅</span>
+                    <span class="diary-cumulative">₩1,336,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/13</span>
+                    <span class="diary-amount">+197,000원 ✅</span>
+                    <span class="diary-cumulative">₩1,174,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/12</span>
+                    <span class="diary-amount">+154,000원 ✅</span>
+                    <span class="diary-cumulative">₩977,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/11</span>
+                    <span class="diary-amount">+185,000원 ✅</span>
+                    <span class="diary-cumulative">₩823,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/10</span>
+                    <span class="diary-amount">+170,000원 ✅</span>
+                    <span class="diary-cumulative">₩638,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/09</span>
+                    <span class="diary-amount">+160,000원 ✅</span>
+                    <span class="diary-cumulative">₩468,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/08</span>
+                    <span class="diary-amount">+191,000원 ✅</span>
+                    <span class="diary-cumulative">₩308,000</span>
+                </div>
+                <div class="diary-item-modal">
+                    <span class="diary-date">11/07</span>
+                    <span class="diary-amount">+148,000원 ✅</span>
+                    <span class="diary-cumulative">₩148,000</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 설정 모달 -->
+    <div class="modal-overlay" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" onclick="closeSettingsModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title" id="settingsModalTitle">⚙️ 거래 시작일 설정</div>
+                <button type="button" class="modal-close" onclick="closeSettingsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <label for="startDateInput" class="settings-label">거래 시작일</label>
+                    <div class="settings-description">손익 발생 일지 및 누적손익계산의 기준이 되는 거래 시작일을 설정합니다.</div>
+                    <input type="date" id="startDateInput" class="settings-input" value="2024-11-07">
+                    <div class="settings-current">
+                        <span class="settings-current-label">현재 설정:</span>
+                        <span class="settings-current-value" id="currentStartDate">2024년 11월 7일</span>
+                    </div>
+                </div>
+                <div class="settings-actions">
+                    <button type="button" class="btn-settings-cancel" onclick="closeSettingsModal()">취소</button>
+                    <button type="button" class="btn-settings-save" onclick="saveStartDate()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 누적손익 목표 설정 모달 -->
+    <div class="modal-overlay" id="goalModal" role="dialog" aria-modal="true" aria-labelledby="goalModalTitle" onclick="closeGoalModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title" id="goalModalTitle">🎯 누적손익 목표 설정</div>
+                <button type="button" class="modal-close" onclick="closeGoalModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section" style="margin-bottom: 24px;">
+                    <label for="monthlyGoalInput" class="settings-label">월간 목표</label>
+                    <div class="settings-description">월간 누적손익 목표 금액을 설정합니다.</div>
+                    <input type="number" id="monthlyGoalInput" class="settings-input" placeholder="예: 5000000" value="5320000">
+                    <div style="font-size: 12px; color: #64748B; margin-top: 4px;">단위: 원 (₩)</div>
+                </div>
+                <div class="settings-section">
+                    <label for="yearlyGoalInput" class="settings-label">연간 목표</label>
+                    <div class="settings-description">연간 누적손익 목표 금액을 설정합니다.</div>
+                    <input type="number" id="yearlyGoalInput" class="settings-input" placeholder="예: 70000000" value="70000000">
+                    <div style="font-size: 12px; color: #64748B; margin-top: 4px;">단위: 원 (₩)</div>
+                </div>
+                <div class="settings-actions">
+                    <button type="button" class="btn-settings-cancel" onclick="closeGoalModal()">취소</button>
+                    <button type="button" class="btn-settings-save" onclick="saveGoals()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 계좌 관리 모달 -->
+    <div class="modal-overlay" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle" onclick="closeAccountModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 600px;">
+            <div class="modal-header">
+                <div class="modal-title" id="accountModalTitle">💼 계좌 관리</div>
+                <button type="button" class="modal-close" onclick="closeAccountModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <div class="settings-description">거래소 계좌를 연결하여 실시간 손익 데이터를 가져옵니다.</div>
+
+                    <!-- 계좌 추가 폼 -->
+                    <div style="background: #F8FAFC; padding: 20px; border-radius: 12px; margin-top: 16px;">
+                        <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 12px;">새 계좌 추가</div>
+
+                        <div style="margin-bottom: 12px;">
+                            <label for="exchangeSelect" style="display: block; font-size: 13px; color: #64748B; margin-bottom: 6px;">거래소 선택</label>
+                            <select id="exchangeSelect" class="settings-input" style="width: 100%;">
+                                <option value="ensomarkets">Enso Markets (엔쏘마켓)</option>
+                                <option value="infinox">INFINOX (인피녹스)</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 12px;">
+                            <label for="accountNickname" style="display: block; font-size: 13px; color: #64748B; margin-bottom: 6px;">계좌 별칭</label>
+                            <input type="text" id="accountNickname" class="settings-input" placeholder="예: 메인 계좌" style="width: 100%;">
+                        </div>
+
+                        <div style="margin-bottom: 12px;">
+                            <label for="apiKey" style="display: block; font-size: 13px; color: #64748B; margin-bottom: 6px;">API Key</label>
+                            <input type="text" id="apiKey" class="settings-input" placeholder="API Key 입력" style="width: 100%;" autocomplete="off" spellcheck="false">
+                        </div>
+
+                        <div style="margin-bottom: 16px;">
+                            <label for="apiSecret" style="display: block; font-size: 13px; color: #64748B; margin-bottom: 6px;">API Secret</label>
+                            <input type="password" id="apiSecret" class="settings-input" placeholder="API Secret 입력" style="width: 100%;" autocomplete="new-password">
+                        </div>
+
+                        <button type="button" onclick="addAccount()" style="width: 100%; padding: 12px; background: #10B981; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                            계좌 추가
+                        </button>
+                    </div>
+
+                    <!-- 연결된 계좌 목록 -->
+                    <div style="margin-top: 24px;">
+                        <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 12px;">연결된 계좌</div>
+                        <div id="accountList" style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- 샘플 계좌 -->
+                            <div class="account-item" style="background: white; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: start;">
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                            <span style="font-size: 14px; font-weight: 700; color: #0F172A;">메인 계좌</span>
+                                            <span style="background: #DCFCE7; color: #166534; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">연결됨</span>
+                                        </div>
+                                        <div style="font-size: 13px; color: #64748B;">Enso Markets (엔쏘마켓)</div>
+                                        <div style="font-size: 12px; color: #94A3B8; margin-top: 4px;">API Key: enso_**********************</div>
+                                        <div style="font-size: 12px; color: #3B82F6; margin-top: 8px; font-weight: 600;">실시간 손익 연동 중</div>
+                                    </div>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button type="button" onclick="disconnectAccount(this)" style="padding: 8px 12px; background: #FEF2F2; color: #DC2626; border: 1px solid #FEE2E2; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                            연결 해제
+                                        </button>
+                                        <button type="button" onclick="deleteAccount(this)" style="padding: 8px 12px; background: white; color: #EF4444; border: 1px solid #FEE2E2; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                            삭제
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 20px; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end;">
+                <button type="button" class="btn-settings-cancel" onclick="closeAccountModal()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSubmenu(element) {
+            // 클릭한 menu-item의 다음 형제 요소 (submenu-list) 찾기
+            const submenuList = element.nextElementSibling;
+
+            // expanded 클래스 토글
+            element.classList.toggle('expanded');
+
+            // submenu-list의 active 클래스 토글
+            submenuList.classList.toggle('active');
+        }
+
+        function openDiaryModal(event) {
+            event.preventDefault();
+            document.getElementById('diaryModal').classList.add('active');
+        }
+
+        function closeDiaryModal(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            document.getElementById('diaryModal').classList.remove('active');
+        }
+
+        function openSettingsModal(event) {
+            event.preventDefault();
+            document.getElementById('settingsModal').classList.add('active');
+        }
+
+        function closeSettingsModal(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function saveStartDate() {
+            const dateInput = document.getElementById('startDateInput');
+            const selectedDate = new Date(dateInput.value);
+
+            // 날짜 포맷팅
+            const year = selectedDate.getFullYear();
+            const month = selectedDate.getMonth() + 1;
+            const day = selectedDate.getDate();
+            const formattedDate = `${year}년 ${month}월 ${day}일`;
+
+            // 현재 설정 업데이트
+            document.getElementById('currentStartDate').textContent = formattedDate;
+
+            // 저장 완료 알림
+            alert(`거래 시작일이 ${formattedDate}로 설정되었습니다.`);
+
+            // 모달 닫기
+            closeSettingsModal();
+        }
+
+        // 누적손익 목표 설정 모달 함수
+        function openGoalModal(event) {
+            event.preventDefault();
+            document.getElementById('goalModal').classList.add('active');
+        }
+
+        function closeGoalModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('goalModal').classList.remove('active');
+        }
+
+        function saveGoals() {
+            const monthlyGoal = document.getElementById('monthlyGoalInput').value;
+            const yearlyGoal = document.getElementById('yearlyGoalInput').value;
+
+            alert(`목표가 설정되었습니다:\n\n월간 목표: ₩${parseInt(monthlyGoal).toLocaleString()}\n연간 목표: ₩${parseInt(yearlyGoal).toLocaleString()}`);
+
+            // 모달 닫기
+            closeGoalModal();
+        }
+
+        // ========================================
+        // 트리 구조 토글 함수
+        // ========================================
+        function toggleTree(element) {
+            const treeContent = element.nextElementSibling;
+            const arrow = element.querySelector('.arrow');
+
+            if (treeContent && treeContent.classList.contains('tree-content')) {
+                if (treeContent.style.display === 'none' || treeContent.style.display === '') {
+                    // 펼치기
+                    treeContent.style.display = 'block';
+                    arrow.textContent = '▼';
+                    element.classList.add('active');
+                } else {
+                    // 접기
+                    treeContent.style.display = 'none';
+                    arrow.textContent = '▶';
+                    element.classList.remove('active');
+
+                    // 2단계 트리도 모두 접기
+                    const subTrees = treeContent.querySelectorAll('.sub-tree');
+                    subTrees.forEach(subTree => {
+                        subTree.style.display = 'none';
+                        const subArrow = subTree.previousElementSibling.querySelector('.arrow');
+                        if (subArrow) subArrow.textContent = '▶';
+                    });
+                }
+            }
+
+            event.stopPropagation();
+        }
+
+        // ========================================
+        // 계좌 관리 관련 함수
+        // ========================================
+        function openAccountModal(event) {
+            event.preventDefault();
+            document.getElementById('accountModal').classList.add('active');
+        }
+
+        function openAccountDashboard() {
+            alert('계좌 현황 대시보드\n\n모든 계좌의 실시간 연동 상태를 한눈에 확인할 수 있습니다.\n\n구현 예정입니다.');
+        }
+
+        function openAccountList() {
+            alert('연결된 계좌 관리\n\n계좌 목록 보기 및 편집/삭제 기능입니다.\n\n구현 예정입니다.');
+        }
+
+        function openAccountLog() {
+            alert('계좌 연동 로그\n\n동기화 이력 및 오류 로그를 확인할 수 있습니다.\n\n구현 예정입니다.');
+        }
+
+        // ========================================
+        // API 연결 설정 관련 함수
+        // ========================================
+        function openAPIKeyManagement() {
+            alert('API 키 관리\n\nAPI Key 보기/숨기기 및 재발급 기능입니다.\n\n구현 예정입니다.');
+        }
+
+        function openConnectionTest() {
+            alert('연결 테스트\n\n계좌 연결 상태를 테스트합니다.\n\n- API 인증\n- 계좌 정보 조회\n- 거래 내역 조회\n- 응답 속도 측정\n\n구현 예정입니다.');
+        }
+
+        function openPermissionCheck() {
+            alert('권한 확인\n\nAPI 키의 권한을 확인합니다.\n\n- 조회 권한 (READ)\n- 거래 권한 (TRADE) - 사용 안 함\n- 출금 권한 (WITHDRAW) - 절대 금지\n\n구현 예정입니다.');
+        }
+
+        function openUsageStats() {
+            alert('사용량 통계\n\nAPI 호출 사용량을 확인합니다.\n\n- 일일 사용량\n- 월간 사용량\n- Rate Limit 상태\n\n구현 예정입니다.');
+        }
+
+        function openExpiryAlert() {
+            alert('만료 알림 설정\n\nAPI 키 만료 7일 전부터 알림을 받을 수 있습니다.\n\n구현 예정입니다.');
+        }
+
+        // ========================================
+        // 알림 설정 관련 함수
+        // ========================================
+        function toggleNotification(type, event) {
+            const checkbox = event.target;
+            if (checkbox.tagName === 'INPUT') {
+                const isEnabled = checkbox.checked;
+                console.log(`${type} 알림: ${isEnabled ? 'ON' : 'OFF'}`);
+                alert(`${type} 알림이 ${isEnabled ? '활성화' : '비활성화'}되었습니다.`);
+            }
+            event.stopPropagation();
+        }
+
+        // ========================================
+        // 데이터 관리 관련 함수
+        // ========================================
+        function downloadCSV() {
+            alert('CSV 거래 내역 다운로드\n\n거래 내역을 CSV 파일로 다운로드합니다.\n엑셀에서 열어볼 수 있습니다.\n\n구현 예정입니다.');
+        }
+
+        function downloadPDF() {
+            alert('PDF 손익 리포트 다운로드\n\n손익 리포트를 PDF로 다운로드합니다.\n그래프와 통계가 포함됩니다.\n\n구현 예정입니다.');
+        }
+
+        function downloadLog() {
+            alert('TXT 연동 로그 다운로드\n\n계좌 연동 로그를 텍스트 파일로 다운로드합니다.\n\n구현 예정입니다.');
+        }
+
+        function deleteTradeHistory() {
+            if (confirm('거래 내역을 삭제하시겠습니까?\n\n⚠️ 삭제된 데이터는 복구할 수 없습니다.\n삭제 전 반드시 백업하세요.')) {
+                alert('거래 내역 삭제 기능입니다.\n\n구현 예정입니다.');
+            }
+        }
+
+        function deleteCache() {
+            if (confirm('캐시 데이터를 삭제하시겠습니까?\n\n약 26MB의 공간을 확보할 수 있습니다.')) {
+                alert('캐시 삭제가 완료되었습니다.\n\n구현 예정입니다.');
+            }
+        }
+
+        function openSyncSettings() {
+            alert('동기화 설정\n\n자동 동기화 간격을 설정합니다.\n\n- 5초마다 (권장)\n- 10초마다\n- 30초마다\n- 1분마다\n- 수동만\n\n구현 예정입니다.');
+        }
+
+        // ========================================
+        // 프로필 관리 관련 함수
+        // ========================================
+        function changeProfilePhoto() {
+            alert('프로필 사진 변경\n\n프로필 사진을 업로드할 수 있습니다.\n(JPG, PNG, 최대 2MB)\n\n구현 예정입니다.');
+        }
+
+        function changeNickname() {
+            const nickname = prompt('새 닉네임을 입력하세요 (2~10자):', '홍길동');
+            if (nickname && nickname.length >= 2 && nickname.length <= 10) {
+                alert('닉네임이 변경되었습니다: ' + nickname);
+            } else if (nickname) {
+                alert('닉네임은 2~10자 이내여야 합니다.');
+            }
+        }
+
+        function changeEmail() {
+            const email = prompt('새 이메일을 입력하세요:', 'hong@example.com');
+            if (email && confirm('이메일 변경 시 인증 메일이 발송됩니다.\n계속하시겠습니까?')) {
+                alert('인증 메일이 발송되었습니다.\n메일에서 인증을 완료해주세요.');
+            }
+        }
+
+        function changePhone() {
+            const phone = prompt('새 전화번호를 입력하세요:', '010-1234-5678');
+            if (phone && confirm('전화번호 변경 시 SMS 인증이 필요합니다.\n계속하시겠습니까?')) {
+                alert('인증번호가 발송되었습니다.');
+            }
+        }
+
+        function changePassword() {
+            if (confirm('비밀번호를 변경하시겠습니까?')) {
+                alert('비밀번호 변경 페이지로 이동합니다.\n\n구현 예정입니다.');
+            }
+        }
+
+        function viewMemberInfo() {
+            alert('회원 정보\n\n가입일: 2024년 1월 15일\n회원 등급: Lv.10 (상위 1%)\n총 거래 횟수: 247회\n총 누적 손익: ₩58,920,000');
+        }
+
+        function withdrawMembership() {
+            if (confirm('⚠️ 정말 탈퇴하시겠습니까?\n\n모든 데이터가 삭제되며 복구할 수 없습니다.')) {
+                alert('회원 탈퇴 절차로 이동합니다.\n\n구현 예정입니다.');
+            }
+        }
+
+        function closeAccountModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('accountModal').classList.remove('active');
+        }
+
+        // 계좌 추가 함수
+        function addAccount() {
+            const exchange = document.getElementById('exchangeSelect').value;
+            const exchangeName = document.getElementById('exchangeSelect').selectedOptions[0].text;
+            const nickname = document.getElementById('accountNickname').value;
+            const apiKey = document.getElementById('apiKey').value;
+            const apiSecret = document.getElementById('apiSecret').value;
+
+            if (!nickname || !apiKey || !apiSecret) {
+                alert('모든 필드를 입력해주세요.');
+                return;
+            }
+
+            // API Key 마스킹
+            const maskedKey = apiKey.substring(0, 5) + '*'.repeat(20);
+
+            // 새 계좌 아이템 생성
+            const accountItem = document.createElement('div');
+            accountItem.className = 'account-item';
+            accountItem.style.cssText = 'background: white; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px;';
+            accountItem.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                            <span style="font-size: 14px; font-weight: 700; color: #0F172A;">${nickname}</span>
+                            <span style="background: #DCFCE7; color: #166534; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">연결됨</span>
+                        </div>
+                        <div style="font-size: 13px; color: #64748B;">${exchangeName}</div>
+                        <div style="font-size: 12px; color: #94A3B8; margin-top: 4px;">API Key: ${maskedKey}</div>
+                        <div style="font-size: 12px; color: #3B82F6; margin-top: 8px; font-weight: 600;">실시간 손익 연동 중</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" onclick="disconnectAccount(this)" style="padding: 8px 12px; background: #FEF2F2; color: #DC2626; border: 1px solid #FEE2E2; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            연결 해제
+                        </button>
+                        <button type="button" onclick="deleteAccount(this)" style="padding: 8px 12px; background: white; color: #EF4444; border: 1px solid #FEE2E2; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            삭제
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // 계좌 목록에 추가
+            document.getElementById('accountList').appendChild(accountItem);
+
+            // 폼 초기화
+            document.getElementById('accountNickname').value = '';
+            document.getElementById('apiKey').value = '';
+            document.getElementById('apiSecret').value = '';
+
+            alert(`${nickname} 계좌가 성공적으로 연결되었습니다.`);
+        }
+
+        // 계좌 연결 해제
+        function disconnectAccount(button) {
+            const accountItem = button.closest('.account-item');
+            const nickname = accountItem.querySelector('span[style*="font-weight: 700"]').textContent;
+
+            if (confirm(`${nickname} 계좌의 연결을 해제하시겠습니까?\n연결을 해제하면 실시간 손익 데이터를 가져올 수 없습니다.`)) {
+                // 연결 상태 변경
+                const statusBadge = accountItem.querySelector('span[style*="background: #DCFCE7"]');
+                statusBadge.style.background = '#FEE2E2';
+                statusBadge.style.color = '#991B1B';
+                statusBadge.textContent = '연결 해제됨';
+
+                const syncStatus = accountItem.querySelector('div[style*="color: #3B82F6"]');
+                syncStatus.style.color = '#94A3B8';
+                syncStatus.textContent = '손익 연동 중지됨';
+
+                // 버튼을 재연결로 변경
+                button.textContent = '재연결';
+                button.style.background = '#EFF6FF';
+                button.style.color = '#1D4ED8';
+                button.style.border = '1px solid #DBEAFE';
+                button.onclick = function() { reconnectAccount(this); };
+
+                alert(`${nickname} 계좌의 연결이 해제되었습니다.`);
+            }
+        }
+
+        // 계좌 재연결
+        function reconnectAccount(button) {
+            const accountItem = button.closest('.account-item');
+            const nickname = accountItem.querySelector('span[style*="font-weight: 700"]').textContent;
+
+            // 연결 상태 복구
+            const statusBadge = accountItem.querySelector('span[style*="background"]');
+            statusBadge.style.background = '#DCFCE7';
+            statusBadge.style.color = '#166534';
+            statusBadge.textContent = '연결됨';
+
+            const syncStatus = accountItem.querySelector('div[style*="중지됨"], div[style*="연동 중"]');
+            syncStatus.style.color = '#3B82F6';
+            syncStatus.textContent = '실시간 손익 연동 중';
+
+            // 버튼을 연결 해제로 변경
+            button.textContent = '연결 해제';
+            button.style.background = '#FEF2F2';
+            button.style.color = '#DC2626';
+            button.style.border = '1px solid #FEE2E2';
+            button.onclick = function() { disconnectAccount(this); };
+
+            alert(`${nickname} 계좌가 재연결되었습니다.`);
+        }
+
+        // 계좌 삭제
+        function deleteAccount(button) {
+            const accountItem = button.closest('.account-item');
+            const nickname = accountItem.querySelector('span[style*="font-weight: 700"]').textContent;
+
+            if (confirm(`${nickname} 계좌를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+                accountItem.remove();
+                alert(`${nickname} 계좌가 삭제되었습니다.`);
+            }
+        }
+
+        // 시뮬레이터 변수
+        let simConfig = {
+            trades: 30,
+            account: 300,
+            winRateTP: 84,
+            winRateSL: 16
+        };
+
+        function selectTrades(trades) {
+            simConfig.trades = trades;
+            // 클릭된 버튼의 부모 btn-group 내 모든 버튼에서 active 제거
+            event.target.parentElement.querySelectorAll('.btn-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function selectAccount(account) {
+            simConfig.account = account;
+            // 클릭된 버튼의 부모 btn-group 내 모든 버튼에서 active 제거
+            event.target.parentElement.querySelectorAll('.btn-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function selectWinRate(tp, sl) {
+            simConfig.winRateTP = tp;
+            simConfig.winRateSL = sl;
+            // 클릭된 버튼의 부모 btn-group 내 모든 버튼에서 active 제거
+            event.target.parentElement.querySelectorAll('.btn-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function runSimulation() {
+            const { trades, account, winRateTP, winRateSL } = simConfig;
+
+            // PDF 기반 계산식
+            const tpProfit = account === 100 ? 123 : account === 300 ? 369 : 615; // TP 도달 시 스캘핑 계좌 수익
+            const slLoss = account === 100 ? 645 : account === 300 ? 1935 : 3225; // SL 도달 시 스캘핑 계좌 손실
+
+            // 합격률 계산 (winRateSL = 합격 확률)
+            const passRate = winRateSL / 100;
+            const passCount = Math.round(trades * passRate);
+            const failCount = trades - passCount;
+
+            // 손익 계산
+            const hedgeProfitTotal = failCount * tpProfit; // 스캘핑 계좌 익절 수익
+            const hedgeLossTotal = passCount * slLoss; // 스캘핑 계좌 손절 손실
+            const hedgeNet = hedgeProfitTotal - hedgeLossTotal; // 스캘핑 계좌 순손익
+
+            // 합격시 펀딩 수익 = 참가비 × 10 × 합격 횟수 × 80%
+            const fundingProfitTotal = account * 10 * passCount * 0.8;
+
+            // 참가비 투입액 = 참가비 × 참가 횟수
+            const entryFeeTotal = account * trades;
+
+            // 수수료 계산
+            const insuranceFee = 18; // 스캘핑 계좌 수수료 (매 거래)
+            const fundingFee = 32; // 펀딩 계좌 수수료 (합격 시에만, $20 × 2개 × 80%)
+            const insuranceFeeTotal = trades * insuranceFee; // 스캘핑 계좌 수수료 총액
+            const fundingFeeTotal = passCount * fundingFee; // 펀딩 계좌 수수료 총액
+            const totalFees = insuranceFeeTotal + fundingFeeTotal; // 총 수수료
+
+            const totalProfit = hedgeNet + fundingProfitTotal - entryFeeTotal - totalFees;
+
+            // 월 수익률 계산 (필요 자본 = 스캘핑 계좌 + 참가비)
+            const requiredCapital = account * trades + account * 50; // 마진 포함
+            const monthlyReturn = (totalProfit / requiredCapital * 100).toFixed(1);
+
+            // 랜덤 시뮬레이션 결과 생성
+            const results = [];
+            for (let i = 0; i < trades; i++) {
+                results.push(Math.random() < passRate);
+            }
+
+            // 결과 표시
+            document.getElementById('totalProfit').textContent = `$${totalProfit.toLocaleString()}`;
+            document.getElementById('passCount').textContent = `${passCount}회`;
+            document.getElementById('failCount').textContent = `${failCount}회`;
+            document.getElementById('monthlyReturn').textContent = `${monthlyReturn}%`;
+
+            document.getElementById('hedgeProfit').textContent = `+$${hedgeProfitTotal.toLocaleString()}`;
+            document.getElementById('hedgeLoss').textContent = `-$${hedgeLossTotal.toLocaleString()}`;
+            document.getElementById('hedgeNet').textContent = `$${hedgeNet.toLocaleString()}`;
+            document.getElementById('fundingProfit').textContent = `+$${fundingProfitTotal.toLocaleString()}`;
+            document.getElementById('entryLoss').textContent = `-$${entryFeeTotal.toLocaleString()}`;
+            document.getElementById('insuranceFeeTotal').textContent = `-$${insuranceFeeTotal.toLocaleString()}`;
+            document.getElementById('fundingFeeTotal').textContent = `-$${fundingFeeTotal.toLocaleString()}`;
+            document.getElementById('finalProfit').textContent = `$${totalProfit.toLocaleString()}`;
+
+            // 회차별 상세 테이블 생성
+            const detailedTableBody = document.getElementById('detailedTableBody');
+            detailedTableBody.innerHTML = '';
+
+            // 펀딩 수익 지연 입금 배열 (15일 후 입금)
+            const fundingDelayDays = 15;
+            const fundingPayments = new Array(trades).fill(0);
+
+            let cumulative = 0;
+            let cashFlow = 0; // 순현금흐름 누적
+
+            results.forEach((isPass, index) => {
+                const round = index + 1;
+                const hedgeAmount = isPass ? -slLoss : tpProfit;
+                const fundingAmount = isPass ? (account * 10 * 0.8) : 0; // 합격시만 펀딩 수익
+                const entryFee = -account; // 참가비는 항상 비용
+                const roundInsuranceFee = -insuranceFee; // 스캘핑 계좌 수수료 (매 거래)
+                const roundFundingFee = isPass ? -fundingFee : 0; // 펀딩 계좌 수수료 (합격 시에만)
+                const roundProfit = hedgeAmount + fundingAmount + entryFee + roundInsuranceFee + roundFundingFee;
+                cumulative += roundProfit;
+
+                // 펀딩 수익을 15일 후에 입금되도록 예약
+                if (fundingAmount > 0 && (index + fundingDelayDays) < trades) {
+                    fundingPayments[index + fundingDelayDays] += fundingAmount;
+                }
+
+                // 현재 회차의 실제 현금흐름 = 헤지 손익 - 참가비 - 수수료 + 15일 전 발생한 펀딩 입금
+                const delayedFunding = fundingPayments[index] || 0;
+                const currentCashFlow = hedgeAmount + entryFee + roundInsuranceFee + roundFundingFee + delayedFunding;
+                cashFlow += currentCashFlow;
+
+                const tr = document.createElement('tr');
+                if (isPass) tr.classList.add('pass-row');
+
+                const challengeNet = fundingAmount + entryFee + roundFundingFee; // 펀딩 수익 + 참가비 소멸 + 펀딩 수수료
+                tr.innerHTML = `
+                    <td>${round}</td>
+                    <td><span class="${isPass ? 'pass-badge' : 'fail-badge'}">${isPass ? '🏆 합격' : '탈락'}</span></td>
+                    <td style="color: ${hedgeAmount > 0 ? '#10B981' : '#EF4444'};">
+                        ${hedgeAmount > 0 ? '+' : ''}$${hedgeAmount.toLocaleString()}
+                    </td>
+                    <td style="color: ${challengeNet > 0 ? '#10B981' : '#EF4444'};">
+                        ${challengeNet > 0 ? '+' : ''}$${challengeNet.toLocaleString()}
+                    </td>
+                    <td style="color: ${roundProfit > 0 ? '#10B981' : '#EF4444'};">
+                        ${roundProfit > 0 ? '+' : ''}$${roundProfit.toLocaleString()}
+                    </td>
+                    <td style="color: ${cumulative > 0 ? '#10B981' : cumulative < 0 ? '#EF4444' : '#64748B'};">
+                        ${cumulative > 0 ? '+' : ''}$${cumulative.toLocaleString()}
+                    </td>
+                    <td style="color: ${cashFlow > 0 ? '#10B981' : cashFlow < 0 ? '#EF4444' : '#64748B'};">
+                        ${cashFlow > 0 ? '+' : ''}$${cashFlow.toLocaleString()}
+                    </td>
+                `;
+                detailedTableBody.appendChild(tr);
+            });
+
+            // 시각화 생성
+            const visualization = document.getElementById('resultsVisualization');
+            visualization.innerHTML = '';
+
+            results.forEach((isPass, index) => {
+                const div = document.createElement('div');
+                div.className = `trade-result ${isPass ? 'trade-pass' : 'trade-fail'}`;
+                div.textContent = isPass ? '🏆' : index + 1;
+                div.title = isPass ? `${index + 1}회: 합격` : `${index + 1}회: 탈락`;
+                visualization.appendChild(div);
+            });
+
+            // 결과 영역 표시
+            document.getElementById('simulatorResults').style.display = 'block';
+
+            // 결과로 스크롤
+            document.getElementById('simulatorResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function closeSimulationResults() {
+            document.getElementById('simulatorResults').style.display = 'none';
+        }
+
+        // ===== 알람 설정 기능 =====
+        function setAlarm() {
+            const alarmMessage = `거래 시간 알람이 설정되었습니다:\n\n⏰ 오전 08:00\n⏰ 오후 16:00\n⏰ 저녁 20:00\n\n알람은 브라우저 알림으로 발송됩니다.`;
+
+            // 브라우저 알림 권한 요청
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        alert(alarmMessage);
+                    } else {
+                        alert('알람 기능을 사용하려면 브라우저 알림 권한이 필요합니다.');
+                    }
+                });
+            } else if (Notification.permission === 'granted') {
+                alert(alarmMessage);
+            } else {
+                alert('브라우저 알림 권한을 허용해주세요.');
+            }
+        }
+
+        // ===== MT5 연결 확인 =====
+        function checkMT5Connection() {
+            alert('MT5 연결 상태를 확인합니다.\n\n✅ 연결 상태: 정상\n✅ 계좌: 활성화\n✅ 서버: 응답 중');
+        }
+
+        // ===== 챌린지 계좌 관리 =====
+        function manageChallengeAccount() {
+            alert('챌린지 계좌 관리 페이지로 이동합니다.\n\n현재 챌린지 계좌 상태:\n• 계좌번호: CH-300-12345\n• 잔액: $300\n• 상태: 활성');
+        }
+
+        // ===== 스캘핑 계좌 관리 =====
+        function manageInsuranceAccount() {
+            alert('스캘핑 계좌 관리 페이지로 이동합니다.\n\n현재 스캘핑 계좌 상태:\n• 계좌번호: IN-300-67890\n• 잔액: $300\n• 상태: 활성');
+        }
+
+        // ===== USDT 구매 =====
+        function buyUSDT() {
+            alert('USDT 구매 안내\n\n1. 업비트 또는 빗썸 접속\n2. USDT 구매\n3. 전자지갑으로 송금\n\n추천 거래소: 업비트, 빗썸');
+        }
+
+        // ===== 전자지갑 송금 =====
+        function transferToWallet() {
+            alert('전자지갑 송금 안내\n\n1. 전자지갑 주소 확인\n2. 거래소에서 출금\n3. 네트워크 수수료 확인\n4. 송금 완료 확인\n\n⚠️ 주의: 주소를 정확히 입력하세요!');
+        }
+
+        // ===== 거래소 입금 확인 =====
+        function checkExchangeDeposit() {
+            alert('거래소 입금 확인\n\n입금 확인까지 약 10-30분 소요\n\n현재 상태:\n• 트랜잭션: 진행 중\n• 컨펌: 2/3');
+        }
+
+        // ===== 펀딩 계좌 A 관리 =====
+        function manageFundingAccountA() {
+            alert('펀딩 계좌 A 관리\n\n계좌 정보:\n• 계좌번호: FD-A-3000-11111\n• 펀딩 금액: $3,000\n• 포지션: 매수(Buy) 대기');
+        }
+
+        // ===== 펀딩 계좌 B 관리 =====
+        function manageFundingAccountB() {
+            alert('펀딩 계좌 B 관리\n\n계좌 정보:\n• 계좌번호: FD-B-3000-22222\n• 펀딩 금액: $3,000\n• 포지션: 매도(Sell) 대기');
+        }
+
+        // ===== Top 10 랭킹 시스템 =====
+
+        // 등급 기준 (구성비율 기반 - 백분위)
+        // Level 10: 상위 1%, Level 9: 상위 3%, Level 8: 상위 7%, Level 7: 상위 13%
+        // Level 6: 상위 21%, Level 5: 상위 31%, Level 4: 상위 43%, Level 3: 상위 57%
+        // Level 2: 상위 73%, Level 1: 상위 91% (나머지)
+        const levelPercentiles = [
+            { level: 10, percentile: 1 },
+            { level: 9, percentile: 3 },
+            { level: 8, percentile: 7 },
+            { level: 7, percentile: 13 },
+            { level: 6, percentile: 21 },
+            { level: 5, percentile: 31 },
+            { level: 4, percentile: 43 },
+            { level: 3, percentile: 57 },
+            { level: 2, percentile: 73 },
+            { level: 1, percentile: 91 }
+        ];
+
+        // 순위 기반 등급 계산 (총 회원 수 대비 현재 순위)
+        function getGradeByRank(rank, totalMembers) {
+            const percentile = (rank / totalMembers) * 100;
+
+            for (const levelInfo of levelPercentiles) {
+                if (percentile <= levelInfo.percentile) {
+                    return { name: `Lv.${levelInfo.level}`, class: `level-${levelInfo.level}`, level: levelInfo.level };
+                }
+            }
+            return { name: 'Lv.1', class: 'level-1', level: 1 };
+        }
+
+        // 샘플 회원 데이터 (실제 구현 시 API 연동)
+        // 전체 회원 수 시뮬레이션: 1000명 중 Top 10
+        const totalMembers = 1000;
+        const rankingData = [
+            { id: 1, name: '김영수', profit: 127500000, change: 'up', changeAmount: 2, rank: 1 },
+            { id: 2, name: '이정민', profit: 98200000, change: 'same', changeAmount: 0, rank: 2 },
+            { id: 3, name: '박서연', profit: 85600000, change: 'up', changeAmount: 1, rank: 3 },
+            { id: 4, name: '최현우', profit: 72300000, change: 'down', changeAmount: 1, rank: 4 },
+            { id: 5, name: '정민준', profit: 65800000, change: 'up', changeAmount: 3, rank: 5 },
+            { id: 6, name: '강지훈', profit: 54200000, change: 'same', changeAmount: 0, rank: 6 },
+            { id: 7, name: '조은서', profit: 48700000, change: 'down', changeAmount: 2, rank: 7 },
+            { id: 8, name: '윤하늘', profit: 42100000, change: 'up', changeAmount: 1, rank: 8 },
+            { id: 9, name: '장도윤', profit: 38500000, change: 'same', changeAmount: 0, rank: 9 },
+            { id: 10, name: '임수현', profit: 31200000, change: 'down', changeAmount: 1, rank: 10 }
+        ];
+
+        function formatProfit(amount) {
+            if (amount >= 100000000) {
+                return (amount / 100000000).toFixed(1) + '억';
+            } else if (amount >= 10000000) {
+                return (amount / 10000000).toFixed(1) + '천만';
+            } else if (amount >= 10000) {
+                return Math.floor(amount / 10000) + '만';
+            }
+            return amount.toLocaleString() + '원';
+        }
+
+        function getPositionClass(position) {
+            return `rank-${position}`;
+        }
+
+        function renderRankingList() {
+            const container = document.getElementById('rankingList');
+            if (!container) return;
+
+            let html = '';
+            rankingData.forEach((member, index) => {
+                const position = index + 1;
+                const grade = getGradeByRank(member.rank, totalMembers);
+                const isTop3 = position <= 3;
+                const positionClass = getPositionClass(position);
+
+                let changeIcon = '';
+                let changeClass = member.change;
+                if (member.change === 'up') {
+                    changeIcon = `▲${member.changeAmount}`;
+                } else if (member.change === 'down') {
+                    changeIcon = `▼${member.changeAmount}`;
+                } else {
+                    changeIcon = '-';
+                }
+
+                // 만원 단위로 표시
+                const profitInMan = Math.floor(member.profit / 10000);
+                const profitDisplay = profitInMan.toLocaleString() + '만원';
+
+                html += `
+                    <div class="ranking-item ${isTop3 ? 'top3' : ''}">
+                        <div class="ranking-position ${positionClass}">${position}</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">${member.name}</div>
+                        </div>
+                        <div class="ranking-profit-amount">+${profitDisplay}</div>
+                        <div class="ranking-change ${changeClass}">${changeIcon}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // 실시간 업데이트 시뮬레이션 (30초마다)
+        function simulateRankingUpdate() {
+            // 랜덤하게 수익 변동 시뮬레이션
+            rankingData.forEach(member => {
+                const fluctuation = Math.floor(Math.random() * 500000) - 200000;
+                member.profit = Math.max(0, member.profit + fluctuation);
+
+                // 랜덤하게 순위 변동
+                const changeType = Math.random();
+                if (changeType < 0.3) {
+                    member.change = 'up';
+                    member.changeAmount = Math.floor(Math.random() * 3) + 1;
+                } else if (changeType < 0.5) {
+                    member.change = 'down';
+                    member.changeAmount = Math.floor(Math.random() * 2) + 1;
+                } else {
+                    member.change = 'same';
+                    member.changeAmount = 0;
+                }
+            });
+
+            // 수익 순으로 정렬
+            rankingData.sort((a, b) => b.profit - a.profit);
+
+            // 다시 렌더링
+            renderRankingList();
+        }
+
+        // Level별 통계 데이터 (상위 % 기준)
+        // Level 10: 상위 1%, Level 9: 상위 3%, Level 8: 상위 7%, ...
+        // 색상: Lv.1 회색 → Lv.10 강렬한 빨강 (랭킹과 동일한 색상 체계)
+        const levelDistribution = [
+            { level: 10, topPercent: 1, rangePercent: 1, color: '#EF4444' },   // Lv.10: 강렬한 빨강
+            { level: 9, topPercent: 3, rangePercent: 2, color: '#FB923C' },    // Lv.9: 주황
+            { level: 8, topPercent: 7, rangePercent: 4, color: '#FACC15' },    // Lv.8: 노랑
+            { level: 7, topPercent: 13, rangePercent: 6, color: '#A3E635' },   // Lv.7: 연두
+            { level: 6, topPercent: 21, rangePercent: 8, color: '#4ADE80' },   // Lv.6: 초록
+            { level: 5, topPercent: 31, rangePercent: 10, color: '#34D399' },  // Lv.5: 민트
+            { level: 4, topPercent: 43, rangePercent: 12, color: '#2DD4BF' },  // Lv.4: 청록
+            { level: 3, topPercent: 57, rangePercent: 14, color: '#22D3EE' },  // Lv.3: 하늘색
+            { level: 2, topPercent: 73, rangePercent: 16, color: '#60A5FA' },  // Lv.2: 파랑
+            { level: 1, topPercent: 91, rangePercent: 18, color: '#94A3B8' }   // Lv.1: 회색
+        ];
+
+        function renderLevelStats() {
+            const container = document.getElementById('levelStatsList');
+            const totalDisplay = document.getElementById('totalMembersDisplay');
+            if (!container) return;
+
+            totalDisplay.textContent = totalMembers.toLocaleString() + '명';
+
+            let html = '';
+            levelDistribution.forEach(level => {
+                const memberCount = Math.round(totalMembers * level.rangePercent / 100);
+
+                html += `
+                    <div class="level-stat-item">
+                        <div class="level-stat-badge grade-level-${level.level}">Lv.${level.level}</div>
+                        <div class="level-stat-bar-container">
+                            <div class="level-stat-bar" style="width: ${level.topPercent}%; background: ${level.color};"></div>
+                        </div>
+                        <div class="level-stat-info">
+                            <div class="level-stat-count">${memberCount.toLocaleString()}명</div>
+                            <div class="level-stat-percent">상위 ${level.topPercent}%</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // 페이지 로드 시 랭킹 및 Level 통계 렌더링
+        document.addEventListener('DOMContentLoaded', function() {
+            renderRankingList();
+            renderLevelStats();
+            // 30초마다 업데이트 (실제 구현 시 WebSocket 또는 API 폴링)
+            setInterval(simulateRankingUpdate, 30000);
+        });
+
+        // 써니에게 묻기 관련 함수
+        let supportFiles = [];
+
+        function handleSupportFileSelect(event) {
+            const files = Array.from(event.target.files);
+            supportFiles = supportFiles.concat(files);
+            updateSupportFileList();
+        }
+
+        function updateSupportFileList() {
+            const fileList = document.getElementById('supportFileList');
+            if (supportFiles.length === 0) {
+                fileList.innerHTML = '';
+                return;
+            }
+            fileList.innerHTML = supportFiles.map((file, index) =>
+                `<div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0;">
+                    <span style="color: #475569;">📎 ${file.name}</span>
+                    <button type="button" onclick="removeSupportFile(${index})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 14px;">×</button>
+                </div>`
+            ).join('');
+        }
+
+        function removeSupportFile(index) {
+            supportFiles.splice(index, 1);
+            updateSupportFileList();
+        }
+
+        function submitSupport() {
+            const question = document.getElementById('supportQuestion').value;
+
+            if (!question.trim()) {
+                alert('문의 내용을 입력하세요!');
+                return;
+            }
+
+            try {
+                let fileInfo = supportFiles.length > 0 ? '\n📎 첨부 파일: ' + supportFiles.map(f => f.name).join(', ') : '';
+
+                alert('✅ 문의가 접수되었습니다!\n\n문의 내용: ' + question + fileInfo + '\n\n관리자가 확인 후 답변을 드립니다.\n접수 시간: ' + new Date().toLocaleString('ko-KR'));
+
+                // 문의창 및 파일 초기화
+                document.getElementById('supportQuestion').value = '';
+                document.getElementById('supportFile').value = '';
+                supportFiles = [];
+                document.getElementById('supportFileList').innerHTML = '';
+
+            } catch (error) {
+                console.error('문의 제출 실패:', error);
+                alert('문의 제출 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+
+        // 출금 관련 함수들
+        function transferToExchange() {
+            alert('📤 거래소 송금 안내\n\n1. MW Wallet에서 USDT를 거래소로 송금합니다.\n2. 송금 주소를 정확히 확인해주세요.\n3. 네트워크는 TRC20을 권장합니다 (수수료 저렴).\n\n구현 예정입니다.');
+        }
+
+        function convertToCash() {
+            alert('💰 현금화 안내\n\n1. 거래소에서 USDT를 원화로 매도합니다.\n2. 현재 시세를 확인하고 매도하세요.\n3. 매도 체결 후 원화가 거래소 계좌에 입금됩니다.\n\n구현 예정입니다.');
+        }
+
+        function withdrawToBank() {
+            alert('🏦 은행 계좌 출금 안내\n\n1. 거래소에서 원화 출금을 신청합니다.\n2. 등록된 본인 명의 계좌로만 출금 가능합니다.\n\n구현 예정입니다.');
+        }
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const diaryModal = document.getElementById('diaryModal');
+                const settingsModal = document.getElementById('settingsModal');
+                const goalModal = document.getElementById('goalModal');
+                const accountModal = document.getElementById('accountModal');
+
+                if (diaryModal && diaryModal.classList.contains('active')) {
+                    closeDiaryModal();
+                } else if (settingsModal && settingsModal.classList.contains('active')) {
+                    closeSettingsModal();
+                } else if (goalModal && goalModal.classList.contains('active')) {
+                    closeGoalModal();
+                } else if (accountModal && accountModal.classList.contains('active')) {
+                    closeAccountModal();
+                }
+            }
+        });
+    </script>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="service-intro.html" class="footer-link">서비스 소개</a>
+                <a href="terms.html" class="footer-link">이용약관</a>
+                <a href="privacy.html" class="footer-link">개인정보처리방침</a>
+                <a href="contact.html" class="footer-link">고객센터</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 HDH Fintech. All rights reserved.
+            </div>
+            <div style="margin-top: 8px; text-align: center; width: 100%;">
+                <a href="../../../index.html" style="color: #FFFFFF; font-size: 11px; text-decoration: none;">← SUNNY ECONOMIC ECOSYSTEM 메인으로</a>
+            </div>
+            <div class="footer-admin">
+                <a href="admin.html" class="footer-admin-link">Admin</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

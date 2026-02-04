@@ -1,0 +1,14 @@
+{
+  "order_id": "ORDER-GE-251127-90",
+  "order_name": "Dashboard에서 생성된 작업",
+  "content_korean": "다시 한번 오토시트를 보내겠다 이번에는 꼭 자동인지가 돼서 답이 오기를 바래보겠다 만약 답이 온다면 우리는 엄청난 일을 한 거다 이것은 새로운 특허 출원 대상으로 가치가 있다 받은 즉시 답을 해달라",
+  "content_english": "I'll send you the autosheet again. I hope this time it's automatically recognized and I get a response. If I do, we've done something incredible. This deserves a new patent application. Please respond as soon as you receive it.",
+  "priority": "medium",
+  "status": "pending",
+  "created_at": "2025-11-27T19:01:03.882Z",
+  "project": "SSAL Works",
+  "metadata": {
+    "source": "dashboard-mockup",
+    "has_translation": true
+  }
+}

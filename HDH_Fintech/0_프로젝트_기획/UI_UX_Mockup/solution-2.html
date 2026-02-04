@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HDH 핵심 손익 구조 - HDH Fintech 솔루션 이해하기 2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+    /* ============================================
+       HDH FINTECH DESIGN SYSTEM
+       ============================================ */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Pretendard', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+        background: #F8FAFC;
+        color: #1F2937;
+        line-height: 1.7;
+        letter-spacing: -0.02em;
+    }
+
+    /* 헤더 */
+    .header {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        padding: 24px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -0.5px;
+    }
+
+    .header-subtitle {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .close-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 600;
+        transition: all 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* 컨테이너 */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    /* 페이지 네비게이션 */
+    .page-nav {
+        background: white;
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .page-nav a {
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+
+    .page-nav a.active {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: white;
+    }
+
+    .page-nav a:not(.active) {
+        background: #F8FAFC;
+        color: #64748B;
+        border: 1px solid #E2E8F0;
+    }
+
+    .page-nav a:not(.active):hover {
+        background: #EFF6FF;
+        color: #1E40AF;
+        border-color: #BFDBFE;
+    }
+
+    /* 섹션 카드 */
+    .section {
+        background: white;
+        border-radius: 12px;
+        padding: 32px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 타이포그래피 */
+    h1 {
+        font-size: 36px;
+        font-weight: 800;
+        color: #1E40AF;
+        margin-bottom: 12px;
+        line-height: 1.2;
+    }
+
+    h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #F59E0B;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #FED7AA;
+    }
+
+    .section h2:first-child {
+        margin-top: 0;
+    }
+
+    h3 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #1E40AF;
+        margin-top: 28px;
+        margin-bottom: 20px;
+    }
+
+    h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #059669;
+        margin-top: 20px;
+        margin-bottom: 16px;
+    }
+
+    p {
+        margin-bottom: 20px;
+        color: #334155;
+        font-size: 15px;
+    }
+
+    /* 강조 박스 */
+    .highlight-box {
+        background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+        border-left: 4px solid #F59E0B;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 24px 0;
+    }
+
+    .highlight-box strong {
+        color: #D97706;
+    }
+
+    .info-box {
+        background: #EFF6FF;
+        border-left: 4px solid #3B82F6;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 24px 0;
+    }
+
+    .success-box {
+        background: #ECFDF5;
+        border-left: 4px solid #10B981;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 24px 0;
+    }
+
+    .warning-box {
+        background: #FFFBEB;
+        border-left: 4px solid #F59E0B;
+        padding: 20px 24px;
+        border-radius: 8px;
+        margin: 24px 0;
+    }
+
+    /* 리스트 */
+    ul, ol {
+        margin: 16px 0;
+        padding-left: 24px;
+        color: #334155;
+    }
+
+    li {
+        margin: 10px 0;
+        line-height: 1.7;
+    }
+
+    /* 시나리오 카드 */
+    .scenario-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 24px;
+        margin: 30px 0;
+    }
+
+    .scenario-card {
+        border-radius: 16px;
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .scenario-card.success {
+        background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+        border: 2px solid #10B981;
+    }
+
+    .scenario-card.win {
+        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+        border: 2px solid #3B82F6;
+    }
+
+    .scenario-badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .scenario-card.success .scenario-badge {
+        background: #10B981;
+        color: white;
+    }
+
+    .scenario-card.win .scenario-badge {
+        background: #3B82F6;
+        color: white;
+    }
+
+    .scenario-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .scenario-card.success .scenario-title {
+        color: #059669;
+    }
+
+    .scenario-card.win .scenario-title {
+        color: #1E40AF;
+    }
+
+    .scenario-subtitle {
+        font-size: 14px;
+        color: #64748B;
+        margin-bottom: 20px;
+    }
+
+    .scenario-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        font-size: 14px;
+    }
+
+    .scenario-row:last-child {
+        border-bottom: none;
+    }
+
+    .scenario-label {
+        color: #64748B;
+    }
+
+    .scenario-value {
+        font-weight: 600;
+    }
+
+    .scenario-value.positive {
+        color: #059669;
+    }
+
+    .scenario-value.negative {
+        color: #DC2626;
+    }
+
+    .scenario-result {
+        margin-top: 20px;
+        padding: 16px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .scenario-card.success .scenario-result {
+        background: rgba(16, 185, 129, 0.15);
+    }
+
+    .scenario-card.win .scenario-result {
+        background: rgba(59, 130, 246, 0.15);
+    }
+
+    .result-amount {
+        font-size: 28px;
+        font-weight: 800;
+    }
+
+    .scenario-card.success .result-amount {
+        color: #059669;
+    }
+
+    .scenario-card.win .result-amount {
+        color: #1E40AF;
+    }
+
+    .result-rate {
+        font-size: 14px;
+        color: #64748B;
+        margin-top: 4px;
+    }
+
+    /* 핵심 비율 박스 */
+    .ratio-box {
+        background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+        border-radius: 16px;
+        padding: 32px;
+        color: white;
+        margin: 30px 0;
+    }
+
+    .ratio-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .ratio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .ratio-item {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
+        padding: 16px;
+        text-align: center;
+    }
+
+    .ratio-label {
+        font-size: 13px;
+        opacity: 0.9;
+        margin-bottom: 8px;
+    }
+
+    .ratio-value {
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .ratio-note {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-top: 6px;
+    }
+
+    /* 결론 박스 */
+    .conclusion-box {
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        border-radius: 16px;
+        padding: 32px;
+        color: white;
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    .conclusion-title {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .conclusion-text {
+        font-size: 16px;
+        opacity: 0.95;
+        line-height: 1.7;
+    }
+
+    /* 다음 페이지 링크 */
+    .next-page {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .next-page a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.2s;
+    }
+
+    .next-page a.primary {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: white;
+    }
+
+    .next-page a.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .next-page a.secondary {
+        background: #F8FAFC;
+        color: #64748B;
+        border: 1px solid #E2E8F0;
+    }
+
+    .next-page a.secondary:hover {
+        background: #EFF6FF;
+        color: #1E40AF;
+        border-color: #BFDBFE;
+    }
+
+    /* 푸터 */
+    .footer {
+        background: #F59E0B;
+        color: #FFFFFF;
+        padding: 40px 0;
+        margin-top: 60px;
+        text-align: center;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    .footer-logo {
+        font-size: 24px;
+        font-weight: 800;
+        color: #FFFFFF;
+        margin-bottom: 12px;
+    }
+
+    .footer-text {
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 8px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* 반응형 */
+    @media (max-width: 768px) {
+        .scenario-container {
+            grid-template-columns: 1fr;
+        }
+
+        .ratio-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .header-inner {
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        .section {
+            padding: 20px;
+        }
+
+        .page-nav {
+            flex-direction: column;
+        }
+
+        .page-nav a {
+            text-align: center;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn {
+            width: 44px;
+            height: 44px;
+        }
+
+        .scenario-card {
+            padding: 20px;
+        }
+
+        .result-amount {
+            font-size: 24px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="header">
+    <div class="header-inner">
+        <div>
+            <div class="logo">HDH Fintech</div>
+            <div class="header-subtitle">HDH Fintech 솔루션 이해하기 2 - HDH 핵심 손익 구조</div>
+        </div>
+        <a href="index.html" class="close-btn">×</a>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 페이지 네비게이션 -->
+    <div class="page-nav">
+        <a href="solution-1.html">1. HDH 개요</a>
+        <a href="solution-2.html" class="active">2. HDH 핵심 손익 구조</a>
+        <a href="solution-monthly-500.html">3. 5천만원으로 월 500만원 벌기</a>
+        <a href="solution-4.html">4. HDH Fintech 솔루션 상세</a>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <div class="section">
+        <h2>2. HDH 핵심 손익 구조</h2>
+
+        <h3>2-1. 이론</h3>
+
+        <p>HDH Fintech 솔루션은 <strong>금 선물</strong>을 대상으로 하여 <strong>스캘핑 계좌</strong>와 <strong>프롭 챌린지</strong>를 활용하여 과거 통계를 바탕으로 수학적으로 정교하게 설계된 규칙에 따라서 운영을 함으로써 <strong>어떠한 경우든 이익이 발생하는 구조</strong>입니다.</p>
+
+        <!-- 핵심 비율 박스 -->
+        <div class="ratio-box">
+            <div class="ratio-title">핵심 비율 (둘 다 5.25배 차이)</div>
+            <div class="ratio-grid">
+                <div class="ratio-item">
+                    <div class="ratio-label">챌린지 탈락 : 합격</div>
+                    <div class="ratio-value">84% : 16%</div>
+                    <div class="ratio-note">5.25배 차이</div>
+                </div>
+                <div class="ratio-item">
+                    <div class="ratio-label">스캘핑 계좌 SL(Stop Loss; 손절) : TP(Take Profit; 익절)</div>
+                    <div class="ratio-value">금선물 기준 -21.5 p : +4.1 p</div>
+                    <div class="ratio-note">5.25배 차이</div>
+                </div>
+            </div>
+        </div>
+
+        <h4>1) 챌린지 합격 시 (합격 확률 16%)</h4>
+
+        <div class="info-box">
+            <p><strong>스캘핑 계좌_손실율 645% / 펀딩 계좌_수익율 700% = +55%</strong></p>
+            <p>※ $300 계좌 운용 시 -$1,935 / +$2,100 = <strong>+$165</strong></p>
+            <p>* 양쪽 합계 $600 기준 순이익(스캘핑 계좌 거래수수료 $18 + 펀딩 계좌 거래수수료 $32 차감 후)은 <strong>$115</strong>(순이익율은 <strong>19.2%</strong>)</p>
+        </div>
+
+        <h4>2) 챌린지 탈락 시 (탈락 확률 84%)</h4>
+
+        <div class="info-box">
+            <p><strong>스캘핑 계좌_수익율 123% / 챌린지_손실율 100% = +23%</strong></p>
+            <p>※ $300 계좌 운용 시 +$369 / -$300 = <strong>+$69</strong></p>
+            <p>* 양쪽 합계 $600 기준 순이익(스캘핑 계좌 거래수수료 $18 차감 후)은 <strong>$51</strong>(순이익율은 <strong>8.5%</strong>)</p>
+        </div>
+
+        <h3>2-2. 실제</h3>
+
+        <div class="warning-box">
+            <p>1) 슬리피지(청산 시 지정가격 보다 밀려서 체결) 및 스프레드(매도 호가와 매수 호가간의 갭)으로 인해서 수익이 줄어들거나 손실이 늘어나서 순이익이 줄어들 가능성이 있습니다.</p>
+            <p>2) 안전하게 운영을 하기 위해서 익절(TP) 포인트를 줄이거나 손절(SL) 포인트를 늘려서 청산이 이루어지게 함으로써 순이익이 줄어들 수 있습니다.</p>
+        </div>
+
+        <!-- 결론 박스 -->
+        <div class="conclusion-box">
+            <div class="conclusion-title">핵심 결론</div>
+            <div class="conclusion-text">
+                시나리오 A - 합격 (16%): <strong>+$107</strong> 순이익 (순이익률 17.8%)<br>
+                시나리오 B - 탈락 (84%): <strong>+$51</strong> 순이익 (순이익률 8.5%)<br><br>
+                어느 시나리오든 이익이 발생하는 구조
+            </div>
+        </div>
+
+        <!-- 다음 페이지 링크 -->
+        <div class="next-page">
+            <a href="solution-1.html" class="secondary">← 이전: HDH 개요</a>
+            <a href="solution-monthly-500.html" class="primary">다음: 5천만원으로 월 500만원 벌기 →</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

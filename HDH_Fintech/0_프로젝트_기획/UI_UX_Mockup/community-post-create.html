@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성 - HDH 실전 운영자 커뮤니티</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background: #F8FAFC;
+            color: #1F2937;
+            min-height: 100vh;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            padding: 16px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .user-level {
+            background: #10B981;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .user-rank {
+            background: #EF4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .user-type {
+            background: #8B5CF6;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.9;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        /* 메인 컨테이너 */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* 페이지 헤더 */
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 8px;
+        }
+
+        .page-desc {
+            color: #D97706;
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            padding: 14px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #F59E0B;
+            text-align: center;
+        }
+
+        /* 폼 카드 */
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 32px;
+        }
+
+        /* 폼 그룹 */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #EF4444;
+            margin-left: 2px;
+        }
+
+        .form-label .optional {
+            color: #94A3B8;
+            font-weight: 400;
+            font-size: 12px;
+            margin-left: 4px;
+        }
+
+        /* 게시판 선택 */
+        .board-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+            background: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        .board-select:focus {
+            border-color: #F59E0B;
+        }
+
+        .board-select:disabled {
+            background-color: #F8FAFC;
+            color: #64748B;
+        }
+
+        /* 텍스트 입력 */
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #F59E0B;
+        }
+
+        .form-input::placeholder {
+            color: #94A3B8;
+        }
+
+        /* 문자수 카운터 */
+        .char-counter {
+            text-align: right;
+            font-size: 12px;
+            color: #94A3B8;
+            margin-top: 4px;
+        }
+
+        /* 코치 선택 (특정 코치에게 묻기) */
+        .coach-select-wrapper {
+            position: relative;
+        }
+
+        .coach-search-input {
+            width: 100%;
+            padding: 14px 16px;
+            padding-left: 44px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .coach-search-input:focus {
+            border-color: #8B5CF6;
+        }
+
+        .coach-search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8B5CF6;
+        }
+
+        .coach-search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .coach-search-results.show {
+            display: block;
+        }
+
+        .coach-result-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #F1F5F9;
+            transition: background 0.2s;
+        }
+
+        .coach-result-item:hover {
+            background: #F8FAFC;
+        }
+
+        .coach-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .coach-result-name {
+            font-weight: 600;
+            color: #7C3AED;
+        }
+
+        .coach-result-info {
+            font-size: 12px;
+            color: #64748B;
+        }
+
+        .selected-coach {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #EDE9FE;
+            border-radius: 20px;
+            margin-top: 8px;
+            width: fit-content;
+        }
+
+        .selected-coach-name {
+            color: #7C3AED;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .selected-coach-remove {
+            background: none;
+            border: none;
+            color: #7C3AED;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* 텍스트 영역 */
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s;
+            resize: vertical;
+            min-height: 300px;
+            line-height: 1.6;
+        }
+
+        .form-textarea:focus {
+            border-color: #F59E0B;
+        }
+
+        .form-textarea::placeholder {
+            color: #94A3B8;
+        }
+
+        /* 태그 입력 */
+        .tags-input-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .tags-input-wrapper:focus-within {
+            border-color: #F59E0B;
+        }
+
+        .tag-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: #FEF3C7;
+            color: #D97706;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .tag-remove {
+            background: none;
+            border: none;
+            color: #D97706;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .tags-input {
+            flex: 1;
+            min-width: 100px;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #94A3B8;
+            margin-top: 6px;
+        }
+
+        /* 파일 업로드 */
+        .file-upload-area {
+            border: 2px dashed #E2E8F0;
+            border-radius: 10px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .file-upload-area:hover {
+            border-color: #F59E0B;
+            background: #FFFBEB;
+        }
+
+        .file-upload-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            color: #94A3B8;
+        }
+
+        .file-upload-text {
+            color: #64748B;
+            font-size: 14px;
+        }
+
+        .file-upload-text strong {
+            color: #F59E0B;
+        }
+
+        .file-upload-hint {
+            font-size: 12px;
+            color: #94A3B8;
+            margin-top: 4px;
+        }
+
+        .file-list {
+            margin-top: 12px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-icon {
+            color: #64748B;
+        }
+
+        .file-name {
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: #94A3B8;
+        }
+
+        .file-remove {
+            background: none;
+            border: none;
+            color: #EF4444;
+            cursor: pointer;
+        }
+
+        /* 작성 가이드 */
+        .writing-guide {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .writing-guide-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: #1E40AF;
+            margin-bottom: 8px;
+        }
+
+        .writing-guide ul {
+            list-style: none;
+            margin-left: 24px;
+        }
+
+        .writing-guide li {
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .writing-guide li::before {
+            content: "•";
+            margin-right: 8px;
+            color: #1E40AF;
+        }
+
+        /* 버튼 그룹 */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            padding-top: 24px;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: white;
+            border: 2px solid #E2E8F0;
+            color: #64748B;
+        }
+
+        .btn-cancel:hover {
+            background: #F8FAFC;
+        }
+
+        .btn-draft {
+            background: white;
+            border: 2px solid #F59E0B;
+            color: #F59E0B;
+        }
+
+        .btn-draft:hover {
+            background: #FFFBEB;
+        }
+
+        .btn-submit {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #D97706;
+        }
+
+        /* 모달 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-message {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1F2937;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: #F59E0B;
+            color: white;
+        }
+
+        .modal-btn:hover {
+            background: #D97706;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-inner">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <a href="index.html" class="back-link">← HDH Fintech</a>
+                <h1 class="header-title">HDH 실전 운영자 커뮤니티</h1>
+            </div>
+            <div class="header-user">
+                <div class="user-info">
+                    <span class="user-name">김철수</span>
+                    <span class="user-type">코치</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <main class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">게시글 작성</h1>
+            <p class="page-desc">HDH 솔루션 실전 운영자들끼리 정보를 공유하고 코치들의 도움을 받아 함께 성장하세요</p>
+        </div>
+
+        <div class="form-card">
+            <form id="postForm">
+                <!-- 게시판 선택 -->
+                <div class="form-group">
+                    <label class="form-label">게시판<span class="required">*</span></label>
+                    <select class="board-select" id="boardSelect" onchange="updateBoardUI()">
+                        <option value="">게시판을 선택하세요</option>
+                        <option value="greeting">👋 가입인사</option>
+                        <option value="qna">❓ Q&A</option>
+                        <option value="info_share">📁 정보공유</option>
+                        <option value="free">💬 자유게시판</option>
+                        <option value="coach" id="coachOption">🎓 코치 게시판 (코치 전용)</option>
+                    </select>
+                </div>
+
+                <!-- 특정 코치에게 묻기 (Q&A 게시판 선택시만 표시) -->
+                <div class="form-group" id="coachSelectGroup" style="display: none;">
+                    <label class="form-label">
+                        특정 코치에게 묻기
+                        <span class="optional">(선택사항)</span>
+                    </label>
+                    <div class="coach-select-wrapper">
+                        <svg class="coach-search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input
+                            type="text"
+                            class="coach-search-input"
+                            id="coachSearch"
+                            placeholder="코치 이름을 검색하세요..."
+                            onclick="showCoachResults()"
+                            oninput="filterCoaches()"
+                        >
+                        <div class="coach-search-results" id="coachResults">
+                            <div class="coach-result-item" onclick="selectCoach('박영수', 'Lv.10, 1위')">
+                                <div class="coach-result-name">박영수 코치</div>
+                                <div class="coach-result-info">Lv.10 · 1위 · 84:16 전략 전문</div>
+                            </div>
+                            <div class="coach-result-item" onclick="selectCoach('김지훈', 'Lv.9, 2위')">
+                                <div class="coach-result-name">김지훈 코치</div>
+                                <div class="coach-result-info">Lv.9 · 2위 · 시장 분석 전문</div>
+                            </div>
+                            <div class="coach-result-item" onclick="selectCoach('이현우', 'Lv.8, 4위')">
+                                <div class="coach-result-name">이현우 코치</div>
+                                <div class="coach-result-info">Lv.8 · 4위 · 리스크 관리 전문</div>
+                            </div>
+                            <div class="coach-result-item" onclick="selectCoach('정민수', 'Lv.8, 5위')">
+                                <div class="coach-result-name">정민수 코치</div>
+                                <div class="coach-result-info">Lv.8 · 5위 · 펀디드 합격 전문</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="selectedCoach" style="display: none;"></div>
+                    <p class="form-hint">특정 코치를 선택하면 해당 코치에게 알림이 전송되고, 코치 프로필에서도 이 질문이 표시됩니다.</p>
+                </div>
+
+                <!-- 제목 -->
+                <div class="form-group">
+                    <label class="form-label">제목<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="titleInput" placeholder="제목을 입력하세요 (최대 100자)" maxlength="100" oninput="updateCharCount('title')">
+                    <div class="char-counter"><span id="titleCount">0</span> / 100</div>
+                </div>
+
+                <!-- 내용 -->
+                <div class="form-group">
+                    <label class="form-label">내용<span class="required">*</span></label>
+                    <textarea class="form-textarea" id="contentInput" placeholder="내용을 입력하세요
+
+• 건전한 커뮤니티 문화를 위해 상호 존중하는 언어를 사용해주세요.
+• 허위 정보나 과장된 수익 인증은 삼가주세요.
+• 개인정보 보호에 유의해주세요." oninput="updateCharCount('content')"></textarea>
+                    <div class="char-counter"><span id="contentCount">0</span>자</div>
+                </div>
+
+                <!-- 태그 -->
+                <div class="form-group">
+                    <label class="form-label">태그<span class="optional">(선택)</span></label>
+                    <div class="tags-input-wrapper" id="tagsWrapper">
+                        <input type="text" class="tags-input" id="tagsInput" placeholder="태그를 입력 후 Enter" onkeydown="handleTagInput(event)">
+                    </div>
+                    <p class="form-hint">최대 5개까지 입력 가능합니다. Enter로 태그를 추가하세요.</p>
+                </div>
+
+                <!-- 파일 첨부 -->
+                <div class="form-group">
+                    <label class="form-label">첨부파일<span class="optional">(선택)</span></label>
+                    <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                        <svg class="file-upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                        </svg>
+                        <p class="file-upload-text"><strong>파일 선택</strong> 또는 드래그 앤 드롭</p>
+                        <p class="file-upload-hint">이미지, PDF, DOC 파일 (최대 10MB)</p>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx" style="display: none;" onchange="handleFileSelect(event)">
+                    <div class="file-list" id="fileList"></div>
+                </div>
+
+                <!-- 작성 가이드 -->
+                <div class="writing-guide">
+                    <h3 class="writing-guide-title">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                        </svg>
+                        작성 가이드
+                    </h3>
+                    <ul>
+                        <li>구체적이고 명확한 제목을 작성해주세요.</li>
+                        <li>질문의 경우 충분한 배경 설명을 포함해주세요.</li>
+                        <li>스크린샷이나 관련 자료를 첨부하면 더 좋은 답변을 받을 수 있습니다.</li>
+                        <li>타인을 존중하는 언어를 사용해주세요.</li>
+                    </ul>
+                </div>
+
+                <!-- 버튼 그룹 -->
+                <div class="button-group">
+                    <button type="button" class="btn btn-cancel" onclick="history.back()">취소</button>
+                    <button type="button" class="btn btn-draft" onclick="saveDraft()">임시저장</button>
+                    <button type="submit" class="btn btn-submit">등록하기</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- 알림 모달 -->
+    <div class="modal-overlay" id="alertModal">
+        <div class="modal-content">
+            <p class="modal-message" id="alertMessage"></p>
+            <button class="modal-btn" onclick="closeAlertModal()">확인</button>
+        </div>
+    </div>
+
+    <script>
+        // URL 파라미터에서 게시판 타입 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const boardParam = urlParams.get('board');
+        if (boardParam) {
+            document.getElementById('boardSelect').value = boardParam;
+            updateBoardUI();
+        }
+
+        // 현재 사용자가 코치인지 확인 (데모용)
+        const isCoach = true;
+        if (!isCoach) {
+            const coachOption = document.getElementById('coachOption');
+            coachOption.disabled = true;
+            coachOption.textContent = '🎓 코치 게시판 (코치 전용 - 권한 없음)';
+        }
+
+        let tags = [];
+        let files = [];
+        let selectedCoachName = null;
+
+        function updateBoardUI() {
+            const board = document.getElementById('boardSelect').value;
+            const coachSelectGroup = document.getElementById('coachSelectGroup');
+
+            // Q&A 게시판 선택시에만 코치 선택 표시
+            if (board === 'qna') {
+                coachSelectGroup.style.display = 'block';
+            } else {
+                coachSelectGroup.style.display = 'none';
+                selectedCoachName = null;
+                document.getElementById('selectedCoach').style.display = 'none';
+                document.getElementById('coachSearch').value = '';
+            }
+        }
+
+        function updateCharCount(type) {
+            if (type === 'title') {
+                const count = document.getElementById('titleInput').value.length;
+                document.getElementById('titleCount').textContent = count;
+            } else {
+                const count = document.getElementById('contentInput').value.length;
+                document.getElementById('contentCount').textContent = count;
+            }
+        }
+
+        function handleTagInput(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const input = event.target;
+                const tag = input.value.trim();
+
+                if (tag && tags.length < 5 && !tags.includes(tag)) {
+                    tags.push(tag);
+                    renderTags();
+                    input.value = '';
+                } else if (tags.length >= 5) {
+                    showAlert('태그는 최대 5개까지 추가할 수 있습니다.');
+                }
+            }
+        }
+
+        function renderTags() {
+            const wrapper = document.getElementById('tagsWrapper');
+            const input = document.getElementById('tagsInput');
+
+            // 기존 태그 제거
+            const existingTags = wrapper.querySelectorAll('.tag-item');
+            existingTags.forEach(tag => tag.remove());
+
+            // 새 태그 추가
+            tags.forEach((tag, index) => {
+                const tagEl = document.createElement('span');
+                tagEl.className = 'tag-item';
+                tagEl.innerHTML = `
+                    ${tag}
+                    <button type="button" class="tag-remove" onclick="removeTag(${index})">×</button>
+                `;
+                wrapper.insertBefore(tagEl, input);
+            });
+        }
+
+        function removeTag(index) {
+            tags.splice(index, 1);
+            renderTags();
+        }
+
+        function handleFileSelect(event) {
+            const selectedFiles = Array.from(event.target.files);
+            files = files.concat(selectedFiles);
+            renderFiles();
+        }
+
+        function renderFiles() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+
+            files.forEach((file, index) => {
+                const fileEl = document.createElement('div');
+                fileEl.className = 'file-item';
+                fileEl.innerHTML = `
+                    <div class="file-info">
+                        <svg class="file-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-size">(${(file.size / 1024).toFixed(1)} KB)</span>
+                    </div>
+                    <button type="button" class="file-remove" onclick="removeFile(${index})">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                `;
+                fileList.appendChild(fileEl);
+            });
+        }
+
+        function removeFile(index) {
+            files.splice(index, 1);
+            renderFiles();
+        }
+
+        // 코치 검색
+        function showCoachResults() {
+            document.getElementById('coachResults').classList.add('show');
+        }
+
+        function filterCoaches() {
+            const query = document.getElementById('coachSearch').value.toLowerCase();
+            const items = document.querySelectorAll('.coach-result-item');
+
+            items.forEach(item => {
+                const name = item.querySelector('.coach-result-name').textContent.toLowerCase();
+                item.style.display = name.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function selectCoach(name, info) {
+            selectedCoachName = name;
+            document.getElementById('coachSearch').value = '';
+            document.getElementById('coachResults').classList.remove('show');
+
+            const selectedCoach = document.getElementById('selectedCoach');
+            selectedCoach.style.display = 'block';
+            selectedCoach.innerHTML = `
+                <div class="selected-coach">
+                    <span class="selected-coach-name">🎓 ${name} 코치</span>
+                    <button type="button" class="selected-coach-remove" onclick="removeSelectedCoach()">×</button>
+                </div>
+            `;
+        }
+
+        function removeSelectedCoach() {
+            selectedCoachName = null;
+            document.getElementById('selectedCoach').style.display = 'none';
+        }
+
+        // 외부 클릭시 검색결과 닫기
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.coach-select-wrapper')) {
+                document.getElementById('coachResults').classList.remove('show');
+            }
+        });
+
+        // 임시저장
+        function saveDraft() {
+            const draft = {
+                board: document.getElementById('boardSelect').value,
+                title: document.getElementById('titleInput').value,
+                content: document.getElementById('contentInput').value,
+                tags: tags,
+                coach: selectedCoachName,
+                savedAt: new Date().toISOString()
+            };
+            localStorage.setItem('draft_post', JSON.stringify(draft));
+            showAlert('임시저장되었습니다.');
+        }
+
+        // 폼 제출
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const board = document.getElementById('boardSelect').value;
+            const title = document.getElementById('titleInput').value.trim();
+            const content = document.getElementById('contentInput').value.trim();
+
+            if (!board) {
+                showAlert('게시판을 선택해주세요.');
+                return;
+            }
+
+            if (!title) {
+                showAlert('제목을 입력해주세요.');
+                return;
+            }
+
+            if (!content) {
+                showAlert('내용을 입력해주세요.');
+                return;
+            }
+
+            // 게시글 등록 성공
+            localStorage.removeItem('draft_post');
+            showAlert('게시글이 등록되었습니다!');
+
+            setTimeout(() => {
+                window.location.href = 'community.html';
+            }, 1500);
+        });
+
+        // 알림 모달
+        function showAlert(message) {
+            document.getElementById('alertMessage').textContent = message;
+            document.getElementById('alertModal').classList.add('show');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alertModal').classList.remove('show');
+        }
+
+        // 모달 외부 클릭시 닫기
+        document.getElementById('alertModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+
+        // 임시저장 불러오기
+        window.addEventListener('load', function() {
+            const draft = localStorage.getItem('draft_post');
+            if (draft) {
+                const shouldLoad = confirm('임시저장된 글이 있습니다. 불러오시겠습니까?');
+                if (shouldLoad) {
+                    const data = JSON.parse(draft);
+                    document.getElementById('boardSelect').value = data.board || '';
+                    document.getElementById('titleInput').value = data.title || '';
+                    document.getElementById('contentInput').value = data.content || '';
+                    tags = data.tags || [];
+                    renderTags();
+                    updateBoardUI();
+                    updateCharCount('title');
+                    updateCharCount('content');
+
+                    if (data.coach) {
+                        selectCoach(data.coach, '');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+
+// ChatGPT API 엔드포인트
+app.post('/chatgpt/ask', async (req, res) => {
+    try {
+        const { question } = req.body;
+
+        if (!question) {
+            return res.status(400).json({
+                success: false,
+                error: '질문이 필요합니다.'
+            });
+        }
+
+        console.log('💬 ChatGPT 질문:', question.substring(0, 50) + '...');
+
+        // AI_Link 서버로 프록시
+        const aiResponse = await fetch('http://localhost:3031/ask-chatgpt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question })
+        });
+
+        const result = await aiResponse.json();
+
+        if (result.success) {
+            console.log('✅ ChatGPT 응답 성공');
+            res.json({
+                success: true,
+                question: question,
+                answer: result.answer,
+                timestamp: new Date().toISOString()
+            });
+        } else {
+            throw new Error(result.error || 'ChatGPT API 오류');
+        }
+
+    } catch (error) {
+        console.error('❌ ChatGPT API 오류:', error.message);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Gemini API 엔드포인트
+app.post('/gemini/ask', async (req, res) => {
+    try {
+        const { question } = req.body;
+
+        if (!question) {
+            return res.status(400).json({
+                success: false,
+                error: '질문이 필요합니다.'
+            });
+        }
+
+        console.log('🔷 Gemini 질문:', question.substring(0, 50) + '...');
+
+        // AI_Link 서버로 프록시
+        const aiResponse = await fetch('http://localhost:3031/ask-gemini', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question })
+        });
+
+        const result = await aiResponse.json();
+
+        if (result.success) {
+            console.log('✅ Gemini 응답 성공');
+            res.json({
+                success: true,
+                question: question,
+                answer: result.answer,
+                timestamp: new Date().toISOString()
+            });
+        } else {
+            throw new Error(result.error || 'Gemini API 오류');
+        }
+
+    } catch (error) {
+        console.error('❌ Gemini API 오류:', error.message);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
